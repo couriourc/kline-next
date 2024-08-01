@@ -1,24 +1,39 @@
+"use client";
 import type { ReactNode } from "react";
 import React from "react";
 import SwrInitor from "@/app/components/swr-initor";
 import { EventEmitterContextProvider } from "@/app/context/event-emitter";
 import { MantineProvider } from "@/app/context/mantine-context";
-import { cx } from "@emotion/css";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppShell, Burger } from "@mantine/core";
+import { ToastContainer } from "react-toastify";
+import { cx } from "@emotion/css";
 
 type Props = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export default function ({ children }: { children: ReactNode }) {
+export default function({ children }: { children: ReactNode }) {
   return (
     <>
       <SwrInitor>
         <MantineProvider>
           <EventEmitterContextProvider>
-            {children}
+            <AppShell navbar={{ width: 200, breakpoint: "xl" }}>
+              <AppShell.Header>
+                <Burger
+                  hiddenFrom="sm"
+                  size="sm"
+                />
+                <div>Logo</div>
+              </AppShell.Header>
+
+              <AppShell.Navbar p="md">
+              </AppShell.Navbar>
+
+              <AppShell.Main>{children}</AppShell.Main>
+            </AppShell>
             <ToastContainer
               position="top-center"
               newestOnTop={true}

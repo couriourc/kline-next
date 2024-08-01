@@ -7,6 +7,7 @@ import { PublicEnvScript } from "next-runtime-env";
 import { ReactNode } from "react";
 import "./styles/globals.css";
 import "@/vendors/index";
+import { ColorSchemeScript } from "@mantine/core";
 
 export const metadata = {
   title: ""
@@ -29,9 +30,10 @@ const LocaleLayout = ({ children }: { children: ReactNode }) => {
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      <script src={"/config.js"}></script>
-      <PublicEnvScript></PublicEnvScript>
       <title></title>
+      <PublicEnvScript></PublicEnvScript>
+      <ColorSchemeScript />
+      <script src={"/config.js"}></script>
     </head>
     <body className="h-full select-auto">
     <Topbar />

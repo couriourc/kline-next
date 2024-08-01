@@ -14,20 +14,6 @@ npm install
 pnpm install
 ```
 
-Then, configure the environment variables. Create a file named `.env.local` in the current directory and copy the
-contents from `.env.example`. Modify the values of these environment variables according to your requirements:
-
-```
-# For production release, change this to PRODUCTION
-NEXT_PUBLIC_DEPLOY_ENV=DEVELOPMENT
-# The deployment edition, SELF_HOSTED
-NEXT_PUBLIC_EDITION=SELF_HOSTED
-# The base URL of console application, refers to the Console base URL of WEB service if console domain is
-NEXT_PUBLIC_API_PREFIX=http://localhost:5001/console/api
-# console or api domain.
-NEXT_PUBLIC_PUBLIC_API_PREFIX=http://localhost:5001/api
-```
-
 ### 主要技术栈说明
 
 - 状态管理框架： https://jotai.org/ jotai jotai-immer
@@ -53,3 +39,4 @@ npm run build:static
 
 [NextJs 快速入门](docs/nextjs快速入门.md)
 [Jotai 快速入门](docs/jotai快速入门指南.md)
+[Tabler 图标](https://icon-sets.iconify.design/tabler/?category=General)
