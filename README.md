@@ -36,10 +36,13 @@ NEXT_PUBLIC_PUBLIC_API_PREFIX=http://localhost:5001/api
 - 路由结构 https://nextjs.org/docs/app/building-your-application/routing/defining-routes
 
 ### 部署相关
+
 #### Docker 镜像部分
+
 ![docs/部署相关指令.png](docs/部署相关指令.png)
 
 #### 后续覆盖
+
 ```bash
 # 对打包后生成的文件进行整合
 npm run build:static
@@ -47,4 +50,6 @@ npm run build:static
 ```
 
 ### 其他文档
-[NextJs 快速入门](http://cloud.datamatrixai.com:30137/docs/ue-web/ue-web-1fn8mmiqncct5)
+
+[NextJs 快速入门](docs/nextjs快速入门.md)
+[Jotai 快速入门](docs/jotai快速入门指南.md)
