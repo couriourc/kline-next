@@ -1,0 +1,10 @@
+.mantine-Input-wrapper {
+  --input-bg: "transparent" !important;
+  --input-bd: #017990 !important;
+  --input-bd-focus: #017990 !important;
+  --input-color: #ffffff !important;
+}
+
+.mantine-Input-input {
+  color: var(--input-color) !important;
+}

@@ -1,0 +1,53 @@
+const { codeInspectorPlugin } = require("code-inspector-plugin");
+const path = require("path");
+
+/** @type {import("next").NextConfig} */
+const nextConfig = {
+  webpack                    : (config, { dev, isServer }) => {
+    // why did you render
+    if (dev && !isServer) {
+      const originalEntry = config.entry;
+      config.entry = async () => {
+        const wdrPath = path.resolve(__dirname, "./vendors/whyDidYouRender.js");
+        const entries = await originalEntry();
+        if (entries["main.js"] && !entries["main.js"].includes(wdrPath)) {
+          entries["main.js"].unshift(wdrPath);
+        }
+        return entries;
+      };
+    }
+
+    config.plugins.push(codeInspectorPlugin({ bundler: "webpack" }));
+
+    return config;
+  },
+  compiler                   : {
+    styledComponents: true
+  },
+  productionBrowserSourceMaps: false, // enable browser source map generation during the production build
+  // Configure pageExtensions to include md and mdx
+  pageExtensions: ["ts", "tsx", "js", "jsx"],
+  experimental  : {},
+  // fix all before production. Now it slow the develop speed.
+  eslint    : {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true
+  },
+  typescript: {
+    // https://nextjs.org/docs/api-reference/next.config.js/ignoring-typescript-errors
+    ignoreBuildErrors: true
+  },
+  async redirects() {
+    return [
+      {
+        source     : "/",
+        destination: "/home",
+        permanent  : true
+      }
+    ];
+  },
+  output: "standalone"
+};
+
+module.exports = nextConfig;

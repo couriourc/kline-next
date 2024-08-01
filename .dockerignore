@@ -1,0 +1,26 @@
+.env
+.env.*
+
+# Logs
+logs
+*.log*
+
+# node
+node_modules
+.husky
+.next
+
+# vscode
+.vscode
+
+# webstorm
+.idea
+*.iml
+*.iws
+*.ipr
+
+
+# Jetbrains
+.idea
+.deploy
+.deploy-*

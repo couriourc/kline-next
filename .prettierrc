@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindPreserveDuplicates": false,
+  "tailwindConfig": "./tailwind.config.js",
+  "tailwindFunctions": [
+    "cx"
+  ],
+  "semi": true,
+  "arrowParens": "always",
+  "htmlWhitespaceSensitivity": "ignore",
+  "trailingComma": "none"
+}
