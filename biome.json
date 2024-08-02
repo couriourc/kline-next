@@ -96,7 +96,7 @@
 			}
 		},
 		"ignore": [
-			"./src/socket/worker-polyfill.ts",
+			"vendors",
 			"*.min.*",
 			"CHANGELOG.md",
 			"dist",
@@ -107,7 +107,6 @@
 			"temp",
 			"packages-lock.json",
 			"pnpm-lock.yaml",
-			"yarn.lock",
 			"__snapshots__",
 			"!.github",
 			"!.vitepress",
@@ -119,11 +118,7 @@
 			"include": [
 				"*.config.[tj]s",
 				"pages/**/*.[tj]sx",
-				"src/pages/**/*.[tj]sx",
-				"src/views/**/*.[tj]sx",
-				"views/**/*.[tj]sx",
-				"src/store/**/*.[tj]s",
-				"store/**/*.[tj]s"
+				"app/**/*.[tj]sx"
 			],
 			"linter": {
 				"rules": {
