@@ -46,9 +46,6 @@ package-lock.json
 .yarn/
 .yarnrc.yml
 
-# pmpm
-*-lock.yaml
-
 .favorites.json
 .deploy/llm
 .deploy-*
