@@ -13,7 +13,7 @@
  */
 
 import type KLineData from '../../common/KLineData'
-import { type Indicator, type IndicatorTemplate } from '../../component/Indicator'
+import type { Indicator, IndicatorTemplate } from '../../component/Indicator'
 
 interface Psy {
   psy?: number

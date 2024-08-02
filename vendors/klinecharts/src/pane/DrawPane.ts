@@ -14,7 +14,7 @@
 
 import type DeepRequired from '../common/DeepRequired'
 import type Nullable from '../common/Nullable'
-import { type UpdateLevel } from '../common/Updater'
+import type { UpdateLevel } from '../common/Updater'
 import type Bounding from '../common/Bounding'
 
 import { isString, isValid, merge } from '../common/utils/typeChecks'

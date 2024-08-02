@@ -22,7 +22,7 @@ import { createFont } from '../common/utils/canvas'
 import type Axis from '../component/Axis'
 import type YAxis from '../component/YAxis'
 
-import { type TextAttrs } from '../extension/figure/text'
+import type { TextAttrs } from '../extension/figure/text'
 
 import type ChartStore from '../store/ChartStore'
 

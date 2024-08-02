@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Github } from "@/app/components/base/icons/src/public/common";
 import type { GithubRepo } from "@/models/common";
 

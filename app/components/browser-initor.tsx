@@ -1,6 +1,6 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 class StorageMock {
   data: Record<string, string>;

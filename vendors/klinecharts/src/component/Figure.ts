@@ -15,7 +15,7 @@
 import type Coordinate from '../common/Coordinate'
 
 import Eventful from '../common/Eventful'
-import { type MouseTouchEvent } from '../common/SyntheticEvent'
+import type { MouseTouchEvent } from '../common/SyntheticEvent'
 
 export const DEVIATION = 2
 

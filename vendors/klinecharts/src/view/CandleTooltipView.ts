@@ -33,7 +33,7 @@ import type Indicator from '../component/Indicator'
 
 import IndicatorTooltipView from './IndicatorTooltipView'
 
-import { type TooltipIcon } from '../store/TooltipStore'
+import type { TooltipIcon } from '../store/TooltipStore'
 
 import { i18n } from '../extension/i18n/index'
 

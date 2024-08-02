@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import I18N from "./i18n";
 import { ToastProvider } from "./base/toast";
 import { getLocaleOnServer } from "@/i18n/server";

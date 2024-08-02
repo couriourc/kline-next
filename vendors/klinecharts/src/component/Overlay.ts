@@ -20,14 +20,14 @@ import type Coordinate from '../common/Coordinate'
 import type Bounding from '../common/Bounding'
 import type BarSpace from '../common/BarSpace'
 import type Precision from '../common/Precision'
-import { type OverlayStyle } from '../common/Styles'
-import { type MouseTouchEvent } from '../common/SyntheticEvent'
+import type { OverlayStyle } from '../common/Styles'
+import type { MouseTouchEvent } from '../common/SyntheticEvent'
 import { clone, isArray, isFunction, isNumber, isString, merge } from '../common/utils/typeChecks'
 
 import type TimeScaleStore from '../store/TimeScaleStore'
 
-import { type XAxis } from './XAxis'
-import { type YAxis } from './YAxis'
+import type { XAxis } from './XAxis'
+import type { YAxis } from './YAxis'
 
 export enum OverlayMode {
   Normal = 'normal',

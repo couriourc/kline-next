@@ -1,7 +1,18 @@
 {
-  "name": "web",
-  "version": "0.6.11",
+  "name": "kline-next",
+  "version": "0.0.1",
   "private": true,
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --ignore-path ./.gitignore --write "
+    ],
+    "*.{js,ts,cjs,mjs,jsx,tsx,json}": [
+      "biome lint --write --no-errors-on-unmatched"
+    ]
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +21,8 @@
     "copy-static": "cpx .next/static/**/* .next/standalone/.next/static && cpx public/**/* .next/standalone/public",
     "copy-serve": "cpx .next/standalone/**/* ./.next/.output/ && cpx .next/static/**/* ./.next/.output/.nexts/static/",
     "check-i18n": "node ./i18n/script.js",
-    "format": "prettier --write ./app/**/*.{tsx,ts}"
+    "lint": "biome lint . --no-errors-on-unmatched",
+    "lint:fix": "pnpm run lint --write"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
@@ -24,7 +36,7 @@
     "@heroicons/react": "^2.0.16",
     "@hookform/resolvers": "^3.3.4",
     "@lexical/react": "^0.16.0",
-    "@mantine/core": "^7.10.2",
+    "@mantine/core": "^7.11.2",
     "@mantine/hooks": "^7.10.2",
     "@monaco-editor/react": "^4.6.0",
     "@next/mdx": "^14.0.4",
@@ -101,10 +113,9 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.36.0",
     "@antfu/utils": "^0.7.10",
+    "@biomejs/biome": "^1.8.3",
     "@emotion/babel-preset-css-prop": "^11.11.0",
-    "@faker-js/faker": "^7.6.0",
     "@rgrove/parse-xml": "^4.1.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -135,6 +146,7 @@
     "env-cmd": "^10.1.0",
     "eslint-config-next": "^14.0.4",
     "husky": "^8.0.3",
+    "lint-staged": "^15.2.7",
     "lodash": "^4.17.21",
     "postcss": "^8.4.38",
     "postcss-preset-mantine": "^1.15.0",
@@ -145,6 +157,7 @@
     "prettier-plugin-import-sort": "^0.0.7",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "sass": "^1.77.6",
+    "simple-git-hooks": "^2.11.1",
     "styled-components": "^6.1.11",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.3.3",
@@ -158,5 +171,6 @@
   "resolutions": {
     "@types/react": "~18.2.0",
     "@types/react-dom": "~18.2.0"
-  }
+  },
+  "packageManager": "pnpm@9.6.0"
 }

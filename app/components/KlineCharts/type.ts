@@ -1,4 +1,4 @@
-import { Chart, Overlay, OverlayCreate } from "klinecharts";
+import type { Chart, Overlay, OverlayCreate } from "klinecharts";
 
 export interface ICommands {
   createOverlay: Chart["createOverlay"];

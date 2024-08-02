@@ -19,17 +19,17 @@ import type Bounding from '../common/Bounding'
 import type VisibleRange from '../common/VisibleRange'
 import type BarSpace from '../common/BarSpace'
 import type Crosshair from '../common/Crosshair'
-import { type IndicatorStyle, type IndicatorPolygonStyle, type SmoothLineStyle, type RectStyle, type TextStyle, type TooltipIconStyle, type LineStyle, type LineType, type PolygonType, type TooltipLegend } from '../common/Styles'
+import type { IndicatorStyle, IndicatorPolygonStyle, SmoothLineStyle, RectStyle, TextStyle, TooltipIconStyle, LineStyle, LineType, PolygonType, TooltipLegend } from '../common/Styles'
 import { isNumber, isValid, merge, clone, isArray, isBoolean } from '../common/utils/typeChecks'
 
-import { type XAxis } from './XAxis'
-import { type YAxis } from './YAxis'
+import type { XAxis } from './XAxis'
+import type { YAxis } from './YAxis'
 
 import { formatValue } from '../common/utils/format'
 
-import { type ArcAttrs } from '../extension/figure/arc'
-import { type RectAttrs } from '../extension/figure/rect'
-import { type TextAttrs } from '../extension/figure/text'
+import type { ArcAttrs } from '../extension/figure/arc'
+import type { RectAttrs } from '../extension/figure/rect'
+import type { TextAttrs } from '../extension/figure/text'
 
 export enum IndicatorSeries {
   Normal = 'normal',

@@ -19,7 +19,7 @@ import { UpdateLevel } from './common/Updater'
 import type Crosshair from './common/Crosshair'
 import { requestAnimationFrame, cancelAnimationFrame } from './common/utils/compatible'
 
-import { type AxisRange } from './component/Axis'
+import type { AxisRange } from './component/Axis'
 import type YAxis from './component/YAxis'
 import type XAxis from './component/XAxis'
 

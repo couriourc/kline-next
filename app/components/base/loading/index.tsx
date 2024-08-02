@@ -1,7 +1,7 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 import "./style.css";
-import { BaseProps } from "@/app/types/misc";
+import type { BaseProps } from "@/app/types/misc";
 import cn from "classnames";
 
 type ILoadingProps = {

@@ -13,7 +13,7 @@
  */
 
 import type KLineData from '../../common/KLineData'
-import { type IndicatorStyle } from '../../common/Styles'
+import type { IndicatorStyle } from '../../common/Styles'
 import { formatValue } from '../../common/utils/format'
 import { isValid } from '../../common/utils/typeChecks'
 

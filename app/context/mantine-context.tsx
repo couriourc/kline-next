@@ -1,6 +1,6 @@
 "use client";
 import { createTheme, MantineProvider as Provider } from "@mantine/core";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import "./mantine-override.scss";
 import "@mantine/core/styles.css";
 

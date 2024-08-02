@@ -15,14 +15,14 @@
 import type Nullable from '../common/Nullable'
 import type VisibleData from '../common/VisibleData'
 import type BarSpace from '../common/BarSpace'
-import { type EventHandler } from '../common/SyntheticEvent'
+import type { EventHandler } from '../common/SyntheticEvent'
 import { ActionType } from '../common/Action'
 import { CandleType, type CandleBarColor, type RectStyle, PolygonType } from '../common/Styles'
 
 import type ChartStore from '../store/ChartStore'
 
-import { type FigureCreate } from '../component/Figure'
-import { type RectAttrs } from '../extension/figure/rect'
+import type { FigureCreate } from '../component/Figure'
+import type { RectAttrs } from '../extension/figure/rect'
 
 import ChildrenView from './ChildrenView'
 

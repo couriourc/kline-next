@@ -21,7 +21,7 @@ import { formatPrecision, formatThousands, formatFoldDecimal } from '../common/u
 
 import AxisImp, { type AxisTemplate, type Axis, type AxisRange, type AxisTick, type AxisCreateTicksParams } from './Axis'
 
-import { type IndicatorFigure } from './Indicator'
+import type { IndicatorFigure } from './Indicator'
 
 import type DrawPane from '../pane/DrawPane'
 
