@@ -69,7 +69,6 @@
 				"noClassAssign": "error",
 				"noCommentText": "error",
 				"noCompareNegZero": "error",
-				"noConsoleLog": "error",
 				"noControlCharactersInRegex": "error",
 				"noDebugger": "error",
 				"noDuplicateCase": "error",
@@ -110,16 +109,14 @@
 			"__snapshots__",
 			"!.github",
 			"!.vitepress",
-			"!.vscode"
+			"!.vscode",
+			"node_modules",
+			".next"
 		]
 	},
 	"overrides": [
 		{
-			"include": [
-				"*.config.[tj]s",
-				"pages/**/*.[tj]sx",
-				"app/**/*.[tj]sx"
-			],
+			"include": ["*.config.[tj]s", "pages/**/*.[tj]sx", "app/**/*.[tj]sx"],
 			"linter": {
 				"rules": {
 					"style": {
@@ -129,39 +126,25 @@
 			}
 		},
 		{
-			"include": [
-				"*.d.ts"
-			],
+			"include": ["*.d.ts"],
 			"linter": {
 				"rules": {}
 			}
 		},
 		{
-			"include": [
-				"*.js"
-			],
+			"include": ["*.js"],
 			"linter": {
 				"rules": {}
 			}
 		},
 		{
-			"include": [
-				"*.test.ts",
-				"*.test.js",
-				"*.spec.ts",
-				"*.spec.js"
-			],
+			"include": ["*.test.ts", "*.test.js", "*.spec.ts", "*.spec.js"],
 			"linter": {
 				"rules": {}
 			}
 		},
 		{
-			"include": [
-				"*.ts",
-				"*.tsx",
-				"*.mts",
-				"*.cts"
-			],
+			"include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
 			"linter": {
 				"rules": {
 					"correctness": {

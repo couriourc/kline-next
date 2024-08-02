@@ -8,12 +8,7 @@ import { AppShell, Burger } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import { cx } from "@emotion/css";
 
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export default function({ children }: { children: ReactNode }) {
+export default function ({ children }: { children: ReactNode }) {
   return (
     <>
       <SwrInitor>
@@ -21,15 +16,11 @@ export default function({ children }: { children: ReactNode }) {
           <EventEmitterContextProvider>
             <AppShell navbar={{ width: 200, breakpoint: "xl" }}>
               <AppShell.Header>
-                <Burger
-                  hiddenFrom="sm"
-                  size="sm"
-                />
+                <Burger hiddenFrom="sm" size="sm" />
                 <div>Logo</div>
               </AppShell.Header>
 
-              <AppShell.Navbar p="md">
-              </AppShell.Navbar>
+              <AppShell.Navbar p="md"></AppShell.Navbar>
 
               <AppShell.Main>{children}</AppShell.Main>
             </AppShell>

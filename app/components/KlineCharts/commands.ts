@@ -1,10 +1,10 @@
-import { useKlineChart } from "@/app/components/KlineCharts/core";
+import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import type { ICommands } from "@/app/components/KlineCharts/type";
 import type { OverlayCreate } from "klinecharts";
 import _ from "underscore";
 import { defaultOverlayExtendData } from "@/app/components/KlineCharts/schema";
 
-const klineChartInstance = useKlineChart();
+const klineChartInstance = KlineChartModule();
 
 function arrifyOverlay<T>(target: T | T[]): T[] {
   /*@ts-ignore*/
@@ -20,22 +20,24 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
       Object.assign(option, nameOrOption);
     }
 
-    ([
-      "onDrawStart",
-      "onDrawing",
-      "onDrawEnd",
-      "onClick",
-      "onDoubleClick",
-      "onRightClick",
-      "onPressedMoveStart",
-      "onPressedMoving",
-      "onPressedMoveEnd",
-      "onMouseEnter",
-      "onMouseLeave",
-      "onRemoved",
-      "onSelected",
-      "onDeselected"
-    ] as const).forEach((fnName) => {
+    (
+      [
+        "onDrawStart",
+        "onDrawing",
+        "onDrawEnd",
+        "onClick",
+        "onDoubleClick",
+        "onRightClick",
+        "onPressedMoveStart",
+        "onPressedMoving",
+        "onPressedMoveEnd",
+        "onMouseEnter",
+        "onMouseLeave",
+        "onRemoved",
+        "onSelected",
+        "onDeselected"
+      ] as const
+    ).forEach((fnName) => {
       const fn = option[fnName];
       switch (fnName) {
         case "onRightClick":
@@ -69,10 +71,18 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     };
     return option as OverlayCreate;
   };
-  const wrapperOverlayCreator = arrifyOverlay(overlayCreator).map(wrapperOverlayFunction);
-  const overlayIds: string[] = klineChartInstance.chart.createOverlay(wrapperOverlayCreator, paneId) as string[];
+  const wrapperOverlayCreator = arrifyOverlay(overlayCreator).map(
+    wrapperOverlayFunction
+  );
+  const overlayIds: string[] = klineChartInstance.chart.createOverlay(
+    wrapperOverlayCreator,
+    paneId
+  ) as string[];
   // 创建覆层
-  klineChartInstance.emitter.emit("overlay:create", getOverlayByIds(overlayIds));
+  klineChartInstance.emitter.emit(
+    "overlay:create",
+    getOverlayByIds(overlayIds)
+  );
   // 获取
   return overlayIds;
 };
@@ -80,7 +90,10 @@ const removeOverlay: ICommands["removeOverlay"] = (...args) => {
   const overlayIds = arrifyOverlay(args[0]);
   // 移除覆层
   /*@ts-ignore*/
-  klineChartInstance.emitter.emit("overlay:removed", getOverlayByIds(overlayIds));
+  klineChartInstance.emitter.emit(
+    "overlay:removed",
+    getOverlayByIds(overlayIds)
+  );
   return klineChartInstance.chart.removeOverlay(...args);
 };
 const getOverlayByIds: ICommands["getOverlayByIds"] = (...args) => {
@@ -99,16 +112,14 @@ const commands: ICommands = {
   getOverlayByIds
 };
 
-
-export function executeCommand<T extends keyof ICommands>
-(type: T, ...args: Parameters<ICommands[T]>): ReturnType<ICommands[T]> {
-  klineChartInstance
-    .emitter
-    .emit("setup:command",
-      {
-        type,
-        args
-      });
+export function executeCommand<T extends keyof ICommands>(
+  type: T,
+  ...args: Parameters<ICommands[T]>
+): ReturnType<ICommands[T]> {
+  klineChartInstance.emitter.emit("setup:command", {
+    type,
+    args
+  });
   /*@ts-ignore*/
   return commands[type as keyof Commands](...args);
 }

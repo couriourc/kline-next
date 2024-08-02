@@ -1,15 +1,13 @@
 "use client";
 
 import { SWRConfig } from "swr";
-import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type SwrInitorProps = {
   children: ReactNode;
 };
 const SwrInitor = ({ children }: SwrInitorProps) => {
-  const searchParams = useSearchParams();
   const [init, setInit] = useState(false);
 
   useEffect(() => {

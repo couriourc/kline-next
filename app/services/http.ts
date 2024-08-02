@@ -5,9 +5,7 @@ import type {
   FunctionOrValue,
   WithMessageProps
 } from "@/app/types/misc";
-import { isDev, isHref } from "@/app/utils/misc";
 import { getConfigurationFromGlobal } from "@/app/utils/globalConfig";
-import { delay, random } from "underscore";
 
 interface AxiosRequestType extends AxiosRequestConfig {
   baseURL?: string;
@@ -35,9 +33,6 @@ request.interceptors.request.use(
   (config) => {
     if (config.params instanceof FormData || config.data instanceof FormData) {
       config.headers["Content-Type"] = "application/x-www-urlencoded";
-    }
-    if (isHref(config.url as string)) {
-      config.baseURL = "";
     }
     return config;
   },
@@ -97,7 +92,6 @@ export default function requester<T>(
   data: any = null,
   config: DynamicProps<Partial<AxiosRequestConfig>> = {}
 ): Promise<T> {
-  console.log(method, url, data);
   method = method.toLowerCase();
   const methodFilter = ["post", "get", "delete", "put", "patch"];
   const paramsFilter = ["get", "delete"];
@@ -117,32 +111,19 @@ export default function requester<T>(
       ...config
     });
   } else {
-    console.error("未知的method" + method);
-    return Promise.reject("未知的method" + method);
+    //    console.error("未知的method" + method);
+    return Promise.reject(`未知的method${method}`);
   }
 }
 /*@ts-ignore*/
 export const withMockData: <T extends (...args: any) => any>(fn: T) => T =
   (() => {
-    const cached: Record<string, any> | null = null;
-
-    async function cacheMockJSON(url: string) {
-      if (cached !== null) {
-        return cached;
-      }
-      return fetch(url).then((d) => d.json());
-    }
-
     return (fn) => {
       return async (
         url: string,
         data: AxiosRequestConfig["data"],
         config = {} as AxiosRequestType
       ) => {
-        const is_need_mock =
-          !config.disabled_mock &&
-          getConfigurationFromGlobal("need_mock", isDev()) &&
-          config.mock;
         if (config.mock) {
           console.group(
             "%cDebugging",
@@ -165,24 +146,6 @@ export const withMockData: <T extends (...args: any) => any>(fn: T) => T =
           console.groupEnd();
         }
 
-        if (is_need_mock) {
-          await new Promise((resolve) => {
-            delay(
-              resolve,
-              ~~random(getConfigurationFromGlobal("mock_max_interval", 500))
-            );
-          });
-          const json_path = getConfigurationFromGlobal(
-            "mock_json_path",
-            "/mock_data.json"
-          );
-          if (json_path) {
-            const data = await cacheMockJSON(json_path);
-            console.log(data[url]);
-            return data[url] ? { ...(data[url] ?? {}) } : { ...config.mock };
-          }
-          return { ...config.mock };
-        }
         const res = (await fn(url, data, config)) as AxiosResponse["data"];
         if (config.mock) {
           console.group(
@@ -205,7 +168,6 @@ export const withMockData: <T extends (...args: any) => any>(fn: T) => T =
           }
           console.groupEnd();
         }
-        console.log("res", res);
         return await Promise.resolve(res);
       };
     };
@@ -224,35 +186,35 @@ type InferResponseFromMockData<U extends ExtendedAxiosRequestConfig> =
       ? P
       : never;
 requester.get = withMockData(
-  <T, U extends ExtendedAxiosRequestConfig = ExtendedAxiosRequestConfig>(
+  <U extends ExtendedAxiosRequestConfig = ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
   ) => requester<InferResponseFromMockData<U>>("get", url, params, config)
 );
 requester.post = withMockData(
-  <T, U extends ExtendedAxiosRequestConfig>(
+  <U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
   ) => requester<InferResponseFromMockData<U>>("post", url, params, config)
 );
 requester.delete = withMockData(
-  <T, U extends ExtendedAxiosRequestConfig>(
+  <U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
   ) => requester<InferResponseFromMockData<U>>("delete", url, params, config)
 );
 requester.put = withMockData(
-  <T, U extends ExtendedAxiosRequestConfig>(
+  <U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
   ) => requester<InferResponseFromMockData<U>>("put", url, params, config)
 );
 requester.patch = withMockData(
-  <T, U extends ExtendedAxiosRequestConfig>(
+  <U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
