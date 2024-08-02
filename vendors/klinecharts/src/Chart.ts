@@ -50,8 +50,8 @@ import { type PaneOptions, PanePosition, PANE_DEFAULT_HEIGHT, PaneIdConstants } 
 
 import type Axis from './component/Axis'
 
-import { type Indicator, type IndicatorCreate } from './component/Indicator'
-import { type Overlay, type OverlayCreate, type OverlayRemove } from './component/Overlay'
+import type { Indicator, IndicatorCreate } from './component/Indicator'
+import type { Overlay, OverlayCreate, OverlayRemove } from './component/Overlay'
 
 import { getIndicatorClass } from './extension/indicator/index'
 import { getStyles as getExtensionStyles } from './extension/styles/index'

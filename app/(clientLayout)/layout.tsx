@@ -1,6 +1,5 @@
 "use client";
 import type { ReactNode } from "react";
-import React from "react";
 import SwrInitor from "@/app/components/swr-initor";
 import { EventEmitterContextProvider } from "@/app/context/event-emitter";
 import { MantineProvider } from "@/app/context/mantine-context";

@@ -16,18 +16,18 @@ import type Nullable from '../common/Nullable'
 import type Coordinate from '../common/Coordinate'
 import type Bounding from '../common/Bounding'
 import type BarSpace from '../common/BarSpace'
-import { type OverlayStyle } from '../common/Styles'
-import { type CustomApi } from '../Options'
+import type { OverlayStyle } from '../common/Styles'
+import type { CustomApi } from '../Options'
 import { formatPrecision, formatThousands, formatFoldDecimal } from '../common/utils/format'
 import { isNumber } from '../common/utils/typeChecks'
 
 import type Axis from '../component/Axis'
 import type XAxis from '../component/XAxis'
 import type YAxis from '../component/YAxis'
-import { type OverlayPrecision, type OverlayFigure, type Overlay } from '../component/Overlay'
+import type { OverlayPrecision, OverlayFigure, Overlay } from '../component/Overlay'
 import type OverlayImp from '../component/Overlay'
 
-import { type EventOverlayInfo } from '../store/OverlayStore'
+import type { EventOverlayInfo } from '../store/OverlayStore'
 
 import OverlayView from './OverlayView'
 

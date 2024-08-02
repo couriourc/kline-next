@@ -17,7 +17,7 @@ import { isValid, isString } from '../common/utils/typeChecks'
 
 import type ChartStore from './ChartStore'
 
-import { type IndicatorCreate, type Indicator } from '../component/Indicator'
+import type { IndicatorCreate, Indicator } from '../component/Indicator'
 import type IndicatorImp from '../component/Indicator'
 import { IndicatorSeries } from '../component/Indicator'
 import { getIndicatorClass } from '../extension/indicator/index'

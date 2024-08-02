@@ -1,4 +1,4 @@
-import _, { noop } from "underscore";
+import _ from "underscore";
 import dayjs from "dayjs";
 
 /**
@@ -6,7 +6,7 @@ import dayjs from "dayjs";
  * */
 
 export const renderLog = (() => {
-  let count: number = 0;
+  const count: number = 0;
   const cache = new Map<string, number>();
   return (namespace: string) => {
     const pre = cache.get(namespace) ?? 0;
@@ -134,7 +134,7 @@ export function withLocker<T extends (locker: Locker, ...args: any[]) => any>(
 }
 
 export const delayWithClean = (fn: Function, delay: number) => {
-  let timer = setTimeout(() => {
+  const timer = setTimeout(() => {
     return fn();
   }, delay);
   return () => {

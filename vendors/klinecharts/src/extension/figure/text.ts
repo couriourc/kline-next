@@ -13,11 +13,11 @@
  */
 
 import type Coordinate from '../../common/Coordinate'
-import { type TextStyle } from '../../common/Styles'
+import type { TextStyle } from '../../common/Styles'
 
 import { createFont, calcTextWidth } from '../../common/utils/canvas'
 
-import { type FigureTemplate } from '../../component/Figure'
+import type { FigureTemplate } from '../../component/Figure'
 
 import { type RectAttrs, drawRect } from './rect'
 

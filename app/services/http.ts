@@ -1,5 +1,5 @@
 import type { AxiosInstance, AxiosResponse } from "axios";
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 import type {
   DynamicProps,
   FunctionOrValue,
@@ -99,10 +99,10 @@ export default function requester<T>(
 ): Promise<T> {
   console.log(method, url, data);
   method = method.toLowerCase();
-  let methodFilter = ["post", "get", "delete", "put", "patch"];
-  let paramsFilter = ["get", "delete"];
+  const methodFilter = ["post", "get", "delete", "put", "patch"];
+  const paramsFilter = ["get", "delete"];
   if (methodFilter.includes(method)) {
-    let isParams = paramsFilter.includes(method);
+    const isParams = paramsFilter.includes(method);
     data = isParams
       ? {
           params: data
@@ -124,7 +124,7 @@ export default function requester<T>(
 /*@ts-ignore*/
 export const withMockData: <T extends (...args: any) => any>(fn: T) => T =
   (() => {
-    let cached: Record<string, any> | null = null;
+    const cached: Record<string, any> | null = null;
 
     async function cacheMockJSON(url: string) {
       if (cached !== null) {

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { type Chart, init } from "klinecharts";
-import mitt, { Emitter } from "mitt";
+import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
 
 export const useKlineChart = (() => {
