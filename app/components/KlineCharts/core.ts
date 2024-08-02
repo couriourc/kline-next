@@ -4,14 +4,11 @@ import { type Chart, init } from "klinecharts";
 import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
 
-export const useKlineChart = (() => {
+export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
   const emitter: Emitter<{
-    [key:
-      "setup:command" |
-      `overlay:${"create" | "removed"}` |
-      string]: any;
+    [key: "setup:command" | `overlay:${"create" | "removed"}` | string]: any;
   }> = mitt();
 
   return () => {

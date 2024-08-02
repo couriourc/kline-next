@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import "./style.css";
 import type { BaseProps } from "@/app/types/misc";
-import cn from "classnames";
+import { cx } from "@emotion/css";
 
 type ILoadingProps = {
   type?: "area" | "app";
@@ -12,7 +12,7 @@ const Loading = (
 ) => {
   return (
     <div
-      className={cn(
+      className={cx(
         `flex w-full items-center justify-center`,
         {
           "h-full": type === "app"

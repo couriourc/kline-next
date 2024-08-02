@@ -1,8 +1,7 @@
 import type { Viewport } from "next";
 import BrowerInitor from "./components/browser-initor";
 import Topbar from "./components/base/topbar";
-// import I18nServer from './components/i18n-server';
-// import {getLocaleOnServer} from '@/i18n/server';
+
 import { PublicEnvScript } from "next-runtime-env";
 import type { ReactNode } from "react";
 import "./styles/globals.css";
@@ -22,7 +21,6 @@ export const viewport: Viewport = {
 };
 
 const LocaleLayout = ({ children }: { children: ReactNode }) => {
-
   return (
     <html lang={"zh-Hans"} className="h-full">
       <head>
