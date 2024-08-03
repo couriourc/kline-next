@@ -3,7 +3,7 @@ const path = require("path");
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
-  webpack                    : (config, { dev, isServer }) => {
+  webpack: (config, { dev, isServer }) => {
     // why did you render
     if (dev && !isServer) {
       const originalEntry = config.entry;
@@ -21,15 +21,17 @@ const nextConfig = {
 
     return config;
   },
-  compiler                   : {
+  compiler: {
     styledComponents: true
   },
   productionBrowserSourceMaps: false, // enable browser source map generation during the production build
   // Configure pageExtensions to include md and mdx
   pageExtensions: ["ts", "tsx", "js", "jsx"],
-  experimental  : {},
+  experimental: {
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks"]
+  },
   // fix all before production. Now it slow the develop speed.
-  eslint    : {
+  eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true
@@ -41,9 +43,9 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source     : "/",
+        source: "/",
         destination: "/home",
-        permanent  : true
+        permanent: true
       }
     ];
   },
