@@ -14,7 +14,7 @@ export default function KlinePage() {
         <div
           className={"h-100vh w-full"}
           ref={klineRef}
-          onContextMenu={showContextMenu((close) => {
+          onContextMenu={showContextMenu(() => {
             return (
               <Stack>
                 <ScrollArea mah={250}>

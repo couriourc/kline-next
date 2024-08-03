@@ -34,6 +34,8 @@
     "@lexical/react": "^0.16.0",
     "@mantine/core": "^7.11.2",
     "@mantine/hooks": "^7.10.2",
+    "@mantine/notifications": "^7.11.2",
+    "@mantine/nprogress": "^7.11.2",
     "@tailwindcss/typography": "^0.5.9",
     "@unocss/preset-uno": "^0.61.0",
     "@unocss/webpack": "^0.61.0",
