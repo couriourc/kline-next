@@ -5,24 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/context/plugins/mantine-context-menu-context.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/kline/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/kline/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/kline/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/kline/page.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/base/float-popover-container/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/base/github-star/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/base/github-star/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/base/loading/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/base/loading/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/browser-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/browser-initor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/swr-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/swr-initor.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/i18n.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/next-env.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/http.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/design.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/design.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/misc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/misc.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biome.json" beforeDir="false" afterPath="$PROJECT_DIR$/biome.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/mantine-override.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-override.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +25,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="fix/lint" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitToolBoxStore">
@@ -43,8 +42,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1722605856" />
+                    <option name="branchName" value="feature/layout" />
+                    <option name="lastUsedInstant" value="1722607621" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="fix/lint" />
+                    <option name="lastUsedInstant" value="1722607604" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feature-layout" />
@@ -104,11 +107,11 @@
       <recent name="C:\Users\Administrator\Desktop\EuProjects\frontend\comprehensive_big_model\comprehensive_big_model\.deploy" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\kline-next\app\(clientLayout)\home" />
       <recent name="D:\projects\kline-next" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\vendors" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\app" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\app\pages" />
-      <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next" />
     </key>
   </component>
   <component name="RunManager" selected="npm.format">
@@ -182,6 +185,9 @@
       <workItem from="1722487541279" duration="34000" />
       <workItem from="1722487581474" duration="4614000" />
       <workItem from="1722512327181" duration="11365000" />
+      <workItem from="1722614842325" duration="947000" />
+      <workItem from="1722639909287" duration="594000" />
+      <workItem from="1722684103611" duration="4132000" />
     </task>
     <servers />
   </component>
@@ -193,7 +199,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feature/layout" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

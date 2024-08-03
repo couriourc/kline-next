@@ -7,7 +7,6 @@ import { defaultOverlayExtendData } from "@/app/components/KlineCharts/schema";
 const klineChartInstance = KlineChartModule();
 
 function arrifyOverlay<T>(target: T | T[]): T[] {
-  /*@ts-ignore*/
   return _.isArray(target) ? target : [target];
 }
 
@@ -56,12 +55,6 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
             return true;
           };
           break;
-        default:
-          /*@ts-ignore*/
-          option[fnName as unknown as keyof typeof option] = (...args) => {
-            /*@ts-ignore*/
-            return fn?.(...args);
-          };
       }
     });
     // 内置信息
@@ -89,10 +82,9 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
 const removeOverlay: ICommands["removeOverlay"] = (...args) => {
   const overlayIds = arrifyOverlay(args[0]);
   // 移除覆层
-  /*@ts-ignore*/
   klineChartInstance.emitter.emit(
     "overlay:removed",
-    getOverlayByIds(overlayIds)
+    getOverlayByIds(overlayIds as string[])
   );
   return klineChartInstance.chart.removeOverlay(...args);
 };
