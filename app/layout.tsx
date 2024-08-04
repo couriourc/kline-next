@@ -5,7 +5,6 @@ import Topbar from "./components/base/topbar";
 import { PublicEnvScript } from "next-runtime-env";
 import type { ReactNode } from "react";
 import "./styles/globals.css";
-import "@/vendors/index";
 import { ColorSchemeScript } from "@mantine/core";
 
 export const metadata = {

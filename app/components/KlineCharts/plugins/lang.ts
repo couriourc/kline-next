@@ -1,4 +1,4 @@
-import { registerLocale } from "klinecharts";
+import { registerLocale } from "couriourc-klinecharts";
 
 registerLocale("zh-HK", {
   time: "時間：",

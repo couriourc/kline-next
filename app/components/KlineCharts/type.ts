@@ -1,4 +1,4 @@
-import type { Chart, Overlay, OverlayCreate } from "klinecharts";
+import type { Chart, Overlay, OverlayCreate } from "couriourc-klinecharts";
 
 export interface ICommands {
   createOverlay: Chart["createOverlay"];

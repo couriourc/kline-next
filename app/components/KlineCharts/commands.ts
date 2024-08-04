@@ -1,6 +1,6 @@
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import type { ICommands } from "@/app/components/KlineCharts/type";
-import type { OverlayCreate } from "klinecharts";
+import type { OverlayCreate } from "couriourc-klinecharts";
 import _ from "underscore";
 import { defaultOverlayExtendData } from "@/app/components/KlineCharts/schema";
 

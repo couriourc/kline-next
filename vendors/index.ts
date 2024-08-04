@@ -1,6 +1,10 @@
 "use client";
 import overlays from "./extensitons/overlays";
-import { registerFigure, registerIndicator, registerOverlay } from "klinecharts";
+import {
+  registerFigure,
+  registerIndicator,
+  registerOverlay
+} from "couriourc-klinecharts";
 import indicators from "./extensitons/indicators";
 import figures from "./extensitons/figures";
 

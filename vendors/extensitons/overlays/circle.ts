@@ -25,35 +25,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type {OverlayTemplate} from 'klinecharts';
+import type { OverlayTemplate } from "couriourc-klinecharts";
 
-import { getDistance } from './utils'
+import { getDistance } from "./utils";
 
 const circle: OverlayTemplate = {
-  name: 'circle',
+  name: "circle",
   totalStep: 3,
   needDefaultPointFigure: true,
   needDefaultXAxisFigure: true,
   needDefaultYAxisFigure: true,
   styles: {
     circle: {
-      color: 'rgba(22, 119, 255, 0.15)'
+      color: "rgba(22, 119, 255, 0.15)"
     }
   },
   createPointFigures: ({ coordinates }) => {
     if (coordinates.length > 1) {
-      const radius = getDistance(coordinates[0], coordinates[1])
+      const radius = getDistance(coordinates[0], coordinates[1]);
       return {
-        type: 'circle',
+        type: "circle",
         attrs: {
           ...coordinates[0],
           r: radius
         },
-        styles: { style: 'stroke_fill' }
-      }
+        styles: { style: "stroke_fill" }
+      };
     }
-    return []
+    return [];
   }
-}
+};
 
-export default circle
+export default circle;

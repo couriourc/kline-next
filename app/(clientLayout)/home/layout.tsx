@@ -17,6 +17,7 @@ import { useContextMenu } from "mantine-contextmenu";
 import { executeCommand } from "@/app/components/KlineCharts/commands";
 import { useEffect } from "react";
 import { Logs } from "@/app/components/page/home/Logs";
+import Datasource from "@/app/(clientLayout)/home/page";
 
 export default function KLineChartLayout() {
   const klineChartMemo = KlineChartModule();
@@ -211,6 +212,7 @@ export default function KLineChartLayout() {
             </Popover>
           </Group>
           {/*<HomeNav />*/}
+          <Datasource />
           <Logs />
         </Flex>
       </Split.Pane>

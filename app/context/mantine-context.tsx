@@ -23,6 +23,10 @@ import "@mantine/core/styles/Popover.css";
 import "@mantine/core/styles/Text.css";
 import "@mantine/core/styles/Menu.css";
 import "@mantine/core/styles/UnstyledButton.css";
+import "@mantine/core/styles/Badge.css";
+import "@mantine/core/styles/Loader.css";
+import "@mantine/core/styles/Blockquote.css";
+import "@mantine/core/styles/ActionIcon.css";
 // 布局样式
 import "@mantine/core/styles/global.layer.css";
 import "@mantine/core/styles/AppShell.layer.css";
@@ -41,6 +45,10 @@ import "@mantine/core/styles/Popover.layer.css";
 import "@mantine/core/styles/Text.layer.css";
 import "@mantine/core/styles/Menu.layer.css";
 import "@mantine/core/styles/UnstyledButton.layer.css";
+import "@mantine/core/styles/Badge.layer.css";
+import "@mantine/core/styles/Loader.layer.css";
+import "@mantine/core/styles/Blockquote.layer.css";
+import "@mantine/core/styles/ActionIcon.layer.css";
 
 // 插件样式
 import "@mantine/nprogress/styles.css";

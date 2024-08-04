@@ -5,24 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
-      <change afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/ui/Logo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendors/klinecharts/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendors/klinecharts/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendors/klinecharts/src/Chart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vendors/klinecharts/src/Chart.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,10 +15,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/layout" />
+        <entry key="$PROJECT_DIR$" value="feature/kline-data" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
@@ -46,6 +30,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="chore/module-alias" />
+                    <option name="lastUsedInstant" value="1722747081" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feature/kline-data" />
                     <option name="lastUsedInstant" value="1722689706" />
@@ -102,6 +90,7 @@
     &quot;notes&quot;: &quot;&quot;,
     &quot;npm.format.executor&quot;: &quot;Run&quot;,
     &quot;npm.gen-icons.executor&quot;: &quot;Run&quot;,
+    &quot;npm.klinecharts &gt; build-dts.executor&quot;: &quot;Run&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\projects\\kline-next\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -123,7 +112,7 @@
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\app\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.format">
+  <component name="RunManager" selected="Docker.Dockerfile">
     <configuration name="save.sh" type="ShConfigurationType" temporary="true">
       <option name="SCRIPT_TEXT" value="" />
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
@@ -137,6 +126,20 @@
       <option name="EXECUTE_IN_TERMINAL" value="true" />
       <option name="EXECUTE_SCRIPT_FILE" value="true" />
       <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration name="format" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -159,8 +162,20 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="klinecharts &gt; build-dts" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/vendors/klinecharts/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build-dts" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.Dockerfile" />
+        <item itemvalue="npm.klinecharts &gt; build-dts" />
         <item itemvalue="npm.format" />
         <item itemvalue="npm.gen-icons" />
         <item itemvalue="Shell Script.save.sh" />
@@ -197,7 +212,8 @@
       <workItem from="1722614842325" duration="947000" />
       <workItem from="1722639909287" duration="594000" />
       <workItem from="1722684103611" duration="12537000" />
-      <workItem from="1722729099861" duration="5447000" />
+      <workItem from="1722729099861" duration="15281000" />
+      <workItem from="1722744843620" duration="2894000" />
     </task>
     <servers />
   </component>
@@ -215,7 +231,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feature/layout" />
+                        <option value="feature/kline-data" />
                       </list>
                     </value>
                   </entry>

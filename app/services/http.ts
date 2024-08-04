@@ -5,7 +5,7 @@ import type {
   FunctionOrValue,
   WithMessageProps
 } from "@/app/types/misc";
-import { getConfigurationFromGlobal } from "@/app/utils/globalConfig";
+import { NEXT_PUBLIC_PUBLIC_API_PREFIX } from "@/config";
 
 interface AxiosRequestType extends AxiosRequestConfig {
   baseURL?: string;
@@ -21,12 +21,9 @@ interface AxiosRequestType extends AxiosRequestConfig {
   need_loading?: boolean;
   mock?: any;
 }
-
 // axios 配置
 const request: AxiosInstance = axios.create({
-  get baseURL() {
-    return getConfigurationFromGlobal("base_url", "");
-  }
+  baseURL: NEXT_PUBLIC_PUBLIC_API_PREFIX
 });
 
 request.interceptors.request.use(
@@ -186,37 +183,38 @@ type InferResponseFromMockData<U extends ExtendedAxiosRequestConfig> =
       ? P
       : never;
 requester.get = withMockData(
-  <U extends ExtendedAxiosRequestConfig = ExtendedAxiosRequestConfig>(
+  <T, U extends ExtendedAxiosRequestConfig = ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
-  ) => requester<InferResponseFromMockData<U>>("get", url, params, config)
+  ) => requester<T & InferResponseFromMockData<U>>("get", url, params, config)
 );
 requester.post = withMockData(
-  <U extends ExtendedAxiosRequestConfig>(
+  <T, U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
-  ) => requester<InferResponseFromMockData<U>>("post", url, params, config)
+  ) => requester<T & InferResponseFromMockData<U>>("post", url, params, config)
 );
 requester.delete = withMockData(
-  <U extends ExtendedAxiosRequestConfig>(
+  <T, U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
-  ) => requester<InferResponseFromMockData<U>>("delete", url, params, config)
+  ) =>
+    requester<T & InferResponseFromMockData<U>>("delete", url, params, config)
 );
 requester.put = withMockData(
-  <U extends ExtendedAxiosRequestConfig>(
+  <T, U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
-  ) => requester<InferResponseFromMockData<U>>("put", url, params, config)
+  ) => requester<T & InferResponseFromMockData<U>>("put", url, params, config)
 );
 requester.patch = withMockData(
-  <U extends ExtendedAxiosRequestConfig>(
+  <T, U extends ExtendedAxiosRequestConfig>(
     url: string,
     params: any = {},
     config = {} as U
-  ) => requester<InferResponseFromMockData<U>>("patch", url, params, config)
+  ) => requester<T & InferResponseFromMockData<U>>("patch", url, params, config)
 );
