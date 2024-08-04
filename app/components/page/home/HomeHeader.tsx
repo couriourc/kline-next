@@ -1,4 +1,11 @@
-import { Avatar, Group, Input, Kbd } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Group,
+  Input,
+  Kbd,
+  useMantineColorScheme
+} from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { useRef } from "react";
 
@@ -18,6 +25,8 @@ export function HomeHeader() {
     ],
     undefined
   );
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
   return (
     <>
       <Group>
@@ -34,6 +43,13 @@ export function HomeHeader() {
             </>
           }
         />
+        <ActionIcon variant={"outline"} onClick={() => toggleColorScheme()}>
+          {colorScheme === "dark" ? (
+            <i className={"i-material-symbols-light-sunny"} />
+          ) : (
+            <i className={"i-material-symbols-light-shield-moon"} />
+          )}
+        </ActionIcon>
       </Group>
     </>
   );

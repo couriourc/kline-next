@@ -23,13 +23,15 @@ const LocaleLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang={"zh-Hans"} className="h-full">
       <head>
-        <meta name="theme-color" content="#FFFFFF" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <title></title>
         <PublicEnvScript></PublicEnvScript>
-        <ColorSchemeScript />
+        <ColorSchemeScript
+          forceColorScheme={"dark"}
+          defaultColorScheme="dark"
+        />
         <script src={"/config.js"}></script>
       </head>
       <body className="h-full select-auto">

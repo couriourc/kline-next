@@ -6,6 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/plugins/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/plugins/theme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,6 +227,9 @@
       <workItem from="1722684103611" duration="12537000" />
       <workItem from="1722729099861" duration="15281000" />
       <workItem from="1722744843620" duration="2894000" />
+      <workItem from="1722749392281" duration="2569000" />
+      <workItem from="1722752115379" duration="1470000" />
+      <workItem from="1722755916691" duration="2695000" />
     </task>
     <servers />
   </component>
