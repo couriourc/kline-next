@@ -3,12 +3,19 @@ import { useEffect, useRef } from "react";
 import { type Chart, init } from "klinecharts";
 import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
+import { formatDate } from "@/vendors/klinecharts/src/common/utils/format";
 
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
   const emitter: Emitter<{
-    [key: "setup:command" | `overlay:${"create" | "removed"}` | string]: any;
+    [
+      key:
+        | "chart:setup"
+        | "command:setup"
+        | `overlay:${"create" | "removed"}`
+        | string
+    ]: any;
   }> = mitt();
 
   return () => {
@@ -17,7 +24,13 @@ export const KlineChartModule = (() => {
       init() {
         const ref = useRef<HTMLDivElement | any>();
         useEffect(() => {
-          chartMemo = init(ref.current, {})!;
+          console.log(chartMemo);
+          chartMemo = init(ref.current, {
+            customApi: {
+              formatDate
+            }
+          })!;
+          emitter.emit("chart:setup", chartMemo);
         }, []);
         return {
           ref

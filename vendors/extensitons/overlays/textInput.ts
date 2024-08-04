@@ -25,46 +25,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type {OverlayTemplate, TextAttrs} from 'klinecharts';
+import type { OverlayTemplate, TextAttrs } from "klinecharts";
 
 const textInput: OverlayTemplate = {
-    name: 'textInput',
-    totalStep: 2,
-    createPointFigures: (args) => {
-        if (!args.overlay.extendData?.text) {
-            return [
-                {
-                    type: 'circle',
-                    attrs: {
-                        x: args.coordinates[0].x,
-                        y: args.coordinates[0].y,
-                        r: 5,
-                    },
-                    styles: {
-                        fill: '#ff0000',
-                        stroke: '#ff0000',
-                        strokeWidth: 2
-                    }
-                }
-            ];
+  name: "textInput",
+  totalStep: 2,
+  createPointFigures: (args) => {
+    if (!args.overlay.extendData?.text) {
+      return [
+        {
+          type: "circle",
+          attrs: {
+            x: args.coordinates[0].x,
+            y: args.coordinates[0].y,
+            r: 5
+          },
+          styles: {
+            fill: "#ff0000",
+            stroke: "#ff0000",
+            strokeWidth: 2
+          }
         }
-        const texts: TextAttrs[] = args.coordinates.map((coordinate) => {
-            return {
-                ...coordinate,
-                text: (args.overlay.extendData?.text ?? ""),
-                baseline: 'top'
-            };
-        });
+      ];
+    }
+    console.log("textInput:createPointFigures", args);
+    const texts: TextAttrs[] = args.coordinates.map((coordinate) => {
+      return {
+        ...coordinate,
+        text: args.overlay.extendData?.label ?? "",
+        baseline: "top"
+      };
+    });
 
-        return [
-            {
-                type: 'text',
-                attrs: texts,
-                styles: {color: '#000', fontSize: 12, fontWeight: 'bold'}
-            },
-
-        ];
-    },
+    return [
+      {
+        type: "text",
+        attrs: texts,
+        styles: { color: "#000", fontSize: 12, fontWeight: "bold" }
+      }
+    ];
+  }
 };
 
 export default textInput;
