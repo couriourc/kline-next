@@ -1,5 +1,9 @@
 "use client";
-import { createTheme, MantineProvider as Provider } from "@mantine/core";
+import {
+  createTheme,
+  localStorageColorSchemeManager,
+  MantineProvider as Provider
+} from "@mantine/core";
 import type { PropsWithChildren } from "react";
 import "./mantine-override.scss";
 import { MantineContextMenuContext } from "@/app/context/plugins/mantine-context-menu-context";
@@ -53,13 +57,23 @@ import "@mantine/core/styles/ActionIcon.layer.css";
 // 插件样式
 import "@mantine/nprogress/styles.css";
 
-const theme = createTheme({
-  /** Put your mantine theme override here */
-});
+const theme = createTheme({});
 
+const colorSchemeManager = localStorageColorSchemeManager({
+  key: "theme-color-scheme"
+});
 export function MantineProvider({ children }: PropsWithChildren) {
   return (
-    <Provider theme={theme} defaultColorScheme="auto">
+    <Provider
+      theme={theme}
+      withCssVariables
+      withGlobalClasses
+      withStaticClasses
+      defaultColorScheme="dark"
+      colorSchemeManager={colorSchemeManager}
+      cssVariablesSelector="html"
+      deduplicateCssVariables={false}
+    >
       <NavigationProgress />
       <Notifications />
       <MantineContextMenuContext>{children}</MantineContextMenuContext>

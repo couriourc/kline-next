@@ -4,6 +4,7 @@ import { type Chart, init } from "couriourc-klinecharts";
 import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
 import "@/vendors/index";
+import { defaultTheme } from "@/app/components/KlineCharts/plugins/theme";
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
@@ -23,9 +24,9 @@ export const KlineChartModule = (() => {
       init() {
         const ref = useRef<HTMLDivElement | any>();
         useEffect(() => {
-          console.log(chartMemo);
           chartMemo = init(ref.current, {
-            customApi: {}
+            customApi: {},
+            styles: defaultTheme
           })!;
           emitter.emit("chart:setup", chartMemo);
         }, []);

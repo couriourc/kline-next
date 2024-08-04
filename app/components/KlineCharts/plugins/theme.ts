@@ -12,14 +12,14 @@ export const defaultTheme = {
     horizontal: {
       show: true,
       size: 1,
-      color: "#EDEDED",
+      color: "#999999",
       style: "dashed",
       dashedValue: [2, 2]
     },
     vertical: {
       show: true,
       size: 1,
-      color: "#EDEDED",
+      color: "#999999",
       style: "dashed",
       dashedValue: [2, 2]
     }
@@ -220,7 +220,7 @@ export const defaultTheme = {
         smooth: false,
         size: 1,
         dashedValue: [2, 2],
-        color: "#FF9600"
+        color: "#58B9FF"
       },
       {
         style: "solid",

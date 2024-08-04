@@ -34,7 +34,7 @@ export default function HomeNav() {
             <Group>
               <div
                 className={
-                  "border-gray box-border size-[30px] rounded-md border-[1px] border-solid p-[2px]"
+                  "border-gray dark:text-blue box-border size-[30px] rounded-md border-[1px] border-solid p-[2px]"
                 }
               >
                 <Logo />

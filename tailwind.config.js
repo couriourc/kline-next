@@ -1,4 +1,3 @@
-/** @type {import("tailwindcss").Config} */
 const plugin = require("tailwindcss");
 const {
   iconsPlugin,
@@ -6,8 +5,11 @@ const {
   dynamicIconsPlugin
 } = require("@egoist/tailwindcss-icons");
 
+/** @type {import("tailwindcss").Config} */
 module.exports = {
+  mode: "jit",
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: ["class", '[data-mantine-color-scheme="dark"]'],
   theme: {
     typography: require("./typography"),
     extend: {
@@ -108,7 +110,7 @@ module.exports = {
       // and the more recommended way is to use `dynamicIconsPlugin`, see below.
     }),
     dynamicIconsPlugin(),
-    plugin(({ addUtilities }) => {
+    plugin(({ addUtilities, addVariant }) => {
       addUtilities({
         ".flex-center": {
           display: "flex",
@@ -116,6 +118,10 @@ module.exports = {
           alignItems: "center"
         }
       });
+      addVariant("data-active", "&[data-active]");
+      addVariant("data-selected", "&[data-selected]");
+      addVariant("data-hovered", "&[data-hovered]");
+      addVariant("disabled", "&:disabled");
     })
   ]
 };

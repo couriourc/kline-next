@@ -68,7 +68,10 @@ function DraggableRowRenderer<R, SR>({
       }}
       rowIdx={rowIdx}
       isRowSelected={true}
-      className={cx(className, "cursor-pointer !border-none !outline-none")}
+      className={cx(
+        className,
+        "cursor-pointer !border-none !bg-[transparent] !outline-none"
+      )}
       {...props}
     />
   );
@@ -138,7 +141,7 @@ export default function Datasource() {
         <DndProvider backend={HTML5Backend}>
           <DataGrid<StockListRow>
             columns={columns}
-            className={"!h-full grow"}
+            className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
             rows={rows}
             rowKeyGetter={(state: StockListRow) =>
               state.stock_code + _.uniqueId()

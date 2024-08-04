@@ -167,7 +167,7 @@ export default function KLineChartLayout() {
           <Group
             justify={"space-between"}
             p={"sm"}
-            className={"shadow-inset rounded-md bg-gray-200"}
+            className={"shadow-inset rounded-md bg-[var(--mantine-color-body)]"}
           >
             <Group>
               <Popover>
@@ -178,7 +178,7 @@ export default function KLineChartLayout() {
                   </UnstyledButton>
                 </Popover.Target>
                 <Popover.Dropdown p={0} bg={"transparent"} maw={200}>
-                  <List p={0} bg={"white"}>
+                  <List p={0} bg={"white"} className={"dark:bg-[#191919]!"}>
                     <List.Item
                       className={
                         "cursor-pointer px-[4px] py-[6px] hover:bg-gray-200"
