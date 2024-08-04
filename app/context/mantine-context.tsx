@@ -6,7 +6,6 @@ import {
 } from "@mantine/core";
 import type { PropsWithChildren } from "react";
 import "./mantine-override.scss";
-import { MantineContextMenuContext } from "@/app/context/plugins/mantine-context-menu-context";
 import { NavigationProgress } from "@mantine/nprogress";
 import { Notifications } from "@mantine/notifications";
 // 基本样式
@@ -31,6 +30,7 @@ import "@mantine/core/styles/Badge.css";
 import "@mantine/core/styles/Loader.css";
 import "@mantine/core/styles/Blockquote.css";
 import "@mantine/core/styles/ActionIcon.css";
+import "@mantine/core/styles/Tooltip.css";
 // 布局样式
 import "@mantine/core/styles/global.layer.css";
 import "@mantine/core/styles/AppShell.layer.css";
@@ -53,9 +53,11 @@ import "@mantine/core/styles/Badge.layer.css";
 import "@mantine/core/styles/Loader.layer.css";
 import "@mantine/core/styles/Blockquote.layer.css";
 import "@mantine/core/styles/ActionIcon.layer.css";
+import "@mantine/core/styles/Tooltip.layer.css";
 
 // 插件样式
 import "@mantine/nprogress/styles.css";
+import { ContextMenus } from "@/app/components/ui/ContextMenu";
 
 const theme = createTheme({});
 
@@ -76,7 +78,8 @@ export function MantineProvider({ children }: PropsWithChildren) {
     >
       <NavigationProgress />
       <Notifications />
-      <MantineContextMenuContext>{children}</MantineContextMenuContext>
+      {children}
+      <ContextMenus />
     </Provider>
   );
 }

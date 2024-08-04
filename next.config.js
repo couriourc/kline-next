@@ -48,13 +48,12 @@ const nextConfig = {
     // https://nextjs.org/docs/api-reference/next.config.js/ignoring-typescript-errors
     ignoreBuildErrors: true
   },
-
   async redirects() {
     return [
       {
         source: "/",
         destination: "/home",
-        permanent: true
+        permanent: false
       }
     ];
   },

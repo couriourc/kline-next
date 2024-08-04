@@ -5,19 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
+      <change afterPath="$PROJECT_DIR$/app/components/ui/CmdK/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DockerfileBeta" beforeDir="false" afterPath="$PROJECT_DIR$/DockerfileBeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/plugins/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/plugins/theme.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/event-emitter.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/部署相关指令.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/kline-data" />
+        <entry key="$PROJECT_DIR$" value="chore/module-alias" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,6 +44,10 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="feature/color-schema" />
+                    <option name="lastUsedInstant" value="1722758934" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="chore/module-alias" />
                     <option name="lastUsedInstant" value="1722747081" />
                   </RecentBranch>
@@ -58,10 +62,6 @@
                   <RecentBranch>
                     <option name="branchName" value="fix/lint" />
                     <option name="lastUsedInstant" value="1722607604" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature-layout" />
-                    <option name="lastUsedInstant" value="1722605855" />
                   </RecentBranch>
                 </list>
               </option>
@@ -144,6 +144,15 @@
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
+          <option name="containerName" value="klinenext" />
+          <option name="portBindings">
+            <list>
+              <DockerPortBindingImpl>
+                <option name="containerPort" value="3000" />
+                <option name="hostPort" value="3001" />
+              </DockerPortBindingImpl>
+            </list>
+          </option>
           <option name="sourceFilePath" value="Dockerfile" />
         </settings>
       </deployment>
@@ -185,6 +194,13 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Docker.Dockerfile" />
+      <item itemvalue="npm.format" />
+      <item itemvalue="npm.gen-icons" />
+      <item itemvalue="npm.klinecharts &gt; build-dts" />
+      <item itemvalue="Shell Script.save.sh" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Docker.Dockerfile" />
@@ -229,7 +245,10 @@
       <workItem from="1722744843620" duration="2894000" />
       <workItem from="1722749392281" duration="2569000" />
       <workItem from="1722752115379" duration="1470000" />
-      <workItem from="1722755916691" duration="2695000" />
+      <workItem from="1722755916691" duration="3318000" />
+      <workItem from="1722763393179" duration="1631000" />
+      <workItem from="1722769904917" duration="2879000" />
+      <workItem from="1722775287941" duration="7394000" />
     </task>
     <servers />
   </component>
@@ -247,7 +266,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feature/kline-data" />
+                        <option value="origin/master" />
                       </list>
                     </value>
                   </entry>
