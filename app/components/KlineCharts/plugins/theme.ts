@@ -1,4 +1,9 @@
-import { type DeepPartial, type Styles, TooltipShowRule, TooltipShowType } from "klinecharts";
+import {
+  type DeepPartial,
+  type Styles,
+  TooltipShowRule,
+  TooltipShowType
+} from "couriourc-klinecharts";
 
 export const defaultTheme = {
   // 网格线
@@ -41,13 +46,16 @@ export const defaultTheme = {
       lineColor: "#2196F3",
       value: "close",
       smooth: false,
-      backgroundColor: [{
-        offset: 0,
-        color: "rgba(33, 150, 243, 0.01)"
-      }, {
-        offset: 1,
-        color: "rgba(33, 150, 243, 0.2)"
-      }],
+      backgroundColor: [
+        {
+          offset: 0,
+          color: "rgba(33, 150, 243, 0.01)"
+        },
+        {
+          offset: 1,
+          color: "rgba(33, 150, 243, 0.2)"
+        }
+      ],
       point: {
         show: true,
         color: "blue",
@@ -192,17 +200,19 @@ export const defaultTheme = {
       downColor: "rgba(249, 40, 85, .7)",
       noChangeColor: "#888888"
     },
-    bars: [{
-      // 'fill' | 'stroke' | 'stroke_fill'
-      style: "fill",
-      // 'solid' | 'dashed'
-      borderStyle: "solid",
-      borderSize: 1,
-      borderDashedValue: [2, 2],
-      upColor: "rgba(45, 192, 142, .7)",
-      downColor: "rgba(249, 40, 85, .7)",
-      noChangeColor: "#888888"
-    }],
+    bars: [
+      {
+        // 'fill' | 'stroke' | 'stroke_fill'
+        style: "fill",
+        // 'solid' | 'dashed'
+        borderStyle: "solid",
+        borderSize: 1,
+        borderDashedValue: [2, 2],
+        upColor: "rgba(45, 192, 142, .7)",
+        downColor: "rgba(249, 40, 85, .7)",
+        noChangeColor: "#888888"
+      }
+    ],
     lines: [
       {
         // 'solid' | 'dashed'
@@ -211,25 +221,29 @@ export const defaultTheme = {
         size: 1,
         dashedValue: [2, 2],
         color: "#FF9600"
-      }, {
+      },
+      {
         style: "solid",
         smooth: false,
         size: 1,
         dashedValue: [2, 2],
         color: "#935EBD"
-      }, {
+      },
+      {
         style: "solid",
         smooth: false,
         size: 1,
         dashedValue: [2, 2],
         color: "#2196F3"
-      }, {
+      },
+      {
         style: "solid",
         smooth: false,
         size: 1,
         dashedValue: [2, 2],
         color: "#E11D74"
-      }, {
+      },
+      {
         style: "solid",
         smooth: false,
         size: 1,
@@ -237,17 +251,19 @@ export const defaultTheme = {
         color: "#01C5C4"
       }
     ],
-    circles: [{
-      // 'fill' | 'stroke' | 'stroke_fill'
-      style: "fill",
-      // 'solid' | 'dashed'
-      borderStyle: "solid",
-      borderSize: 1,
-      borderDashedValue: [2, 2],
-      upColor: "rgba(45, 192, 142, .7)",
-      downColor: "rgba(249, 40, 85, .7)",
-      noChangeColor: "#888888"
-    }],
+    circles: [
+      {
+        // 'fill' | 'stroke' | 'stroke_fill'
+        style: "fill",
+        // 'solid' | 'dashed'
+        borderStyle: "solid",
+        borderSize: 1,
+        borderDashedValue: [2, 2],
+        upColor: "rgba(45, 192, 142, .7)",
+        downColor: "rgba(249, 40, 85, .7)",
+        noChangeColor: "#888888"
+      }
+    ],
     // 最新值标记
     lastValueMark: {
       show: false,
@@ -550,4 +566,3 @@ export const defaultTheme = {
     }
   }
 } as DeepPartial<Styles>;
-

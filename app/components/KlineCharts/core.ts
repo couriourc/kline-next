@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { type Chart, init } from "klinecharts";
+import { type Chart, init } from "couriourc-klinecharts";
 import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
-import { formatDate } from "@/vendors/klinecharts/src/common/utils/format";
-
+import "@/vendors/index";
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
@@ -26,9 +25,7 @@ export const KlineChartModule = (() => {
         useEffect(() => {
           console.log(chartMemo);
           chartMemo = init(ref.current, {
-            customApi: {
-              formatDate
-            }
+            customApi: {}
           })!;
           emitter.emit("chart:setup", chartMemo);
         }, []);

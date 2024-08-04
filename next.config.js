@@ -16,7 +16,15 @@ const nextConfig = {
         return entries;
       };
     }
-
+    config.resolve.alias = {
+      // Spread everything to avoid remove any alias they might have
+      ...config.resolve.alias,
+      // Your custom aliases here
+      klinecharts: path.resolve(
+        __dirname,
+        "node_modules/couriourc-klinecharts/"
+      )
+    };
     config.plugins.push(codeInspectorPlugin({ bundler: "webpack" }));
 
     return config;
@@ -40,6 +48,7 @@ const nextConfig = {
     // https://nextjs.org/docs/api-reference/next.config.js/ignoring-typescript-errors
     ignoreBuildErrors: true
   },
+
   async redirects() {
     return [
       {
