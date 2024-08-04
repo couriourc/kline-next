@@ -132,6 +132,9 @@ importers:
       react-18-input-autosize:
         specifier: ^3.0.0
         version: 3.0.0(react@18.2.0)
+      react-data-grid:
+        specifier: 7.0.0-beta.44
+        version: 7.0.0-beta.44(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-dom:
         specifier: ~18.2.0
         version: 18.2.0(react@18.2.0)
@@ -4852,6 +4855,12 @@ packages:
     resolution: {integrity: sha512-7tsUc9PJWg6Vsp8qYuzlKKBf7hbCoTBdNfjYZSprEPbxf3meuhjklg9QPBe9rIyoR3uDAzmG7NpoJ1+kP5ns+w==}
     peerDependencies:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0
+
+  react-data-grid@7.0.0-beta.44:
+    resolution: {integrity: sha512-VTql8VPBJEf7E+zkrqYW+jaQT1/m47dxigWzPq59QESJ8LhU59kHyzIx06BUpjdZKdK/tzbWaw2yyJpKoNnt5g==}
+    peerDependencies:
+      react: ^18.0
+      react-dom: ^18.0
 
   react-dom@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
@@ -10676,6 +10685,12 @@ snapshots:
     dependencies:
       prop-types: 15.8.1
       react: 18.2.0
+
+  react-data-grid@7.0.0-beta.44(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      clsx: 2.1.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   react-dom@18.2.0(react@18.2.0):
     dependencies:

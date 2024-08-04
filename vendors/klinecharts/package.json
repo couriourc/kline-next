@@ -46,7 +46,8 @@
     "build-umd": "npm run build-umd:dev && npm run build-umd:prod",
     "build-core": "npm run build-esm && npm run build-cjs && npm run build-umd",
     "build-dts": "dts-bundle-generator --no-banner true --fail-on-class false --umd-module-name klinecharts -o dist/index.d.ts src/index.ts",
-    "build": "npm run clean && npm run build-core "
+    "build": "npm run clean && npm run build-core ",
+    "prepare": "npm run build"
   },
   "engines": {
     "node": ">=0.10.0"

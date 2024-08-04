@@ -71,6 +71,7 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     wrapperOverlayCreator,
     paneId
   ) as string[];
+  console.log(overlayIds);
   // 创建覆层
   klineChartInstance.emitter.emit(
     "overlay:create",
@@ -97,21 +98,24 @@ const getOverlayByIds: ICommands["getOverlayByIds"] = (...args) => {
     return klineChartInstance.chart.getOverlayById(idOrOption.id!);
   });
 };
-
+const resize: ICommands["resize"] = () => {
+  return klineChartInstance.chart?.resize();
+};
 const commands: ICommands = {
   createOverlay,
   removeOverlay,
-  getOverlayByIds
+  getOverlayByIds,
+  resize
 };
 
 export function executeCommand<T extends keyof ICommands>(
   type: T,
   ...args: Parameters<ICommands[T]>
 ): ReturnType<ICommands[T]> {
-  klineChartInstance.emitter.emit("setup:command", {
+  klineChartInstance.emitter.emit("command:setup", {
     type,
     args
   });
   /*@ts-ignore*/
-  return commands[type as keyof Commands](...args);
+  return commands[type as keyof ICommands](...args);
 }

@@ -4,82 +4,46 @@ import SwrInitor from "@/app/components/swr-initor";
 import { EventEmitterContextProvider } from "@/app/context/event-emitter";
 import { MantineProvider } from "@/app/context/mantine-context";
 import "react-toastify/dist/ReactToastify.css";
-import { AppShell, Flex, ThemeIcon } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import { cx } from "@emotion/css";
 import useBreakpoints, { MediaType } from "@/app/hooks/use-breakpoints";
+import { useDisclosure } from "@mantine/hooks";
+import { HomeHeader } from "@/app/components/page/home/HomeHeader";
+import HomeNav from "@/app/components/page/home/HomeNav";
 
-interface ToolOption {
-  icon: string;
-  label: string;
-  key: string;
-}
 export default function ({ children }: { children: ReactNode }) {
-  const rightTools: ToolOption[] = [
-    {
-      label: "添加文本",
-      icon: "i-material-symbols-light-text-fields ",
-      key: "add-text"
-    }
-  ];
   const mediaType = useBreakpoints();
+  const [opened] = useDisclosure();
   return (
     <>
       <SwrInitor>
         <MantineProvider>
           <EventEmitterContextProvider>
             <AppShell
+              layout="alt"
               navbar={{
                 width: {
                   base: 60
                 },
-                breakpoint: "md"
+                breakpoint: "md",
+                collapsed: { mobile: !opened }
               }}
               header={{
-                height: { base: 60, sm: 48 }
+                height: {
+                  base: 56
+                }
               }}
             >
-              {mediaType !== MediaType.mobile ? (
-                <AppShell.Navbar
-                  p="md"
-                  className={"overflow-hidden"}
-                  zIndex={2}
+              <AppShell.Header px={16}>
+                <AppShell.Section
+                  className={"flex h-full items-center justify-between"}
                 >
-                  <AppShell.Section>
-                    {rightTools.map((item) => {
-                      return (
-                        <ThemeIcon
-                          variant="gradient"
-                          size="md"
-                          gradient={{ from: "orange", to: "red", deg: 282 }}
-                          radius={"sm"}
-                          className={cx("cursor-pointer")}
-                          key={item.key}
-                        >
-                          <i className={cx(item.icon)}></i>
-                        </ThemeIcon>
-                      );
-                    })}
-                  </AppShell.Section>
-                </AppShell.Navbar>
-              ) : null}
-
-              <AppShell.Header
-                className={"flex items-center justify-end px-[10px]"}
-                zIndex={100}
-              >
-                <Flex
-                  gap={"12px"}
-                  h={"full"}
-                  direction={"row"}
-                  align={"center"}
-                  justify={"end"}
-                >
-                  <ThemeIcon className={"cursor-pointer"} radius="xl">
-                    <i className={"i-mdi-settings"}></i>
-                  </ThemeIcon>
-                </Flex>
+                  <HomeHeader></HomeHeader>
+                </AppShell.Section>
               </AppShell.Header>
+              <HomeNav />
+
               <AppShell.Main h={"100vh"}>
                 {children}
                 <ToastContainer
@@ -97,7 +61,6 @@ export default function ({ children }: { children: ReactNode }) {
                 />
               </AppShell.Main>
 
-              <AppShell.Aside w={48} p="md"></AppShell.Aside>
               {mediaType === MediaType.mobile ? (
                 <AppShell.Footer px={60} p="md">
                   <AppShell.Section>Footer</AppShell.Section>
