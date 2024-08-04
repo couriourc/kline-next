@@ -25,18 +25,11 @@ pnpm install
 
 #### Docker 镜像部分
 
-![docs/部署相关指令.png](docs/部署相关指令.png)
-
-#### 后续覆盖
-
-```bash
-# 对打包后生成的文件进行整合
-npm run build:static
-# > 生成的文件存在 .next/.output
-```
 
 ### 其他文档
 
 [NextJs 快速入门](docs/nextjs快速入门.md)
+
 [Jotai 快速入门](docs/jotai快速入门指南.md)
+
 [Tabler 图标](https://icon-sets.iconify.design/tabler/?category=General)

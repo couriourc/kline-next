@@ -8,8 +8,11 @@ const {
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   mode: "jit",
+  experimental: {
+    darkModeVariant: true
+  },
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: ["class", '[data-mantine-color-scheme="dark"]'],
+  darkMode: ["selector", '[data-mantine-color-scheme="dark"]'],
   theme: {
     typography: require("./typography"),
     extend: {
@@ -95,6 +98,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("tailwindcss-animate"),
+    require("tailwindcss-dark-mode"),
     require("tailwind-scrollbar"),
     iconsPlugin({
       // Select the icon collections you want to use

@@ -1,6 +1,7 @@
 # base image
 FROM node:20.11-alpine3.19 AS base
-LABEL NAME="LLM_Server" TAG="llm" maintainer="quantum"
+LABEL NAME="KlineNext" TAG="KlineNext" maintainer="CouriourC"
+
 
 # if you located in China, you can use aliyun mirror to speed up
 # RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories

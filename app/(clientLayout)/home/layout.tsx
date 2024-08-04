@@ -6,25 +6,28 @@ import {
   Group,
   List,
   Popover,
-  ScrollArea,
   Stack,
   Text,
-  ThemeIcon,
   UnstyledButton
 } from "@mantine/core";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
-import { useContextMenu } from "mantine-contextmenu";
 import { executeCommand } from "@/app/components/KlineCharts/commands";
 import { useEffect } from "react";
 import { Logs } from "@/app/components/page/home/Logs";
 import Datasource from "@/app/(clientLayout)/home/page";
+import { ContextMenuTrigger } from "rctx-contextmenu";
+import { ContextMenuEnum } from "@/app/components/ui/ContextMenu";
+import { useEventEmitterContextContext } from "@/app/context/event-emitter";
 
 export default function KLineChartLayout() {
   const klineChartMemo = KlineChartModule();
   const { init } = klineChartMemo;
   const { ref: klineRef } = init();
-  const { showContextMenu } = useContextMenu();
+  const emitter = useEventEmitterContextContext();
 
+  emitter.eventEmitter?.useSubscription(() => {
+    klineChartMemo.chart.createOverlay("textInput");
+  });
   useEffect(() => {
     klineChartMemo.chart.applyNewData([
       {
@@ -122,38 +125,12 @@ export default function KLineChartLayout() {
         }}
       >
         <Stack className={"h-100vh flex w-full flex-col"}>
-          <div
-            className={"w-full grow"}
-            ref={klineRef}
-            onContextMenu={showContextMenu(() => {
-              return (
-                <Stack>
-                  <ScrollArea mah={250}>
-                    <List
-                      spacing="xs"
-                      size="sm"
-                      center
-                      icon={
-                        <ThemeIcon color="teal" size={24} radius="xl">
-                          <i className={"i-mdi-text"} />
-                        </ThemeIcon>
-                      }
-                    >
-                      <List.Item
-                        p={"sm"}
-                        onClick={() =>
-                          executeCommand("createOverlay", "circle")
-                        }
-                        className={"rounded-1 cursor-pointer hover:bg-gray-200"}
-                      >
-                        添加文本
-                      </List.Item>
-                    </List>
-                  </ScrollArea>
-                </Stack>
-              );
-            })}
-          />
+          <ContextMenuTrigger
+            id={ContextMenuEnum.CHART}
+            className={"flex w-full grow"}
+          >
+            <div className={"w-full grow"} ref={klineRef} />
+          </ContextMenuTrigger>
         </Stack>
       </Split.Pane>
       <Split.Pane
