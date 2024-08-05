@@ -11,32 +11,11 @@ import {
 } from "@mantine/core";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { cx } from "@emotion/css";
-import { type Events, executeCommand } from "@/app/hooks/use-event-emitter";
-import Handlebars from "handlebars";
+import { executeCommand } from "@/app/hooks/use-event-emitter";
 import _ from "underscore";
+import { CommandEnum, ContextMenuEnum, type ExecutionMenuItem } from "./types";
 
-export enum ContextMenuEnum {
-  CHART = "ContextMenuEnumCHART",
-  TEMP = "TEMP"
-}
-export enum CommandEnum {
-  CHART = "CHART",
-  TABLE = "TABLE"
-}
-
-export interface ExecutionMenuItem {
-  label: string;
-  icon?: string;
-  key?: string;
-  command?: string;
-  category?: CommandEnum;
-  isEqual?: (
-    item: string,
-    raw: ExecutionMenuItem,
-    paneId?: ContextMenuEnum
-  ) => boolean;
-  executor?: (args: Events["chart:command:creator"]) => any;
-}
+const Handlebars = require("handlebars");
 
 /**
  * 快捷方式的权重计算
@@ -89,14 +68,12 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   );
 
   const handleCheckCommand = (item: ExecutionMenuItem) => {
-    console.log(item);
     item?.executor?.({
       params: {
         search: inputValue,
         command: item.command
       }
     });
-
     hidden();
   };
   function handleExecuteInContextMenu(ev: React.KeyboardEvent<HTMLDivElement>) {

@@ -4,7 +4,6 @@ import type { ICommands } from "@/app/components/KlineCharts/type";
 import type { OverlayCreate } from "couriourc-klinecharts";
 import _ from "underscore";
 import { defaultOverlayExtendData } from "@/app/components/KlineCharts/schema";
-import { registerCommand } from "@/app/hooks/use-event-emitter";
 
 const klineChartInstance = KlineChartModule();
 
@@ -60,8 +59,10 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
       }
     });
     // 内置信息
+    console.log(option?.extendData);
     option.extendData = {
-      ...defaultOverlayExtendData
+      ...defaultOverlayExtendData,
+      ...(option?.extendData ?? {})
     };
     return option as OverlayCreate;
   };
@@ -72,7 +73,6 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     wrapperOverlayCreator,
     paneId
   ) as string[];
-  console.log(overlayIds);
   // 创建覆层
   klineChartInstance.emitter.emit(
     "overlay:create",
@@ -109,7 +109,7 @@ const commands: ICommands = {
   resize
 };
 
-function executeCommand<T extends keyof ICommands>(
+export function executeChartCommand<T extends keyof ICommands>(
   type: T,
   ...args: Parameters<ICommands[T]>
 ): ReturnType<ICommands[T]> {
@@ -119,23 +119,4 @@ function executeCommand<T extends keyof ICommands>(
   });
   /*@ts-ignore*/
   return commands[type as keyof ICommands](...args);
-}
-
-{
-  // ！！注册基本实例
-  // 系统局部指令
-  registerCommand("chart:command:resize", () => {
-    executeCommand("resize");
-  });
-  // 创建图形指令
-  registerCommand("chart:command:creator", (args) => {
-    console.log("chart:command:creator");
-    createOverlay({
-      name: "textInput",
-      extendData: {
-        text: args.params.search ?? "asd"
-      }
-    });
-  });
-  // 移除图形指令
 }

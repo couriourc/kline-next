@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { Logs } from "@/app/components/page/home/Logs";
 import Datasource from "@/app/(clientLayout)/home/page";
 import { ContextMenuTrigger } from "rctx-contextmenu";
-import { ContextMenuEnum } from "@/app/components/ui/ContextMenu";
+import { ContextMenuEnum } from "@/app/components/ui/ContextMenu/types";
 
 export default function KLineChartLayout() {
   const klineChartMemo = KlineChartModule();
@@ -106,8 +106,13 @@ export default function KLineChartLayout() {
         volume: 76
       }
     ]);
-    klineChartMemo.chart.createIndicator("RSI", true);
-    klineChartMemo.chart.createIndicator("BOLL", true);
+    const rsi = klineChartMemo.chart.createIndicator("RSI", true);
+    const boll = klineChartMemo.chart.createIndicator("BOLL", true);
+
+    return () => {
+      klineChartMemo.chart.removeIndicator(rsi!);
+      klineChartMemo.chart.removeIndicator(boll!);
+    };
   }, [klineChartMemo.chart]);
 
   return (

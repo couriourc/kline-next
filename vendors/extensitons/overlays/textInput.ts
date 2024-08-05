@@ -51,7 +51,7 @@ const textInput: OverlayTemplate = {
     const texts: TextAttrs[] = args.coordinates.map((coordinate) => {
       return {
         ...coordinate,
-        text: args.overlay.extendData?.label ?? "",
+        text: args.overlay.extendData?.text ?? "",
         baseline: "top"
       };
     });

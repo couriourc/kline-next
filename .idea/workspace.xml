@@ -5,24 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tailwind.config.cjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/event-emitter.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/mantine-override.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-override.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/styles/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -255,6 +247,7 @@
       <workItem from="1722769904917" duration="2879000" />
       <workItem from="1722775287941" duration="7700000" />
       <workItem from="1722861741218" duration="9365000" />
+      <workItem from="1722899844613" duration="2213000" />
     </task>
     <servers />
   </component>
