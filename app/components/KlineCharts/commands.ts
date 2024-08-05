@@ -1,8 +1,10 @@
+"use client";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import type { ICommands } from "@/app/components/KlineCharts/type";
 import type { OverlayCreate } from "couriourc-klinecharts";
 import _ from "underscore";
 import { defaultOverlayExtendData } from "@/app/components/KlineCharts/schema";
+import { registerCommand } from "@/app/hooks/use-event-emitter";
 
 const klineChartInstance = KlineChartModule();
 
@@ -59,8 +61,7 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     });
     // 内置信息
     option.extendData = {
-      ...defaultOverlayExtendData,
-      text: "string"
+      ...defaultOverlayExtendData
     };
     return option as OverlayCreate;
   };
@@ -108,7 +109,7 @@ const commands: ICommands = {
   resize
 };
 
-export function executeCommand<T extends keyof ICommands>(
+function executeCommand<T extends keyof ICommands>(
   type: T,
   ...args: Parameters<ICommands[T]>
 ): ReturnType<ICommands[T]> {
@@ -118,4 +119,23 @@ export function executeCommand<T extends keyof ICommands>(
   });
   /*@ts-ignore*/
   return commands[type as keyof ICommands](...args);
+}
+
+{
+  // ！！注册基本实例
+  // 系统局部指令
+  registerCommand("chart:command:resize", () => {
+    executeCommand("resize");
+  });
+  // 创建图形指令
+  registerCommand("chart:command:creator", (args) => {
+    console.log("chart:command:creator");
+    createOverlay({
+      name: "textInput",
+      extendData: {
+        text: args.params.search ?? "asd"
+      }
+    });
+  });
+  // 移除图形指令
 }

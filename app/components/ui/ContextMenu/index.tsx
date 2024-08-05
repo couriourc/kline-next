@@ -7,45 +7,63 @@ import {
   Input,
   List,
   ScrollArea,
-  Text,
   Tooltip
 } from "@mantine/core";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { cx } from "@emotion/css";
-import { useEventEmitterContextContext } from "@/app/context/event-emitter";
+import { type Events, executeCommand } from "@/app/hooks/use-event-emitter";
+import Handlebars from "handlebars";
+import _ from "underscore";
 
 export enum ContextMenuEnum {
   CHART = "ContextMenuEnumCHART",
   TEMP = "TEMP"
 }
+export enum CommandEnum {
+  CHART = "CHART",
+  TABLE = "TABLE"
+}
 
 export interface ExecutionMenuItem {
   label: string;
-  command: string;
-  isEqual: (
+  icon?: string;
+  key?: string;
+  command?: string;
+  category?: CommandEnum;
+  isEqual?: (
     item: string,
     raw: ExecutionMenuItem,
     paneId?: ContextMenuEnum
   ) => boolean;
+  executor?: (args: Events["chart:command:creator"]) => any;
 }
 
+/**
+ * 快捷方式的权重计算
+ * 满足 category
+ * 满足 equal
+ * */
 const executionMenuList: ExecutionMenuItem[] = [
   {
-    label: "添加到自选",
+    label: "搜索股票代码‘{{params.search}}’",
     command: "createSelfGroup",
-    isEqual: (search, raw) => {
-      return !raw.label.search(search);
-    }
+    isEqual: (search) => {
+      return !!search.length;
+    },
+    category: CommandEnum.TABLE
   },
   {
     label: "添加文本标记",
     command: "createTextOverlay",
-    isEqual: () => true
+    isEqual: () => true,
+    category: CommandEnum.CHART,
+    executor(args) {
+      executeCommand("chart:command:creator", args);
+    }
   }
 ];
 
 const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
-  const { eventEmitter } = useEventEmitterContextContext();
   const [inputValue, updateInputValue] = useState("");
   const curSelectedItem = useRef<ExecutionMenuItem>();
   const [curSelectedItemIndex, updateCurSelectedItemIndex] =
@@ -53,7 +71,7 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
 
   const filteredList = useMemo(() => {
     const commands = executionMenuList.filter((item) =>
-      item.isEqual(inputValue, item, ContextMenuEnum.CHART)
+      item.isEqual?.(inputValue, item, ContextMenuEnum.CHART)
     )!;
     curSelectedItem.current = commands[0];
     return commands;
@@ -70,6 +88,17 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
     [curSelectedItemIndex, filteredList, filteredList.length]
   );
 
+  const handleCheckCommand = (item: ExecutionMenuItem) => {
+    console.log(item);
+    item?.executor?.({
+      params: {
+        search: inputValue,
+        command: item.command
+      }
+    });
+
+    hidden();
+  };
   function handleExecuteInContextMenu(ev: React.KeyboardEvent<HTMLDivElement>) {
     switch (ev.code) {
       case "ArrowDown":
@@ -80,19 +109,19 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
         break;
       case "Enter":
       case "NumpadEnter":
-        eventEmitter?.emit({
-          command: "command:execute",
-          payload: {
-            ...curSelectedItem,
-            inputValue
-          }
-        });
-        hidden();
-
+        handleCheckCommand(curSelectedItem.current!);
         break;
     }
   }
-
+  function resolveLabel(item: ExecutionMenuItem) {
+    if (!item.label) return item.label;
+    if (!_.isString(item.label)) return item.label;
+    return Handlebars.compile(item.label)({
+      params: {
+        search: inputValue
+      }
+    });
+  }
   return (
     <Flex direction={"column"} gap={"12px"}>
       <Input
@@ -133,14 +162,10 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
                   }
                 )}
                 onClick={() => {
-                  eventEmitter?.emit({
-                    command: "command:execute",
-                    payload: item
-                  });
-                  hidden();
+                  handleCheckCommand(item);
                 }}
               >
-                <Text size={"sm"}>{item.label}</Text>
+                {resolveLabel(item)}
               </List.Item>
             );
           })}
@@ -164,7 +189,7 @@ export function ContextMenus() {
     <>
       <ContextMenu
         id={id}
-        className={"!w-[400px] !bg-[var(--mantine-color-body)] !p-0"}
+        className={"!max-w-[400px] !bg-[var(--mantine-color-body)] !p-0"}
       >
         <ContextMenuItem
           className={"!bg-transparent !p-[4px]"}

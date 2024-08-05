@@ -1,10 +1,11 @@
-@layer tailwind {
-    @tailwind base;
-}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer tailwind {
+    @tailwind base;
+}
 
 :root {
   --max-width: 1100px;

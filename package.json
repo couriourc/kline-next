@@ -49,6 +49,7 @@
     "downloadjs": "^1.4.7",
     "emoji-mart": "^5.5.2",
     "framer-motion": "^11.2.12",
+    "handlebars": "^4.7.8",
     "immer": "^9.0.19",
     "jotai": "^2.8.3",
     "jotai-immer": "^0.4.1",
