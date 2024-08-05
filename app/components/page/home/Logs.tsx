@@ -8,14 +8,14 @@ export function Logs() {
   const [history, updateHistory] = useState<string[]>([]);
 
   const { scrollableRef, targetRef, scrollIntoView } = useScrollIntoView();
-  function hanldleScrollToBottom() {
+  function handleScrollToBottom() {
     scrollIntoView({});
   }
   useEffect(() => {
     klineChartMemo.emitter.on("command:setup", (option) => {
       updateHistory((state) => [...state, JSON.stringify(option)]);
     });
-    hanldleScrollToBottom();
+    handleScrollToBottom();
     return () => klineChartMemo.emitter.off("command:setup");
   }, [klineChartMemo]);
   return (
