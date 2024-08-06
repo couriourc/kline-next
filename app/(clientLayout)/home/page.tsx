@@ -1,6 +1,9 @@
 "use client";
-import { useAtom } from "jotai";
-import { stockListAtom } from "@/app/utils/store/chartStore";
+import { useAtom, useSetAtom } from "jotai";
+import {
+  curSelectedStockAtom,
+  stockListAtom
+} from "@/app/utils/store/chartStore";
 import DataGrid, {
   type Column,
   type Renderers,
@@ -34,6 +37,7 @@ function DraggableRowRenderer<R, SR>({
   onRowReorder,
   ...props
 }: DynamicProps<DraggableRowRenderProps<R, SR>>) {
+  const updateCurSelectedStockAtom = useSetAtom(curSelectedStockAtom);
   const [{ isDragging }, drag] = useDrag({
     type: "ROW_DRAG",
     item: { index: rowIdx },
@@ -47,6 +51,7 @@ function DraggableRowRenderer<R, SR>({
   const [{ isOver }, drop] = useDrop({
     accept: "ROW_DRAG",
     drop({ index }: { index: number }) {
+      console.log("drop", index);
       onRowReorder(index, rowIdx);
     },
     collect: (monitor) => ({
@@ -69,6 +74,10 @@ function DraggableRowRenderer<R, SR>({
       }}
       rowIdx={rowIdx}
       isRowSelected={true}
+      draggable
+      onClick={() => {
+        updateCurSelectedStockAtom(() => props.row.stock_code);
+      }}
       className={cx(
         className,
         "cursor-pointer !border-none !bg-[transparent] !outline-none"
@@ -102,10 +111,25 @@ export default function Datasource() {
       name: "操作",
       width: 28,
       resizable: true,
-      renderCell(_row) {
+      renderCell() {
+        //        const [{ isDragging }, drag] = useDrag({
+        //          type: "ROW_DRAG",
+        //          item: row,
+        //          collect: (monitor) => {
+        //            console.log(monitor.isDragging())
+        //            return {
+        //              isDragging: monitor.isDragging()
+        //            };
+        //          }
+        //        });
         return (
-          <ActionIcon variant="transparent" aria-label="menu">
-            <i className={"i-mdi-menu"}></i>
+          <ActionIcon
+            //            ref={(ref)=>drag(ref!)}
+            //            variant={isDragging?"outline":"transparent"}
+            aria-label="menu"
+            draggable
+          >
+            <i className={"i-mdi-menu"} />
           </ActionIcon>
         );
       }
@@ -132,38 +156,43 @@ export default function Datasource() {
       );
     }
   };
+
   return (
-    <div className={"h-full w-full grow"}>
-      {isLoading ? (
-        <Flex py={45} justify={"center"} align={"center"}>
-          <Loader />
-        </Flex>
-      ) : rows.length !== 0 ? (
-        <DndProvider backend={HTML5Backend}>
-          <DataGrid<StockListRow>
-            columns={columns}
-            className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
-            rows={rows}
-            rowKeyGetter={(state: StockListRow) =>
-              state.stock_code + _.uniqueId()
-            }
-            renderers={renderers}
-          />
-        </DndProvider>
-      ) : (
-        <Blockquote
-          iconSize={30}
-          radius="xs"
-          className={"cursor-pointer"}
-          color="rgba(199, 199, 199, 1)"
-          cite="– Forrest Gump"
-          icon={<i className={"i-mdi-info text-xl"} />}
-          mt="sm"
-        >
-          Life is like an npm install – you never know what you are going to
-          get.
-        </Blockquote>
-      )}
-    </div>
+    <>
+      <div className={"h-full w-full grow"}>
+        {isLoading ? (
+          <Flex py={45} justify={"center"} align={"center"}>
+            <Loader />
+          </Flex>
+        ) : rows.length !== 0 ? (
+          <DndProvider backend={HTML5Backend}>
+            <DataGrid<StockListRow>
+              columns={columns}
+              className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
+              rows={rows}
+              rowKeyGetter={(state: StockListRow) =>
+                state.stock_code + _.uniqueId()
+              }
+              renderers={renderers}
+            />
+          </DndProvider>
+        ) : (
+          <Blockquote
+            w={"92%"}
+            iconSize={30}
+            radius="xs"
+            className={"cursor-pointer"}
+            color="rgba(199, 199, 199, 1)"
+            cite="– Forrest Gump"
+            icon={<i className={"i-mdi-question-answer text-xl"} />}
+            mt="sm"
+            mx={"auto"}
+          >
+            Life is like an npm install – you never know what you are going to
+            get.
+          </Blockquote>
+        )}
+      </div>
+    </>
   );
 }

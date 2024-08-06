@@ -5,17 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
-      <change afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_6_23_36_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_6_23_36__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(clientLayout)/home/logs/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/command-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/stock.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/stock.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/store/chartStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/contextmenu" />
+        <entry key="$PROJECT_DIR$" value="feature/command_overlay" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,6 +42,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/datasource" />
+                    <option name="lastUsedInstant" value="1722958601" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="feature/command_overlay" />
                     <option name="lastUsedInstant" value="1722871563" />
@@ -56,10 +62,6 @@
                     <option name="branchName" value="chore/module-alias" />
                     <option name="lastUsedInstant" value="1722747081" />
                   </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/kline-data" />
-                    <option name="lastUsedInstant" value="1722689706" />
-                  </RecentBranch>
                 </list>
               </option>
               <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
@@ -71,6 +73,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+core@7.11.2_@mantine+hooks@7.11.2_react@18.2.0__@types+react@18.2.79_react-dom@18.2._qxyfegsockktv5x56iyzi7jrli/node_modules/@mantine/core/lib/components/Popover/Popover.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+hooks@7.11.2_react@18.2.0/node_modules/@mantine/hooks/lib/use-scroll-into-view/use-scroll-into-view.d.ts" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -90,7 +93,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.19.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.19.43&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -247,7 +250,9 @@
       <workItem from="1722769904917" duration="2879000" />
       <workItem from="1722775287941" duration="7700000" />
       <workItem from="1722861741218" duration="9365000" />
-      <workItem from="1722899844613" duration="2213000" />
+      <workItem from="1722899844613" duration="3692000" />
+      <workItem from="1722918182153" duration="19000" />
+      <workItem from="1722951166959" duration="5784000" />
     </task>
     <servers />
   </component>
@@ -281,5 +286,17 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="feature: 搭建基本布局" />
     <option name="LAST_COMMIT_MESSAGE" value="feature: 搭建基本布局" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/(clientLayout)/home/page.tsx</url>
+          <line>76</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
