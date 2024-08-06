@@ -26,6 +26,7 @@ const rowOverClassname = css`
 interface DraggableRowRenderProps<R, SR> extends RenderRowProps<R, SR> {
   onRowReorder: (sourceIndex: number, targetIndex: number) => void;
 }
+
 function DraggableRowRenderer<R, SR>({
   rowIdx,
   isRowSelected,
@@ -115,7 +116,7 @@ export default function Datasource() {
     return data.content;
   }, [data]);
 
-  const renderers: Renderers<StockListRow, null> = {
+  const renderers: Renderers<StockListRow, unknown> = {
     renderRow(_info, props) {
       return (
         <DraggableRowRenderer
