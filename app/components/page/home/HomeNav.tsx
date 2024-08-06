@@ -1,21 +1,27 @@
 "use client";
 import "react-data-grid/lib/styles.css";
-import { AppShell, Group, ThemeIcon } from "@mantine/core";
+import { AppShell, Group, ThemeIcon, Tooltip } from "@mantine/core";
 import useBreakpoints, { MediaType } from "@/app/hooks/use-breakpoints";
 import { Logo } from "@/app/components/ui/Logo";
 import { cx } from "@emotion/css";
+import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
+import { executeCommand } from "@/app/hooks/use-event-emitter";
 
-interface ToolOption {
-  icon: string;
-  label: string;
-  key: string;
-}
-
-const rightTools: ToolOption[] = [
+const rightTools: ExecutionMenuItem[] = [
   {
     label: "添加文本",
+    description: "添加标记文本",
     icon: "i-material-symbols-light-text-fields ",
-    key: "add-text"
+    key: "add-text",
+    command: "createTextOverlay",
+    executor() {
+      executeCommand("chart:command:creator", {
+        params: {
+          search: "",
+          command: "createTextOverlay"
+        }
+      });
+    }
   }
 ];
 export default function HomeNav() {
@@ -33,25 +39,27 @@ export default function HomeNav() {
           <AppShell.Section>
             <Group>
               <div
-                className={
-                  "border-gray dark:text-blue box-border size-[30px] rounded-md border-[1px] border-solid p-[2px]"
-                }
+                className={cx(
+                  `border-gray dark:text-blue box-border size-[30px] rounded-md border-[1px] border-solid p-[2px]`
+                )}
               >
                 <Logo />
               </div>
               <AppShell.Section>
                 {rightTools.map((item) => {
                   return (
-                    <ThemeIcon
-                      variant="gradient"
-                      size="md"
-                      gradient={{ from: "orange", to: "red", deg: 282 }}
-                      radius={"sm"}
-                      className={cx("cursor-pointer")}
-                      key={item.key}
-                    >
-                      <i className={cx(item.icon)}></i>
-                    </ThemeIcon>
+                    <Tooltip key={item.key} label={item.description}>
+                      <ThemeIcon
+                        variant="gradient"
+                        size="md"
+                        gradient={{ from: "orange", to: "red", deg: 282 }}
+                        radius={"sm"}
+                        className={cx("cursor-pointer")}
+                        onClick={() => item.executor?.()}
+                      >
+                        <i className={cx(item.icon)}></i>
+                      </ThemeIcon>
+                    </Tooltip>
                   );
                 })}
               </AppShell.Section>

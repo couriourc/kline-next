@@ -48,11 +48,10 @@ const textInput: OverlayTemplate = {
         }
       ];
     }
-    console.log("textInput:createPointFigures", args);
     const texts: TextAttrs[] = args.coordinates.map((coordinate) => {
       return {
         ...coordinate,
-        text: args.overlay.extendData?.label ?? "",
+        text: args.overlay.extendData?.text ?? "",
         baseline: "top"
       };
     });
@@ -61,7 +60,7 @@ const textInput: OverlayTemplate = {
       {
         type: "text",
         attrs: texts,
-        styles: { color: "#000", fontSize: 12, fontWeight: "bold" }
+        styles: { color: "#fff", fontSize: 12, fontWeight: "bold" }
       }
     ];
   }

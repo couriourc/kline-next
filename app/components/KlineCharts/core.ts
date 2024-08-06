@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { type Chart, init } from "couriourc-klinecharts";
+import { type Chart, dispose, init } from "couriourc-klinecharts";
 import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
 import "@/vendors/index";
 import { defaultTheme } from "@/app/components/KlineCharts/plugins/theme";
+
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
@@ -29,6 +30,10 @@ export const KlineChartModule = (() => {
             styles: defaultTheme
           })!;
           emitter.emit("chart:setup", chartMemo);
+          return () => {
+            emitter.emit("chart:destroy", chartMemo);
+            dispose(ref.current);
+          };
         }, []);
         return {
           ref

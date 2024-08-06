@@ -1,7 +1,6 @@
 "use client";
 import type { ReactNode } from "react";
 import SwrInitor from "@/app/components/swr-initor";
-import { EventEmitterContextProvider } from "@/app/context/event-emitter";
 import { MantineProvider } from "@/app/context/mantine-context";
 import "react-toastify/dist/ReactToastify.css";
 import { AppShell } from "@mantine/core";
@@ -11,6 +10,7 @@ import useBreakpoints, { MediaType } from "@/app/hooks/use-breakpoints";
 import { useDisclosure } from "@mantine/hooks";
 import { HomeHeader } from "@/app/components/page/home/HomeHeader";
 import HomeNav from "@/app/components/page/home/HomeNav";
+import CommandInitor from "@/app/components/command-initor";
 
 export default function ({ children }: { children: ReactNode }) {
   const mediaType = useBreakpoints();
@@ -19,7 +19,7 @@ export default function ({ children }: { children: ReactNode }) {
     <>
       <SwrInitor>
         <MantineProvider>
-          <EventEmitterContextProvider>
+          <CommandInitor>
             <AppShell
               layout="alt"
               navbar={{
@@ -67,7 +67,7 @@ export default function ({ children }: { children: ReactNode }) {
                 </AppShell.Footer>
               ) : null}
             </AppShell>
-          </EventEmitterContextProvider>
+          </CommandInitor>
         </MantineProvider>
       </SwrInitor>
     </>

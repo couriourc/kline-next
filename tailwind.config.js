@@ -1,4 +1,4 @@
-const plugin = require("tailwindcss");
+const plugin = require("tailwindcss/plugin");
 const {
   iconsPlugin,
   getIconCollections,
@@ -9,10 +9,11 @@ const {
 module.exports = {
   mode: "jit",
   experimental: {
-    darkModeVariant: true
+    darkModeVariant: true,
+    matchVariant: true
   },
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-  darkMode: ["selector", '[data-mantine-color-scheme="dark"]'],
+  darkMode: ["media", "[data-mantine-color-scheme='dark']"],
   theme: {
     typography: require("./typography"),
     extend: {
@@ -114,7 +115,7 @@ module.exports = {
       // and the more recommended way is to use `dynamicIconsPlugin`, see below.
     }),
     dynamicIconsPlugin(),
-    plugin(({ addUtilities, addVariant }) => {
+    plugin(({ addUtilities, addVariant, e }) => {
       addUtilities({
         ".flex-center": {
           display: "flex",
@@ -126,6 +127,18 @@ module.exports = {
       addVariant("data-selected", "&[data-selected]");
       addVariant("data-hovered", "&[data-hovered]");
       addVariant("disabled", "&:disabled");
+      addVariant("dark", ({ modifySelectors, separator }) => {
+        console.log(separator);
+        modifySelectors(({ className }) => {
+          return `.${e(`disabled${separator}${className}`)}:disabled`;
+        });
+      });
     })
-  ]
+  ],
+  variants: {
+    extend: {
+      textOpacity: ["dark"],
+      textColor: ["dark"]
+    }
+  }
 };

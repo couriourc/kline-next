@@ -1,3 +1,4 @@
+"use client";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import type { ICommands } from "@/app/components/KlineCharts/type";
 import type { OverlayCreate } from "couriourc-klinecharts";
@@ -58,9 +59,10 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
       }
     });
     // 内置信息
+    console.log(option?.extendData);
     option.extendData = {
       ...defaultOverlayExtendData,
-      text: "string"
+      ...(option?.extendData ?? {})
     };
     return option as OverlayCreate;
   };
@@ -71,7 +73,6 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     wrapperOverlayCreator,
     paneId
   ) as string[];
-  console.log(overlayIds);
   // 创建覆层
   klineChartInstance.emitter.emit(
     "overlay:create",
@@ -108,7 +109,7 @@ const commands: ICommands = {
   resize
 };
 
-export function executeCommand<T extends keyof ICommands>(
+export function executeChartCommand<T extends keyof ICommands>(
   type: T,
   ...args: Parameters<ICommands[T]>
 ): ReturnType<ICommands[T]> {

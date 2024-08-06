@@ -11,23 +11,18 @@ import {
   UnstyledButton
 } from "@mantine/core";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
-import { executeCommand } from "@/app/components/KlineCharts/commands";
+import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { useEffect } from "react";
 import { Logs } from "@/app/components/page/home/Logs";
 import Datasource from "@/app/(clientLayout)/home/page";
 import { ContextMenuTrigger } from "rctx-contextmenu";
-import { ContextMenuEnum } from "@/app/components/ui/ContextMenu";
-import { useEventEmitterContextContext } from "@/app/context/event-emitter";
+import { ContextMenuEnum } from "@/app/components/ui/ContextMenu/types";
 
 export default function KLineChartLayout() {
   const klineChartMemo = KlineChartModule();
   const { init } = klineChartMemo;
   const { ref: klineRef } = init();
-  const emitter = useEventEmitterContextContext();
 
-  emitter.eventEmitter?.useSubscription(() => {
-    klineChartMemo.chart.createOverlay("textInput");
-  });
   useEffect(() => {
     klineChartMemo.chart.applyNewData([
       {
@@ -111,8 +106,13 @@ export default function KLineChartLayout() {
         volume: 76
       }
     ]);
-    klineChartMemo.chart.createIndicator("RSI", true);
-    klineChartMemo.chart.createIndicator("BOLL", true);
+    const rsi = klineChartMemo.chart.createIndicator("RSI", true);
+    const boll = klineChartMemo.chart.createIndicator("BOLL", true);
+
+    return () => {
+      klineChartMemo.chart.removeIndicator(rsi!);
+      klineChartMemo.chart.removeIndicator(boll!);
+    };
   }, [klineChartMemo.chart]);
 
   return (
@@ -121,7 +121,7 @@ export default function KLineChartLayout() {
         key="left"
         grow
         onResizeEnd={() => {
-          executeCommand("resize");
+          executeCommand("chart:command:resize");
         }}
       >
         <Stack className={"h-100vh flex w-full flex-col"}>
