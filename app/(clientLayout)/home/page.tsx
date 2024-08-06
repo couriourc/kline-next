@@ -15,10 +15,24 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useMemo } from "react";
 import { css, cx } from "@emotion/css";
-import { ActionIcon, Badge, Blockquote, Flex, Loader } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Blockquote,
+  Flex,
+  Loader,
+  Menu,
+  Text
+} from "@mantine/core";
 import type { DynamicProps } from "@/app/types/misc";
 import _ from "underscore";
 
+interface StockListRow {
+  stock_code: string;
+  code_type: string;
+  exchange: string;
+  short_name: string;
+}
 const rowDraggingClassname = css`
   opacity: 0.5;
 `;
@@ -37,7 +51,6 @@ function DraggableRowRenderer<R, SR>({
   onRowReorder,
   ...props
 }: DynamicProps<DraggableRowRenderProps<R, SR>>) {
-  const updateCurSelectedStockAtom = useSetAtom(curSelectedStockAtom);
   const [{ isDragging }, drag] = useDrag({
     type: "ROW_DRAG",
     item: { index: rowIdx },
@@ -75,9 +88,6 @@ function DraggableRowRenderer<R, SR>({
       rowIdx={rowIdx}
       isRowSelected={true}
       draggable
-      onClick={() => {
-        updateCurSelectedStockAtom(() => props.row.stock_code);
-      }}
       className={cx(
         className,
         "cursor-pointer !border-none !bg-[transparent] !outline-none"
@@ -88,23 +98,46 @@ function DraggableRowRenderer<R, SR>({
 }
 export default function Datasource() {
   const [{ data, isLoading }] = useAtom(stockListAtom);
-  interface StockListRow {
-    stock_code: string;
-    code_type: string;
-    exchange: string;
-    short_name: string;
-  }
+  const updateCurSelectedStockAtom = useSetAtom(curSelectedStockAtom);
+
   const columns: Column<StockListRow>[] = [
-    { key: "stock_code", name: "股票代码", width: 58 },
+    {
+      key: "stock_code",
+      name: "股票代码",
+
+      headerCellClass: "text-start",
+      width: 60,
+      cellClass: "text-start flex items-center justify-start",
+      renderCell(row) {
+        return (
+          <Text
+            onClickCapture={() => {
+              updateCurSelectedStockAtom(() => row.row.stock_code);
+            }}
+            c="blue"
+          >
+            {row.row.stock_code}
+          </Text>
+        );
+      }
+    },
     {
       key: "code_type",
       name: "类型",
-      width: 28,
+      width: 30,
+      headerCellClass: "text-center",
+      cellClass: "text-center flex items-center justify-center",
       renderCell(row) {
         return <Badge>{row.row.code_type}</Badge>;
       }
     },
-    { key: "exchange", name: "交易所", width: 58 },
+    {
+      key: "exchange",
+      name: "交易所",
+      width: 58,
+      headerCellClass: "text-center",
+      cellClass: "text-center"
+    },
     { key: "short_name", name: "名称", resizable: true },
     {
       key: "control",
@@ -123,14 +156,18 @@ export default function Datasource() {
         //          }
         //        });
         return (
-          <ActionIcon
-            //            ref={(ref)=>drag(ref!)}
-            //            variant={isDragging?"outline":"transparent"}
-            aria-label="menu"
-            draggable
-          >
-            <i className={"i-mdi-menu"} />
-          </ActionIcon>
+          <Menu shadow="md" trigger={"hover"}>
+            <Menu.Target>
+              <ActionIcon aria-label="menu" draggable>
+                <i className={"i-mdi-menu"} />
+              </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item leftSection={<i className={"i-mdi-add"} />}>
+                <Text size={"sm"}>加入自选组</Text>
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         );
       }
     }

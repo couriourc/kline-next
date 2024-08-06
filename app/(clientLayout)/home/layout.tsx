@@ -8,35 +8,24 @@ import {
   Popover,
   Stack,
   Text,
-  ThemeIcon,
   UnstyledButton
 } from "@mantine/core";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
-import { useEffect } from "react";
-import { Logs } from "@/app/components/page/home/Logs";
-import Datasource from "@/app/(clientLayout)/home/page";
+import { type PropsWithChildren, useEffect } from "react";
 import { ContextMenuTrigger } from "rctx-contextmenu";
 import { ContextMenuEnum } from "@/app/components/ui/ContextMenu/types";
 import { stockMarketKlineChartAtom } from "@/app/utils/store/chartStore";
 import { useAtom } from "jotai";
 import Loading from "@/app/components/base/loading";
 
-export default function KLineChartLayout() {
+export default function KLineChartLayout({ children }: PropsWithChildren) {
   const klineChartMemo = KlineChartModule();
   const { init } = klineChartMemo;
   const { ref: klineRef } = init();
   const [{ data: stockMarketKlineChartData, isLoading }] = useAtom(
     stockMarketKlineChartAtom
   );
-  useEffect(() => {
-    const rsi = klineChartMemo.chart.createIndicator("RSI", true);
-    const boll = klineChartMemo.chart.createIndicator("BOLL", true);
-    return () => {
-      klineChartMemo.chart.removeIndicator(rsi!);
-      klineChartMemo.chart.removeIndicator(boll!);
-    };
-  }, [klineChartMemo.chart]);
 
   useEffect(() => {
     if (!stockMarketKlineChartData?.content) return;
@@ -45,6 +34,14 @@ export default function KLineChartLayout() {
     );
   }, [stockMarketKlineChartData?.content]);
 
+  useEffect(() => {
+    const rsi = klineChartMemo.chart.createIndicator("RSI", true);
+    const boll = klineChartMemo.chart.createIndicator("BOLL", true);
+    return () => {
+      klineChartMemo.chart.removeIndicator(rsi!);
+      klineChartMemo.chart.removeIndicator(boll!);
+    };
+  }, [klineChartMemo.chart]);
   return (
     <Split size="xs" h={"100vh"}>
       <Split.Pane
@@ -80,65 +77,52 @@ export default function KLineChartLayout() {
         key={"right"}
       >
         <Flex w={"100%"} p={"4px"} direction={"column"} gap={6}>
-          <Group
-            justify={"space-between"}
-            p={"sm"}
-            className={"shadow-inset rounded-md bg-[var(--mantine-color-body)]"}
-          >
-            <Group>
-              <Popover>
-                <Popover.Target>
-                  <UnstyledButton className={"flex items-center"}>
-                    <span className="i-[material-symbols-light--expand-circle-down-outline]"></span>
-                    <span className={"text-sm"}>自选组</span>
-                  </UnstyledButton>
-                </Popover.Target>
-                <Popover.Dropdown p={0} bg={"transparent"} maw={200}>
-                  <List
-                    p={0}
-                    bg={"var(--mantine-color-body)"}
-                    className={"dark:bg-[#191919]!"}
-                  >
-                    <List.Item
-                      className={
-                        "cursor-pointer px-[4px] py-[6px] hover:hover:bg-[var(--mantine-color-default-hover)]"
-                      }
-                    >
-                      <Text
-                        size={"sm"}
-                        className={"flex items-center justify-center"}
-                      >
-                        <i className={"i-mdi-add-circle"}></i>添加自选组
-                      </Text>
-                    </List.Item>
-                  </List>
-                </Popover.Dropdown>
-              </Popover>
-            </Group>
+          <Group justify={"space-between"}>
             <Popover>
               <Popover.Target>
-                <ThemeIcon variant={"outline"}>
-                  <i className={"i-mdi-menu cursor-pointer text-xl"} />
-                </ThemeIcon>
+                <UnstyledButton className={"flex items-center"}>
+                  <span className="i-[material-symbols-light--expand-circle-down-outline]"></span>
+                  <Text size={"sm"}>自选组</Text>
+                </UnstyledButton>
               </Popover.Target>
-              <Popover.Dropdown w={200}>
-                <Text size="sm">
-                  <List p={0}>
-                    <List.Item
-                      className={
-                        "cursor-pointer px-[4px] py-[6px] hover:bg-[var(--mantine-color-default-hover)]"
-                      }
+              <Popover.Dropdown p={0} bg={"transparent"} maw={200}>
+                <List
+                  p={0}
+                  bg={"var(--mantine-color-body)"}
+                  className={"dark:bg-[#191919]!"}
+                >
+                  <List.Item
+                    className={
+                      "cursor-pointer px-[4px] py-[6px] hover:hover:bg-[var(--mantine-color-default-hover)]"
+                    }
+                  >
+                    <Text
+                      size={"sm"}
+                      className={"flex items-center justify-center"}
                     >
-                      <Text size={"sm"}>操作信息</Text>
-                    </List.Item>
-                  </List>
-                </Text>
+                      <i className={"i-mdi-eye"}></i>
+                      总览列表
+                    </Text>
+                  </List.Item>
+
+                  <List.Item
+                    className={
+                      "cursor-pointer px-[4px] py-[6px] hover:hover:bg-[var(--mantine-color-default-hover)]"
+                    }
+                  >
+                    <Text
+                      size={"sm"}
+                      className={"flex items-center justify-center"}
+                    >
+                      <i className={"i-mdi-add-circle"}></i>添加分组
+                    </Text>
+                  </List.Item>
+                </List>
               </Popover.Dropdown>
             </Popover>
           </Group>
-          {/*<HomeNav />*/}
-          <Datasource />
-          <Logs />
+
+          {children}
         </Flex>
       </Split.Pane>
     </Split>
