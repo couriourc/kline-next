@@ -2,7 +2,6 @@
   "name": "kline-next",
   "version": "0.0.1",
   "private": true,
-  "type": "module",
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged"
   },
@@ -22,7 +21,8 @@
     "copy-static": "cpx .next/static/**/* .next/standalone/.next/static && cpx public/**/* .next/standalone/public",
     "copy-serve": "cpx .next/standalone/**/* ./.next/.output/ && cpx .next/static/**/* ./.next/.output/.nexts/static/",
     "lint": "biome lint . --no-errors-on-unmatched",
-    "lint:fix": "pnpm run lint --write"
+    "lint:fix": "pnpm run lint --write",
+    "prepare": "pnpm exec simple-git-hooks"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
