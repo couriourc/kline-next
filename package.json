@@ -2,6 +2,7 @@
   "name": "kline-next",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged"
   },
