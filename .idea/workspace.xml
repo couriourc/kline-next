@@ -5,10 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/biome.json" beforeDir="false" afterPath="$PROJECT_DIR$/biome.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/utils/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/store/chartStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +250,7 @@
       <workItem from="1722899844613" duration="3692000" />
       <workItem from="1722918182153" duration="19000" />
       <workItem from="1722951166959" duration="5784000" />
-      <workItem from="1722985247947" duration="1603000" />
+      <workItem from="1722985247947" duration="7759000" />
     </task>
     <servers />
   </component>
