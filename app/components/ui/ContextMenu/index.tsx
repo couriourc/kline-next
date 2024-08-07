@@ -14,8 +14,7 @@ import { cx } from "@emotion/css";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
 import _ from "underscore";
 import { CommandEnum, ContextMenuEnum, type ExecutionMenuItem } from "./types";
-
-const Handlebars = require("handlebars");
+import Handlebars from "handlebars";
 
 /**
  * 快捷方式的权重计算

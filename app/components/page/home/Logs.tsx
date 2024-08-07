@@ -7,10 +7,11 @@ export function Logs() {
   const klineChartMemo = KlineChartModule();
   const [history, updateHistory] = useState<string[]>([]);
 
-  const { scrollableRef, targetRef, scrollIntoView } = useScrollIntoView();
-  function handleScrollToBottom() {
-    scrollIntoView({});
-  }
+  const { scrollableRef, targetRef, scrollIntoView } = useScrollIntoView<
+    HTMLElement,
+    HTMLElement
+  >();
+
   useEffect(() => {
     klineChartMemo.emitter.on("command:setup", (option) => {
       updateHistory((state) => [...state, JSON.stringify(option)]);
@@ -18,6 +19,9 @@ export function Logs() {
     handleScrollToBottom();
     return () => klineChartMemo.emitter.off("command:setup");
   }, [klineChartMemo]);
+  function handleScrollToBottom() {
+    scrollIntoView({});
+  }
   return (
     <>
       <List
@@ -27,7 +31,9 @@ export function Logs() {
         spacing="xs"
         size="sm"
         center
-        ref={scrollableRef}
+        ref={(ref) => {
+          scrollableRef.current = ref as HTMLElement;
+        }}
         icon={
           <ThemeIcon color="teal" size={24} radius="xl">
             <i
@@ -40,7 +46,11 @@ export function Logs() {
         {history.map((item, index) => {
           return <List.Item key={index}>{item}</List.Item>;
         })}
-        <a ref={(ref) => (targetRef.current = ref!)}></a>
+        <a
+          ref={(ref) => {
+            targetRef.current = ref as HTMLElement;
+          }}
+        ></a>
       </List>
     </>
   );

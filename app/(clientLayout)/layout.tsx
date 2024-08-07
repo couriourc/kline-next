@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import SwrInitor from "@/app/components/swr-initor";
 import { MantineProvider } from "@/app/context/mantine-context";
 import "react-toastify/dist/ReactToastify.css";
-import { AppShell } from "@mantine/core";
+import { AppShell, rem } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import { cx } from "@emotion/css";
 import useBreakpoints, { MediaType } from "@/app/hooks/use-breakpoints";
@@ -24,24 +24,18 @@ export default function ({ children }: { children: ReactNode }) {
               layout="alt"
               navbar={{
                 width: {
-                  base: 60
+                  base: rem(60)
                 },
                 breakpoint: "md",
                 collapsed: { mobile: !opened }
               }}
               header={{
                 height: {
-                  base: 56
+                  base: rem(48)
                 }
               }}
             >
-              <AppShell.Header px={16}>
-                <AppShell.Section
-                  className={"flex h-full items-center justify-between"}
-                >
-                  <HomeHeader></HomeHeader>
-                </AppShell.Section>
-              </AppShell.Header>
+              <HomeHeader />
               <HomeNav />
 
               <AppShell.Main h={"100vh"}>

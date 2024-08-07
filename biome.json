@@ -42,7 +42,7 @@
 				"noUnsafeOptionalChaining": "error",
 				"noUnusedLabels": "error",
 				"noUnusedVariables": "warn",
-				"useExhaustiveDependencies": "warn",
+				"useExhaustiveDependencies": "off",
 				"useHookAtTopLevel": "error",
 				"useIsNan": "error",
 				"useJsxKeyInIterable": "error",

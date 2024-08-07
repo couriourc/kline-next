@@ -18,3 +18,10 @@ export interface IGetStockInfoSearchResponse {
 }
 export const getStockInfoSearch = (data: IGetStockInfoSearch) =>
   requester.get<IGetStockInfoSearchResponse>("/stock/info/search", data);
+export interface IGetStockMarketKline {
+  stock_code: string;
+  k_type: string;
+  adjust_type: string;
+}
+export const getStockMarketKline = (data: IGetStockMarketKline) =>
+  requester.get<IGetStockInfoSearchResponse>("/stock/market/kline", data);

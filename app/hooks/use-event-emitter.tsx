@@ -5,12 +5,7 @@ import { useUnmount } from "ahooks";
 
 export type Events = {
   ["chart:command:resize"]: any;
-  ["chart:command:creator"]: {
-    params: {
-      search: string;
-      command?: string;
-    };
-  };
+  ["chart:command:creator"]: { params: { search: string; command?: string } };
   [event: "command:execute" | string]: any;
 };
 type TEmitter = Emitter<Events>;
@@ -26,10 +21,6 @@ export function useEventEmitterOn<T extends keyof Events>(
   useUnmount(() => {
     eventEmitterContextEmitter.off(type, fn);
   });
-}
-
-export function getEventEmitter() {
-  return eventEmitterContextEmitter;
 }
 
 export function registerCommand<T extends keyof Events>(

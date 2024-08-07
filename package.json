@@ -98,7 +98,7 @@
     "use-context-selector": "^1.4.1",
     "uuid": "^9.0.1",
     "valibot": "^0.36.0",
-    "zustand": "^4.5.1"
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@antfu/utils": "^0.7.10",

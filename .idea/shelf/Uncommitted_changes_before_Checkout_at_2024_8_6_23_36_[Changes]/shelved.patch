@@ -1,0 +1,465 @@
+Index: app/(clientLayout)/home/layout.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport \"@gfazioli/mantine-split-pane/styles.css\";\r\nimport { Split } from \"@gfazioli/mantine-split-pane\";\r\nimport {\r\n  Flex,\r\n  Group,\r\n  List,\r\n  Popover,\r\n  Stack,\r\n  Text,\r\n  UnstyledButton\r\n} from \"@mantine/core\";\r\nimport { KlineChartModule } from \"@/app/components/KlineCharts/core\";\r\nimport { executeCommand } from \"@/app/hooks/use-event-emitter\";\r\nimport { useEffect } from \"react\";\r\nimport { Logs } from \"@/app/components/page/home/Logs\";\r\nimport Datasource from \"@/app/(clientLayout)/home/page\";\r\nimport { ContextMenuTrigger } from \"rctx-contextmenu\";\r\nimport { ContextMenuEnum } from \"@/app/components/ui/ContextMenu/types\";\r\n\r\nexport default function KLineChartLayout() {\r\n  const klineChartMemo = KlineChartModule();\r\n  const { init } = klineChartMemo;\r\n  const { ref: klineRef } = init();\r\n\r\n  useEffect(() => {\r\n    klineChartMemo.chart.applyNewData([\r\n      {\r\n        close: 4976.16,\r\n        high: 4977.99,\r\n        low: 4970.12,\r\n        open: 4972.89,\r\n        timestamp: 1587660000000,\r\n        volume: 204\r\n      },\r\n      {\r\n        close: 4977.33,\r\n        high: 4979.94,\r\n        low: 4971.34,\r\n        open: 4973.2,\r\n        timestamp: 1587660060000,\r\n        volume: 194\r\n      },\r\n      {\r\n        close: 4977.93,\r\n        high: 4977.93,\r\n        low: 4974.2,\r\n        open: 4976.53,\r\n        timestamp: 1587660120000,\r\n        volume: 197\r\n      },\r\n      {\r\n        close: 4966.77,\r\n        high: 4968.53,\r\n        low: 4962.2,\r\n        open: 4963.88,\r\n        timestamp: 1587660180000,\r\n        volume: 28\r\n      },\r\n      {\r\n        close: 4961.56,\r\n        high: 4972.61,\r\n        low: 4961.28,\r\n        open: 4961.28,\r\n        timestamp: 1587660240000,\r\n        volume: 184\r\n      },\r\n      {\r\n        close: 4964.19,\r\n        high: 4964.74,\r\n        low: 4961.42,\r\n        open: 4961.64,\r\n        timestamp: 1587660300000,\r\n        volume: 191\r\n      },\r\n      {\r\n        close: 4968.93,\r\n        high: 4972.7,\r\n        low: 4964.55,\r\n        open: 4966.96,\r\n        timestamp: 1587660360000,\r\n        volume: 105\r\n      },\r\n      {\r\n        close: 4979.31,\r\n        high: 4979.61,\r\n        low: 4973.99,\r\n        open: 4977.06,\r\n        timestamp: 1587660420000,\r\n        volume: 35\r\n      },\r\n      {\r\n        close: 4977.02,\r\n        high: 4981.66,\r\n        low: 4975.14,\r\n        open: 4981.66,\r\n        timestamp: 1587660480000,\r\n        volume: 135\r\n      },\r\n      {\r\n        close: 4985.09,\r\n        high: 4988.62,\r\n        low: 4980.3,\r\n        open: 4986.72,\r\n        timestamp: 1587660540000,\r\n        volume: 76\r\n      }\r\n    ]);\r\n    const rsi = klineChartMemo.chart.createIndicator(\"RSI\", true);\r\n    const boll = klineChartMemo.chart.createIndicator(\"BOLL\", true);\r\n\r\n    return () => {\r\n      klineChartMemo.chart.removeIndicator(rsi!);\r\n      klineChartMemo.chart.removeIndicator(boll!);\r\n    };\r\n  }, [klineChartMemo.chart]);\r\n\r\n  return (\r\n    <Split size=\"xs\" h={\"100vh\"}>\r\n      <Split.Pane\r\n        key=\"left\"\r\n        grow\r\n        onResizeEnd={() => {\r\n          executeCommand(\"chart:command:resize\");\r\n        }}\r\n      >\r\n        <Stack className={\"h-100vh flex w-full flex-col\"}>\r\n          <ContextMenuTrigger\r\n            id={ContextMenuEnum.CHART}\r\n            className={\"flex w-full grow\"}\r\n          >\r\n            <div className={\"w-full grow\"} ref={klineRef} />\r\n          </ContextMenuTrigger>\r\n        </Stack>\r\n      </Split.Pane>\r\n      <Split.Pane\r\n        maxWidth={400}\r\n        initialWidth={350}\r\n        withResizer\r\n        minWidth={300}\r\n        key={\"right\"}\r\n      >\r\n        <Flex w={\"100%\"} p={\"4px\"} direction={\"column\"} gap={6}>\r\n          <Group\r\n            justify={\"space-between\"}\r\n            p={\"sm\"}\r\n            className={\"shadow-inset rounded-md bg-[var(--mantine-color-body)]\"}\r\n          >\r\n            <Group>\r\n              <Popover>\r\n                <Popover.Target>\r\n                  <UnstyledButton className={\"flex items-center\"}>\r\n                    <span className=\"i-[material-symbols-light--expand-circle-down-outline]\"></span>\r\n                    <span className={\"text-sm\"}>自选组</span>\r\n                  </UnstyledButton>\r\n                </Popover.Target>\r\n                <Popover.Dropdown p={0} bg={\"transparent\"} maw={200}>\r\n                  <List p={0} bg={\"white\"} className={\"dark:bg-[#191919]!\"}>\r\n                    <List.Item\r\n                      className={\r\n                        \"cursor-pointer px-[4px] py-[6px] hover:bg-gray-200\"\r\n                      }\r\n                    >\r\n                      <Text size={\"sm\"}>添加自选组</Text>\r\n                    </List.Item>\r\n                  </List>\r\n                </Popover.Dropdown>\r\n              </Popover>\r\n            </Group>\r\n            <Popover>\r\n              <Popover.Target>\r\n                <i\r\n                  className={\"i-mdi-menu cursor-pointer text-xl text-[#333]\"}\r\n                />\r\n              </Popover.Target>\r\n              <Popover.Dropdown w={200}>\r\n                <Text size=\"sm\">\r\n                  <List p={0} bg={\"white\"}>\r\n                    <List.Item\r\n                      className={\r\n                        \"cursor-pointer px-[4px] py-[6px] hover:bg-gray-200\"\r\n                      }\r\n                    >\r\n                      <Text size={\"sm\"}>操作信息</Text>\r\n                    </List.Item>\r\n                  </List>\r\n                </Text>\r\n              </Popover.Dropdown>\r\n            </Popover>\r\n          </Group>\r\n          {/*<HomeNav />*/}\r\n          <Datasource />\r\n          <Logs />\r\n        </Flex>\r\n      </Split.Pane>\r\n    </Split>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/(clientLayout)/home/layout.tsx b/app/(clientLayout)/home/layout.tsx
+--- a/app/(clientLayout)/home/layout.tsx	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/app/(clientLayout)/home/layout.tsx	(date 1722952420207)
+@@ -1,15 +1,7 @@
+ "use client";
+ import "@gfazioli/mantine-split-pane/styles.css";
+ import { Split } from "@gfazioli/mantine-split-pane";
+-import {
+-  Flex,
+-  Group,
+-  List,
+-  Popover,
+-  Stack,
+-  Text,
+-  UnstyledButton
+-} from "@mantine/core";
++import { Flex, Group, List, Popover, Stack, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
+ import { KlineChartModule } from "@/app/components/KlineCharts/core";
+ import { executeCommand } from "@/app/hooks/use-event-emitter";
+ import { useEffect } from "react";
+@@ -155,13 +147,13 @@
+                   </UnstyledButton>
+                 </Popover.Target>
+                 <Popover.Dropdown p={0} bg={"transparent"} maw={200}>
+-                  <List p={0} bg={"white"} className={"dark:bg-[#191919]!"}>
++                  <List p={0} bg={"var(--mantine-color-body)"} className={"dark:bg-[#191919]!"}>
+                     <List.Item
+                       className={
+-                        "cursor-pointer px-[4px] py-[6px] hover:bg-gray-200"
++                        "cursor-pointer px-[4px] py-[6px] hover:hover:bg-[var(--mantine-color-default-hover)]"
+                       }
+                     >
+-                      <Text size={"sm"}>添加自选组</Text>
++                      <Text size={"sm"} className={"flex items-center justify-center"}><i className={"i-mdi-add-circle"}></i>添加自选组</Text>
+                     </List.Item>
+                   </List>
+                 </Popover.Dropdown>
+@@ -169,16 +161,18 @@
+             </Group>
+             <Popover>
+               <Popover.Target>
+-                <i
+-                  className={"i-mdi-menu cursor-pointer text-xl text-[#333]"}
++                <ThemeIcon variant={"outline"}>
++                  <i
++                  className={"i-mdi-menu cursor-pointer text-xl "}
+                 />
++                </ThemeIcon>
+               </Popover.Target>
+               <Popover.Dropdown w={200}>
+-                <Text size="sm">
+-                  <List p={0} bg={"white"}>
++              <Text size="sm">
++                  <List p={0} >
+                     <List.Item
+                       className={
+-                        "cursor-pointer px-[4px] py-[6px] hover:bg-gray-200"
++                        "cursor-pointer px-[4px] py-[6px] hover:bg-[var(--mantine-color-default-hover)]"
+                       }
+                     >
+                       <Text size={"sm"}>操作信息</Text>
+Index: app/components/ui/ContextMenu/index.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { ContextMenu, ContextMenuItem } from \"rctx-contextmenu\";\r\nimport \"react-cmdk/dist/cmdk.css\";\r\nimport {\r\n  ActionIcon,\r\n  Flex,\r\n  Group,\r\n  Input,\r\n  List,\r\n  ScrollArea,\r\n  Tooltip\r\n} from \"@mantine/core\";\r\nimport { useCallback, useMemo, useRef, useState } from \"react\";\r\nimport { cx } from \"@emotion/css\";\r\nimport { executeCommand } from \"@/app/hooks/use-event-emitter\";\r\nimport _ from \"underscore\";\r\nimport { CommandEnum, ContextMenuEnum, type ExecutionMenuItem } from \"./types\";\r\n\r\nconst Handlebars = require(\"handlebars\");\r\n\r\n/**\r\n * 快捷方式的权重计算\r\n * 满足 category\r\n * 满足 equal\r\n * */\r\nconst executionMenuList: ExecutionMenuItem[] = [\r\n  {\r\n    label: \"搜索股票代码‘{{params.search}}’\",\r\n    command: \"createSelfGroup\",\r\n    isEqual: (search) => {\r\n      return !!search.length;\r\n    },\r\n    category: CommandEnum.TABLE\r\n  },\r\n  {\r\n    label: \"添加文本标记\",\r\n    command: \"createTextOverlay\",\r\n    isEqual: () => true,\r\n    category: CommandEnum.CHART,\r\n    executor(args) {\r\n      executeCommand(\"chart:command:creator\", args);\r\n    }\r\n  }\r\n];\r\n\r\nconst ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {\r\n  const [inputValue, updateInputValue] = useState(\"\");\r\n  const curSelectedItem = useRef<ExecutionMenuItem>();\r\n  const [curSelectedItemIndex, updateCurSelectedItemIndex] =\r\n    useState<number>(0);\r\n\r\n  const filteredList = useMemo(() => {\r\n    const commands = executionMenuList.filter((item) =>\r\n      item.isEqual?.(inputValue, item, ContextMenuEnum.CHART)\r\n    )!;\r\n    curSelectedItem.current = commands[0];\r\n    return commands;\r\n  }, [inputValue]);\r\n\r\n  const handleUpdateCurSelectedItemIndex = useCallback(\r\n    (index: number) => {\r\n      const nextIdx =\r\n        (curSelectedItemIndex + index + filteredList.length) %\r\n        filteredList.length;\r\n      updateCurSelectedItemIndex(() => nextIdx);\r\n      curSelectedItem.current = filteredList[nextIdx];\r\n    },\r\n    [curSelectedItemIndex, filteredList, filteredList.length]\r\n  );\r\n\r\n  const handleCheckCommand = (item: ExecutionMenuItem) => {\r\n    item?.executor?.({\r\n      params: {\r\n        search: inputValue,\r\n        command: item.command\r\n      }\r\n    });\r\n    hidden();\r\n  };\r\n  function handleExecuteInContextMenu(ev: React.KeyboardEvent<HTMLDivElement>) {\r\n    switch (ev.code) {\r\n      case \"ArrowDown\":\r\n        handleUpdateCurSelectedItemIndex(1);\r\n        break;\r\n      case \"ArrowUp\":\r\n        handleUpdateCurSelectedItemIndex(-1);\r\n        break;\r\n      case \"Enter\":\r\n      case \"NumpadEnter\":\r\n        handleCheckCommand(curSelectedItem.current!);\r\n        break;\r\n    }\r\n  }\r\n  function resolveLabel(item: ExecutionMenuItem) {\r\n    if (!item.label) return item.label;\r\n    if (!_.isString(item.label)) return item.label;\r\n    return Handlebars.compile(item.label)({\r\n      params: {\r\n        search: inputValue\r\n      }\r\n    });\r\n  }\r\n  return (\r\n    <Flex direction={\"column\"} gap={\"12px\"}>\r\n      <Input\r\n        autoFocus\r\n        autoComplete={\"off\"}\r\n        onChange={async (ev) => {\r\n          updateCurSelectedItemIndex(0);\r\n          updateInputValue(ev.target.value);\r\n        }}\r\n        placeholder={\"请输入指令\"}\r\n        onKeyDownCapture={handleExecuteInContextMenu}\r\n        size={\"sm\"}\r\n        rightSection={<i className={\"i-mdi-search\"} />}\r\n      />\r\n      <Group gap={2}>\r\n        <Tooltip label={\"指令分类\"}>\r\n          <ActionIcon>\r\n            <i className={\"i-mdi-settings\"}></i>\r\n          </ActionIcon>\r\n        </Tooltip>\r\n        <Tooltip label={\"指令分类\"}>\r\n          <ActionIcon>\r\n            <i className={\"i-mdi-gift\"}></i>\r\n          </ActionIcon>\r\n        </Tooltip>\r\n      </Group>\r\n      <ScrollArea className={\"w-full grow\"} mah={400}>\r\n        <List className={cx(`flex w-full flex-col gap-[6px]`)}>\r\n          {filteredList.map((item) => {\r\n            return (\r\n              <List.Item\r\n                p={\"4px\"}\r\n                key={item.command}\r\n                className={cx(\r\n                  `w-full rounded-md text-[var(--mantine-color-text)] hover:bg-[var(--mantine-color-default-hover)] [&.active]:bg-[var(--mantine-color-default-hover)]`,\r\n                  {\r\n                    active: item.command === curSelectedItem.current?.command\r\n                  }\r\n                )}\r\n                onClick={() => {\r\n                  handleCheckCommand(item);\r\n                }}\r\n              >\r\n                {resolveLabel(item)}\r\n              </List.Item>\r\n            );\r\n          })}\r\n        </List>\r\n      </ScrollArea>\r\n    </Flex>\r\n  );\r\n};\r\n\r\nexport function ContextMenus() {\r\n  const [id, updateId] = useState(ContextMenuEnum.CHART);\r\n\r\n  const hidden = () => {\r\n    updateId(() => ContextMenuEnum.TEMP);\r\n    setTimeout(() => {\r\n      updateId(() => ContextMenuEnum.CHART);\r\n    }, 0);\r\n  };\r\n\r\n  return (\r\n    <>\r\n      <ContextMenu\r\n        id={id}\r\n        className={\"!max-w-[400px] !bg-[var(--mantine-color-body)] !p-0\"}\r\n      >\r\n        <ContextMenuItem\r\n          className={\"!bg-transparent !p-[4px]\"}\r\n          preventClose={true}\r\n        >\r\n          <ExecuteSearchContextMenu hidden={hidden} />\r\n        </ContextMenuItem>\r\n      </ContextMenu>\r\n    </>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/components/ui/ContextMenu/index.tsx b/app/components/ui/ContextMenu/index.tsx
+--- a/app/components/ui/ContextMenu/index.tsx	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/app/components/ui/ContextMenu/index.tsx	(date 1722955297137)
+@@ -1,21 +1,12 @@
+ import { ContextMenu, ContextMenuItem } from "rctx-contextmenu";
+ import "react-cmdk/dist/cmdk.css";
+-import {
+-  ActionIcon,
+-  Flex,
+-  Group,
+-  Input,
+-  List,
+-  ScrollArea,
+-  Tooltip
+-} from "@mantine/core";
++import { ActionIcon, Flex, Group, Input, List, ScrollArea, Tooltip } from "@mantine/core";
+ import { useCallback, useMemo, useRef, useState } from "react";
+ import { cx } from "@emotion/css";
+ import { executeCommand } from "@/app/hooks/use-event-emitter";
+ import _ from "underscore";
+ import { CommandEnum, ContextMenuEnum, type ExecutionMenuItem } from "./types";
+-
+-const Handlebars = require("handlebars");
++import Handlebars from "handlebars";
+ 
+ /**
+  * 快捷方式的权重计算
+Index: app/(clientLayout)/home/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport { useAtom } from \"jotai\";\r\nimport { stockListAtom } from \"@/app/utils/store/chartStore\";\r\nimport DataGrid, {\r\n  type Column,\r\n  type Renderers,\r\n  type RenderRowProps,\r\n  Row\r\n} from \"react-data-grid\";\r\nimport \"react-data-grid/lib/styles.css\";\r\nimport { DndProvider, useDrag, useDrop } from \"react-dnd\";\r\nimport { HTML5Backend } from \"react-dnd-html5-backend\";\r\nimport { useMemo } from \"react\";\r\nimport { css, cx } from \"@emotion/css\";\r\nimport { ActionIcon, Badge, Blockquote, Flex, Loader } from \"@mantine/core\";\r\nimport type { DynamicProps } from \"@/app/types/misc\";\r\nimport _ from \"underscore\";\r\n\r\nconst rowDraggingClassname = css`\r\n  opacity: 0.5;\r\n`;\r\n\r\nconst rowOverClassname = css`\r\n  background-color: #ececec;\r\n`;\r\ninterface DraggableRowRenderProps<R, SR> extends RenderRowProps<R, SR> {\r\n  onRowReorder: (sourceIndex: number, targetIndex: number) => void;\r\n}\r\nfunction DraggableRowRenderer<R, SR>({\r\n  rowIdx,\r\n  isRowSelected,\r\n  className,\r\n  onRowReorder,\r\n  ...props\r\n}: DynamicProps<DraggableRowRenderProps<R, SR>>) {\r\n  const [{ isDragging }, drag] = useDrag({\r\n    type: \"ROW_DRAG\",\r\n    item: { index: rowIdx },\r\n    collect: (monitor) => {\r\n      return {\r\n        isDragging: monitor.isDragging()\r\n      };\r\n    }\r\n  });\r\n\r\n  const [{ isOver }, drop] = useDrop({\r\n    accept: \"ROW_DRAG\",\r\n    drop({ index }: { index: number }) {\r\n      onRowReorder(index, rowIdx);\r\n    },\r\n    collect: (monitor) => ({\r\n      isOver: monitor.isOver(),\r\n      canDrop: monitor.canDrop()\r\n    })\r\n  });\r\n\r\n  className = cx(className, {\r\n    [rowDraggingClassname]: isDragging,\r\n    [rowOverClassname]: isOver\r\n  });\r\n  return (\r\n    <Row\r\n      ref={(ref) => {\r\n        if (ref) {\r\n          drag(ref.firstElementChild);\r\n        }\r\n        drop(ref);\r\n      }}\r\n      rowIdx={rowIdx}\r\n      isRowSelected={true}\r\n      className={cx(\r\n        className,\r\n        \"cursor-pointer !border-none !bg-[transparent] !outline-none\"\r\n      )}\r\n      {...props}\r\n    />\r\n  );\r\n}\r\nexport default function Datasource() {\r\n  const [{ data, isLoading }] = useAtom(stockListAtom);\r\n  interface StockListRow {\r\n    stock_code: string;\r\n    code_type: string;\r\n    exchange: string;\r\n    short_name: string;\r\n  }\r\n  const columns: Column<StockListRow>[] = [\r\n    { key: \"stock_code\", name: \"股票代码\", width: 58 },\r\n    {\r\n      key: \"code_type\",\r\n      name: \"类型\",\r\n      width: 28,\r\n      renderCell(row) {\r\n        return <Badge>{row.row.code_type}</Badge>;\r\n      }\r\n    },\r\n    { key: \"exchange\", name: \"交易所\", width: 58 },\r\n    { key: \"short_name\", name: \"名称\", resizable: true },\r\n    {\r\n      key: \"control\",\r\n      name: \"操作\",\r\n      width: 28,\r\n      resizable: true,\r\n      renderCell(_row) {\r\n        return (\r\n          <ActionIcon variant=\"transparent\" aria-label=\"menu\">\r\n            <i className={\"i-mdi-menu\"}></i>\r\n          </ActionIcon>\r\n        );\r\n      }\r\n    }\r\n  ];\r\n  const rows = useMemo(() => {\r\n    if (!data?.content) return [];\r\n    return data.content;\r\n  }, [data]);\r\n\r\n  const renderers: Renderers<StockListRow, null> = {\r\n    renderRow(_info, props) {\r\n      return (\r\n        <DraggableRowRenderer\r\n          {...props}\r\n          rowIdx={props.rowIdx}\r\n          isRowSelected={props.isRowSelected}\r\n          onRowReorder={() => {\r\n            console.log(\r\n              `Row ${props.rowIdx} was reordered to ${props.rowIdx + 1}`\r\n            );\r\n          }}\r\n        />\r\n      );\r\n    }\r\n  };\r\n  return (\r\n    <div className={\"h-full w-full grow\"}>\r\n      {isLoading ? (\r\n        <Flex py={45} justify={\"center\"} align={\"center\"}>\r\n          <Loader />\r\n        </Flex>\r\n      ) : rows.length !== 0 ? (\r\n        <DndProvider backend={HTML5Backend}>\r\n          <DataGrid<StockListRow>\r\n            columns={columns}\r\n            className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}\r\n            rows={rows}\r\n            rowKeyGetter={(state: StockListRow) =>\r\n              state.stock_code + _.uniqueId()\r\n            }\r\n            renderers={renderers}\r\n          />\r\n        </DndProvider>\r\n      ) : (\r\n        <Blockquote\r\n          iconSize={30}\r\n          radius=\"xs\"\r\n          className={\"cursor-pointer\"}\r\n          color=\"rgba(199, 199, 199, 1)\"\r\n          cite=\"– Forrest Gump\"\r\n          icon={<i className={\"i-mdi-info text-xl\"} />}\r\n          mt=\"sm\"\r\n        >\r\n          Life is like an npm install – you never know what you are going to\r\n          get.\r\n        </Blockquote>\r\n      )}\r\n    </div>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/(clientLayout)/home/page.tsx b/app/(clientLayout)/home/page.tsx
+--- a/app/(clientLayout)/home/page.tsx	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/app/(clientLayout)/home/page.tsx	(date 1722952517096)
+@@ -1,12 +1,7 @@
+ "use client";
+ import { useAtom } from "jotai";
+ import { stockListAtom } from "@/app/utils/store/chartStore";
+-import DataGrid, {
+-  type Column,
+-  type Renderers,
+-  type RenderRowProps,
+-  Row
+-} from "react-data-grid";
++import DataGrid, { type Column, type Renderers, type RenderRowProps, Row } from "react-data-grid";
+ import "react-data-grid/lib/styles.css";
+ import { DndProvider, useDrag, useDrop } from "react-dnd";
+ import { HTML5Backend } from "react-dnd-html5-backend";
+@@ -33,6 +28,7 @@
+   onRowReorder,
+   ...props
+ }: DynamicProps<DraggableRowRenderProps<R, SR>>) {
++
+   const [{ isDragging }, drag] = useDrag({
+     type: "ROW_DRAG",
+     item: { index: rowIdx },
+@@ -131,38 +127,44 @@
+       );
+     }
+   };
+-  return (
+-    <div className={"h-full w-full grow"}>
+-      {isLoading ? (
+-        <Flex py={45} justify={"center"} align={"center"}>
+-          <Loader />
+-        </Flex>
+-      ) : rows.length !== 0 ? (
+-        <DndProvider backend={HTML5Backend}>
+-          <DataGrid<StockListRow>
+-            columns={columns}
+-            className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
+-            rows={rows}
+-            rowKeyGetter={(state: StockListRow) =>
+-              state.stock_code + _.uniqueId()
+-            }
+-            renderers={renderers}
+-          />
+-        </DndProvider>
+-      ) : (
+-        <Blockquote
+-          iconSize={30}
+-          radius="xs"
+-          className={"cursor-pointer"}
+-          color="rgba(199, 199, 199, 1)"
+-          cite="– Forrest Gump"
+-          icon={<i className={"i-mdi-info text-xl"} />}
+-          mt="sm"
+-        >
+-          Life is like an npm install – you never know what you are going to
+-          get.
+-        </Blockquote>
+-      )}
+-    </div>
++
++
++  return (<>
++
++      <div className={"h-full w-full grow"}>
++        {isLoading ? (
++          <Flex py={45} justify={"center"} align={"center"}>
++            <Loader />
++          </Flex>
++        ) : rows.length !== 0 ? (
++          <DndProvider backend={HTML5Backend}>
++            <DataGrid<StockListRow>
++              columns={columns}
++              className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
++              rows={rows}
++              rowKeyGetter={(state: StockListRow) =>
++                state.stock_code + _.uniqueId()
++              }
++              renderers={renderers}
++            />
++          </DndProvider>
++        ) : (
++          <Blockquote
++            w={"92%"}
++            iconSize={30}
++            radius="xs"
++            className={"cursor-pointer"}
++            color="rgba(199, 199, 199, 1)"
++            cite="– Forrest Gump"
++            icon={<i className={"i-mdi-question-answer text-xl"} />}
++            mt="sm"
++            mx={"auto"}
++          >
++            Life is like an npm install – you never know what you are going to
++            get.
++          </Blockquote>
++        )}
++      </div>
++    </>
+   );
+ }
+Index: app/components/command-initor.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport type { PropsWithChildren } from \"react\";\r\nimport { registerCommand } from \"@/app/hooks/use-event-emitter\";\r\nimport { executeChartCommand } from \"@/app/components/KlineCharts/commands\";\r\n// ！！注册基本实例\r\n// 系统局部指令\r\nregisterCommand(\"chart:command:resize\", () => {\r\n  executeChartCommand(\"resize\");\r\n});\r\n// 创建图形指令\r\nregisterCommand(\"chart:command:creator\", (args) => {\r\n  executeChartCommand(\"createOverlay\", {\r\n    name: \"textInput\",\r\n    extendData: {\r\n      text: args.params.search ?? \"asd\"\r\n    }\r\n  });\r\n});\r\n// 移除图形指令\r\n\r\nconst CommandInitor = ({ children }: PropsWithChildren) => {\r\n  return <>{children}</>;\r\n};\r\n\r\nexport default CommandInitor;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/components/command-initor.tsx b/app/components/command-initor.tsx
+--- a/app/components/command-initor.tsx	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/app/components/command-initor.tsx	(date 1722954907300)
+@@ -17,7 +17,9 @@
+   });
+ });
+ // 移除图形指令
++registerCommand("chart:command:remove", (args) => {
+ 
++})
+ const CommandInitor = ({ children }: PropsWithChildren) => {
+   return <>{children}</>;
+ };
+Index: app/hooks/use-event-emitter.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\n\r\nimport mitt, { type Emitter } from \"mitt\";\r\nimport { useUnmount } from \"ahooks\";\r\n\r\nexport type Events = {\r\n  [\"chart:command:resize\"]: any;\r\n  [\"chart:command:creator\"]: {\r\n    params: {\r\n      search: string;\r\n      command?: string;\r\n    };\r\n  };\r\n  [event: \"command:execute\" | string]: any;\r\n};\r\ntype TEmitter = Emitter<Events>;\r\n\r\nconst eventEmitterContextEmitter: TEmitter = mitt();\r\nexport function useEventEmitterOn<T extends keyof Events>(\r\n  type: T,\r\n  fn: (event: any) => void\r\n) {\r\n  eventEmitterContextEmitter.on<T>(type, (...args) => {\r\n    fn(...args);\r\n  });\r\n  useUnmount(() => {\r\n    eventEmitterContextEmitter.off(type, fn);\r\n  });\r\n}\r\n\r\nexport function getEventEmitter() {\r\n  return eventEmitterContextEmitter;\r\n}\r\n\r\nexport function registerCommand<T extends keyof Events>(\r\n  type: T,\r\n  fn: (event: Events[T]) => void\r\n) {\r\n  console.log(type, fn);\r\n  return eventEmitterContextEmitter.on(type, fn);\r\n}\r\nexport function executeCommand<T extends keyof Events>(\r\n  type: T,\r\n  args?: Events[T]\r\n) {\r\n  return eventEmitterContextEmitter.emit(type, args);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/hooks/use-event-emitter.tsx b/app/hooks/use-event-emitter.tsx
+--- a/app/hooks/use-event-emitter.tsx	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/app/hooks/use-event-emitter.tsx	(date 1722954926006)
+@@ -5,12 +5,7 @@
+ 
+ export type Events = {
+   ["chart:command:resize"]: any;
+-  ["chart:command:creator"]: {
+-    params: {
+-      search: string;
+-      command?: string;
+-    };
+-  };
++  ["chart:command:creator"]: {params: {search: string; command?: string; };};
+   [event: "command:execute" | string]: any;
+ };
+ type TEmitter = Emitter<Events>;
+@@ -28,9 +23,6 @@
+   });
+ }
+ 
+-export function getEventEmitter() {
+-  return eventEmitterContextEmitter;
+-}
+ 
+ export function registerCommand<T extends keyof Events>(
+   type: T,
+Index: app/components/page/home/Logs.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { KlineChartModule } from \"@/app/components/KlineCharts/core\";\r\nimport { useEffect, useState } from \"react\";\r\nimport { List, rem, ThemeIcon } from \"@mantine/core\";\r\nimport { useScrollIntoView } from \"@mantine/hooks\";\r\n\r\nexport function Logs() {\r\n  const klineChartMemo = KlineChartModule();\r\n  const [history, updateHistory] = useState<string[]>([]);\r\n\r\n  const { scrollableRef, targetRef, scrollIntoView } = useScrollIntoView();\r\n  function handleScrollToBottom() {\r\n    scrollIntoView({});\r\n  }\r\n  useEffect(() => {\r\n    klineChartMemo.emitter.on(\"command:setup\", (option) => {\r\n      updateHistory((state) => [...state, JSON.stringify(option)]);\r\n    });\r\n    handleScrollToBottom();\r\n    return () => klineChartMemo.emitter.off(\"command:setup\");\r\n  }, [klineChartMemo]);\r\n  return (\r\n    <>\r\n      <List\r\n        className={\r\n          \"fixed bottom-[24px] max-h-[200px] overflow-y-auto overflow-x-hidden\"\r\n        }\r\n        spacing=\"xs\"\r\n        size=\"sm\"\r\n        center\r\n        ref={scrollableRef}\r\n        icon={\r\n          <ThemeIcon color=\"teal\" size={24} radius=\"xl\">\r\n            <i\r\n              className={\"i-mdi-info\"}\r\n              style={{ width: rem(16), height: rem(16) }}\r\n            />\r\n          </ThemeIcon>\r\n        }\r\n      >\r\n        {history.map((item, index) => {\r\n          return <List.Item key={index}>{item}</List.Item>;\r\n        })}\r\n        <a ref={(ref) => (targetRef.current = ref!)}></a>\r\n      </List>\r\n    </>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/components/page/home/Logs.tsx b/app/components/page/home/Logs.tsx
+--- a/app/components/page/home/Logs.tsx	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/app/components/page/home/Logs.tsx	(date 1722951519592)
+@@ -4,44 +4,53 @@
+ import { useScrollIntoView } from "@mantine/hooks";
+ 
+ export function Logs() {
+-  const klineChartMemo = KlineChartModule();
+-  const [history, updateHistory] = useState<string[]>([]);
++	const klineChartMemo = KlineChartModule();
++	const [history, updateHistory] = useState<string[]>([]);
+ 
+-  const { scrollableRef, targetRef, scrollIntoView } = useScrollIntoView();
+-  function handleScrollToBottom() {
+-    scrollIntoView({});
+-  }
+-  useEffect(() => {
+-    klineChartMemo.emitter.on("command:setup", (option) => {
+-      updateHistory((state) => [...state, JSON.stringify(option)]);
+-    });
+-    handleScrollToBottom();
+-    return () => klineChartMemo.emitter.off("command:setup");
+-  }, [klineChartMemo]);
+-  return (
+-    <>
+-      <List
+-        className={
+-          "fixed bottom-[24px] max-h-[200px] overflow-y-auto overflow-x-hidden"
+-        }
+-        spacing="xs"
+-        size="sm"
+-        center
+-        ref={scrollableRef}
+-        icon={
+-          <ThemeIcon color="teal" size={24} radius="xl">
+-            <i
+-              className={"i-mdi-info"}
+-              style={{ width: rem(16), height: rem(16) }}
+-            />
+-          </ThemeIcon>
+-        }
+-      >
+-        {history.map((item, index) => {
+-          return <List.Item key={index}>{item}</List.Item>;
+-        })}
+-        <a ref={(ref) => (targetRef.current = ref!)}></a>
+-      </List>
+-    </>
+-  );
++	const { scrollableRef, targetRef, scrollIntoView } = useScrollIntoView<
++		HTMLElement,
++		HTMLElement
++	>();
++	function handleScrollToBottom() {
++		scrollIntoView({});
++	}
++	useEffect(() => {
++		klineChartMemo.emitter.on("command:setup", (option) => {
++			updateHistory((state) => [...state, JSON.stringify(option)]);
++		});
++		handleScrollToBottom();
++		return () => klineChartMemo.emitter.off("command:setup");
++	}, [klineChartMemo]);
++	return (
++		<>
++			<List
++				className={
++					"fixed bottom-[24px] max-h-[200px] overflow-y-auto overflow-x-hidden"
++				}
++				spacing="xs"
++				size="sm"
++				center
++				ref={(ref) => {
++					scrollableRef.current = ref as HTMLElement;
++				}}
++				icon={
++					<ThemeIcon color="teal" size={24} radius="xl">
++						<i
++							className={"i-mdi-info"}
++							style={{ width: rem(16), height: rem(16) }}
++						/>
++					</ThemeIcon>
++				}
++			>
++				{history.map((item, index) => {
++					return <List.Item key={index}>{item}</List.Item>;
++				})}
++				<a
++					ref={(ref) => {
++						targetRef.current = ref as HTMLElement;
++					}}
++				></a>
++			</List>
++		</>
++	);
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1f6263d0-5c57-419a-9b1d-797dacb72784\" name=\"Changes\" comment=\"feature: 搭建基本布局\">\r\n      <change afterPath=\"$PROJECT_DIR$/app/components/command-initor.tsx\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/(clientLayout)/layout.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/(clientLayout)/layout.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/components/KlineCharts/commands.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/components/KlineCharts/commands.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/components/page/home/HomeNav.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/components/page/home/HomeNav.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/components/page/home/Logs.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/components/page/home/Logs.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"feature/contextmenu\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"projectConfigVersion\" value=\"5\" />\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/command_overlay\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722871563\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/contextmenu\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722782965\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/color-schema\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722758934\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"chore/module-alias\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722747081\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/kline-data\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722689706\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+core@7.11.2_@mantine+hooks@7.11.2_react@18.2.0__@types+react@18.2.79_react-dom@18.2._qxyfegsockktv5x56iyzi7jrli/node_modules/@mantine/core/lib/components/Popover/Popover.d.ts\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2jK5deEmpiJsceoHWrLDs6UWk5O\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.19.1&quot;,\r\n    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,\r\n    &quot;notes&quot;: &quot;&quot;,\r\n    &quot;npm.format.executor&quot;: &quot;Run&quot;,\r\n    &quot;npm.gen-icons.executor&quot;: &quot;Run&quot;,\r\n    &quot;npm.klinecharts &gt; build-dts.executor&quot;: &quot;Run&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,\r\n    &quot;ts.external.directory.path&quot;: &quot;D:\\\\projects\\\\kline-next\\\\node_modules\\\\typescript\\\\lib&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\vendors\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\app\\components\\base\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\EuProjects\\frontend\\comprehensive_big_model\\comprehensive_big_model\\assets\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\EuProjects\\frontend\\comprehensive_big_model\\comprehensive_big_model\\assets\\home\\card-center\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\EuProjects\\frontend\\comprehensive_big_model\\comprehensive_big_model\\.deploy\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\projects\\kline-next\\app\\hooks\" />\r\n      <recent name=\"D:\\projects\\kline-next\\app\\(clientLayout)\\home\" />\r\n      <recent name=\"D:\\projects\\kline-next\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\vendors\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\app\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Docker.Dockerfile\">\r\n    <configuration name=\"save.sh\" type=\"ShConfigurationType\" temporary=\"true\">\r\n      <option name=\"SCRIPT_TEXT\" value=\"\" />\r\n      <option name=\"INDEPENDENT_SCRIPT_PATH\" value=\"true\" />\r\n      <option name=\"SCRIPT_PATH\" value=\"$PROJECT_DIR$/save.sh\" />\r\n      <option name=\"SCRIPT_OPTIONS\" value=\"\" />\r\n      <option name=\"INDEPENDENT_SCRIPT_WORKING_DIRECTORY\" value=\"true\" />\r\n      <option name=\"SCRIPT_WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"INDEPENDENT_INTERPRETER_PATH\" value=\"true\" />\r\n      <option name=\"INTERPRETER_PATH\" value=\"powershell.exe\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"EXECUTE_IN_TERMINAL\" value=\"true\" />\r\n      <option name=\"EXECUTE_SCRIPT_FILE\" value=\"true\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"Dockerfile\" type=\"docker-deploy\" factoryName=\"dockerfile\" temporary=\"true\" server-name=\"Docker\">\r\n      <deployment type=\"dockerfile\">\r\n        <settings>\r\n          <option name=\"containerName\" value=\"klinenext\" />\r\n          <option name=\"portBindings\">\r\n            <list>\r\n              <DockerPortBindingImpl>\r\n                <option name=\"containerPort\" value=\"3000\" />\r\n                <option name=\"hostPort\" value=\"3001\" />\r\n              </DockerPortBindingImpl>\r\n            </list>\r\n          </option>\r\n          <option name=\"sourceFilePath\" value=\"Dockerfile\" />\r\n        </settings>\r\n      </deployment>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"docker-deploy\" factoryName=\"dockerfile\" temporary=\"true\">\r\n      <deployment type=\"dockerfile\">\r\n        <settings />\r\n      </deployment>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"format\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"format\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"gen-icons\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"gen-icons\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"klinecharts &gt; build-dts\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/vendors/klinecharts/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"build-dts\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Docker.Dockerfile\" />\r\n      <item itemvalue=\"npm.format\" />\r\n      <item itemvalue=\"npm.gen-icons\" />\r\n      <item itemvalue=\"npm.klinecharts &gt; build-dts\" />\r\n      <item itemvalue=\"Shell Script.save.sh\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Docker.Dockerfile\" />\r\n        <item itemvalue=\"npm.klinecharts &gt; build-dts\" />\r\n        <item itemvalue=\"npm.format\" />\r\n        <item itemvalue=\"npm.gen-icons\" />\r\n        <item itemvalue=\"Shell Script.save.sh\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration>C:\\Users\\Administrator\\AppData\\Roaming\\Subversion</configuration>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1f6263d0-5c57-419a-9b1d-797dacb72784\" name=\"Changes\" comment=\"\" />\r\n      <created>1721123016904</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1721123016904</updated>\r\n      <workItem from=\"1721123018066\" duration=\"2269000\" />\r\n      <workItem from=\"1721207950545\" duration=\"12544000\" />\r\n      <workItem from=\"1721373417455\" duration=\"8531000\" />\r\n      <workItem from=\"1721630251659\" duration=\"19000\" />\r\n      <workItem from=\"1721634302177\" duration=\"7483000\" />\r\n      <workItem from=\"1721722147898\" duration=\"112455000\" />\r\n      <workItem from=\"1722308020529\" duration=\"12643000\" />\r\n      <workItem from=\"1722403740672\" duration=\"11502000\" />\r\n      <workItem from=\"1722481871800\" duration=\"1961000\" />\r\n      <workItem from=\"1722486499431\" duration=\"342000\" />\r\n      <workItem from=\"1722486851467\" duration=\"30000\" />\r\n      <workItem from=\"1722486886222\" duration=\"266000\" />\r\n      <workItem from=\"1722487283830\" duration=\"248000\" />\r\n      <workItem from=\"1722487541279\" duration=\"34000\" />\r\n      <workItem from=\"1722487581474\" duration=\"4614000\" />\r\n      <workItem from=\"1722512327181\" duration=\"11365000\" />\r\n      <workItem from=\"1722614842325\" duration=\"947000\" />\r\n      <workItem from=\"1722639909287\" duration=\"594000\" />\r\n      <workItem from=\"1722684103611\" duration=\"12537000\" />\r\n      <workItem from=\"1722729099861\" duration=\"15281000\" />\r\n      <workItem from=\"1722744843620\" duration=\"2894000\" />\r\n      <workItem from=\"1722749392281\" duration=\"2569000\" />\r\n      <workItem from=\"1722752115379\" duration=\"1470000\" />\r\n      <workItem from=\"1722755916691\" duration=\"3318000\" />\r\n      <workItem from=\"1722763393179\" duration=\"1631000\" />\r\n      <workItem from=\"1722769904917\" duration=\"2879000\" />\r\n      <workItem from=\"1722775287941\" duration=\"7700000\" />\r\n      <workItem from=\"1722861741218\" duration=\"9365000\" />\r\n      <workItem from=\"1722899844613\" duration=\"2213000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"feature/contextmenu\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT\" value=\"false\" />\r\n    <MESSAGE value=\"feature: 搭建基本布局\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"feature: 搭建基本布局\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 2ceb4281a8bd0361b6f9fdd7069b543ba49b89db)
++++ b/.idea/workspace.xml	(date 1722958555630)
+@@ -5,17 +5,14 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
+-      <change afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2024_8_5_7_04__Changes_.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/app/(clientLayout)/home/logs/page.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/components/command-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Logs.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vendors/extensitons/overlays/textInput.ts" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -71,6 +68,7 @@
+   </component>
+   <component name="HighlightingSettingsPerFile">
+     <setting file="file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+core@7.11.2_@mantine+hooks@7.11.2_react@18.2.0__@types+react@18.2.79_react-dom@18.2._qxyfegsockktv5x56iyzi7jrli/node_modules/@mantine/core/lib/components/Popover/Popover.d.ts" root0="SKIP_INSPECTION" />
++    <setting file="file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+hooks@7.11.2_react@18.2.0/node_modules/@mantine/hooks/lib/use-scroll-into-view/use-scroll-into-view.d.ts" root0="SKIP_INSPECTION" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+@@ -90,7 +88,7 @@
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.19.1&quot;,
+-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;&quot;,
++    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.19.43&quot;,
+     &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next&quot;,
+     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+@@ -247,7 +245,9 @@
+       <workItem from="1722769904917" duration="2879000" />
+       <workItem from="1722775287941" duration="7700000" />
+       <workItem from="1722861741218" duration="9365000" />
+-      <workItem from="1722899844613" duration="2213000" />
++      <workItem from="1722899844613" duration="3692000" />
++      <workItem from="1722918182153" duration="19000" />
++      <workItem from="1722951166959" duration="3682000" />
+     </task>
+     <servers />
+   </component>
+@@ -282,4 +282,16 @@
+     <MESSAGE value="feature: 搭建基本布局" />
+     <option name="LAST_COMMIT_MESSAGE" value="feature: 搭建基本布局" />
+   </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="javascript">
++          <url>file://$PROJECT_DIR$/app/(clientLayout)/home/page.tsx</url>
++          <line>70</line>
++          <properties lambdaOrdinal="-1" />
++          <option name="timeStamp" value="1" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++  </component>
+ </project>
+\ No newline at end of file
+Index: app/(clientLayout)/home/logs/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/(clientLayout)/home/logs/page.tsx b/app/(clientLayout)/home/logs/page.tsx
+new file mode 100644
+--- /dev/null	(date 1722951650385)
++++ b/app/(clientLayout)/home/logs/page.tsx	(date 1722951650385)
+@@ -0,0 +1,8 @@
++
++
++export default function Datasource() {
++  return <>
++
++  </>;
++}
++

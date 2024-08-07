@@ -17,7 +17,9 @@ registerCommand("chart:command:creator", (args) => {
   });
 });
 // 移除图形指令
-
+//registerCommand("chart:command:remove", (args) => {
+//
+//})
 const CommandInitor = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
