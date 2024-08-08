@@ -23,6 +23,7 @@ import {
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import Loading from "@/app/components/base/loading";
 import { getHotkeyHandler } from "@mantine/hooks";
+import { plateListAtom } from "@/app/utils/store/userPlateStore";
 
 function SearchStockInput() {
   const updateCurSearchStockKeywordAtom = useSetAtom(curSearchStockKeywordAtom);
@@ -47,23 +48,40 @@ function SearchStockInput() {
     />
   );
 }
+// 侧边下拉菜单
+function AsideMenus() {
+  // 用户-自定义板块 列表 数据
+  const { data: plateList } = useAtomValue(plateListAtom);
+  return (
+    <Menu>
+      <Menu.Target>
+        <UnstyledButton className={"flex items-center"}>
+          <span className="i-[material-symbols-light--expand-circle-down-outline]"></span>
+          <Text size={"sm"}>自选组</Text>
+        </UnstyledButton>
+      </Menu.Target>
+      <Menu.Dropdown px={"xs"}>
+        {plateList?.content.map((plate) => (
+          <Menu.Item
+            className={"hover:bg-[var(--mantine-default-hover)]"}
+            p={"5px"}
+            key={plate.plate_id}
+          >
+            <Text size={"xs"} className={""}>
+              {plate.plate_name}
+            </Text>
+          </Menu.Item>
+        )) ?? []}
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
 function AsideHeader() {
   return (
     <Group justify={"space-between"} py={"4px"} className={"box-border"}>
-      <Menu>
-        <Menu.Target>
-          <UnstyledButton className={"flex items-center"}>
-            <span className="i-[material-symbols-light--expand-circle-down-outline]"></span>
-            <Text size={"sm"}>自选组</Text>
-          </UnstyledButton>
-        </Menu.Target>
-        <Menu.Dropdown p={"xs"}>
-          <Menu.Item component="a" href="https://mantine.dev">
-            股票列表
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
-
+      <Group>
+        <AsideMenus />
+      </Group>
       <Group mr={"12px"}>
         <SearchStockInput />
       </Group>
@@ -82,9 +100,14 @@ function KLineChart() {
   useEffect(() => {
     const rsi = klineChartMemo.chart.createIndicator("RSI", true);
     const boll = klineChartMemo.chart.createIndicator("BOLL", true);
+    const indicator = klineChartMemo.chart.createIndicator("Custom", true, {
+      id: "candle_pane"
+    });
+
     return () => {
       klineChartMemo.chart.removeIndicator(rsi!);
       klineChartMemo.chart.removeIndicator(boll!);
+      klineChartMemo.chart.removeIndicator(indicator!);
     };
   }, [klineChartMemo.chart]);
   useEffect(() => {

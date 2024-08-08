@@ -23,5 +23,6 @@ export interface IGetStockMarketKline {
   k_type: string;
   adjust_type: string;
 }
+export interface IGetStockMarketKlineResponse {}
 export const getStockMarketKline = (data: IGetStockMarketKline) =>
-  requester.get<IGetStockInfoSearchResponse>("/stock/market/kline", data);
+  requester.get<IGetStockMarketKlineResponse>("/stock/market/kline", data);
