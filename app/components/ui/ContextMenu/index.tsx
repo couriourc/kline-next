@@ -1,3 +1,4 @@
+"use client";
 import { ContextMenu, ContextMenuItem } from "rctx-contextmenu";
 import "react-cmdk/dist/cmdk.css";
 import {
@@ -15,6 +16,7 @@ import { executeCommand } from "@/app/hooks/use-event-emitter";
 import _ from "underscore";
 import { CommandEnum, ContextMenuEnum, type ExecutionMenuItem } from "./types";
 import Handlebars from "handlebars";
+import { useRouter } from "next/navigation";
 
 /**
  * 快捷方式的权重计算
@@ -38,6 +40,18 @@ const executionMenuList: ExecutionMenuItem[] = [
     executor(args) {
       executeCommand("chart:command:creator", args);
     }
+  },
+  {
+    label: "下载本页标记",
+    isEqual: () => true
+  },
+  {
+    label: "查看涂层",
+    isEqual: () => true,
+    executor(args) {
+      args?.router?.push("/home/layers");
+      executeCommand("view:layers", "/home/layers");
+    }
   }
 ];
 
@@ -46,7 +60,7 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   const curSelectedItem = useRef<ExecutionMenuItem>();
   const [curSelectedItemIndex, updateCurSelectedItemIndex] =
     useState<number>(0);
-
+  const router = useRouter();
   const filteredList = useMemo(() => {
     const commands = executionMenuList.filter((item) =>
       item.isEqual?.(inputValue, item, ContextMenuEnum.CHART)
@@ -71,7 +85,8 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
       params: {
         search: inputValue,
         command: item.command
-      }
+      },
+      router
     });
     hidden();
   };

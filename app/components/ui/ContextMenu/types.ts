@@ -22,4 +22,5 @@ export interface ExecutionMenuItem {
     paneId?: ContextMenuEnum
   ) => boolean;
   executor?: (args?: Events["chart:command:creator"]) => any;
+  children?: ExecutionMenuItem[];
 }

@@ -1,9 +1,10 @@
 "use client";
-import { KlineChartModule } from "@/app/components/KlineCharts/core";
-import type { ICommands } from "@/app/components/KlineCharts/type";
+import { KlineChartModule } from "./core";
 import type { OverlayCreate } from "couriourc-klinecharts";
 import _ from "underscore";
-import { defaultOverlayExtendData } from "@/app/components/KlineCharts/schema";
+import { updateDrawStore } from "./stateFn/store";
+import type { ICommands } from "./types";
+import { makeAttributes } from "@/app/components/KlineCharts/utils/makeAttributes";
 
 const klineChartInstance = KlineChartModule();
 
@@ -11,9 +12,14 @@ function arrifyOverlay<T>(target: T | T[]): T[] {
   return _.isArray(target) ? target : [target];
 }
 
+type OverlayCreatorOverrid = OverlayCreate & {
+  setup: boolean;
+};
 const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
   const wrapperOverlayFunction = (nameOrOption: string | OverlayCreate) => {
-    const option: OverlayCreate = {} as OverlayCreate;
+    const option: OverlayCreatorOverrid = {
+      setup: false
+    } as OverlayCreatorOverrid;
     if (_.isString(nameOrOption)) {
       option.name = nameOrOption;
     } else {
@@ -56,14 +62,12 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
             return true;
           };
           break;
+        default:
+          break;
       }
     });
     // 内置信息
-    console.log(option?.extendData);
-    option.extendData = {
-      ...defaultOverlayExtendData,
-      ...(option?.extendData ?? {})
-    };
+    option.extendData = makeAttributes();
     return option as OverlayCreate;
   };
   const wrapperOverlayCreator = arrifyOverlay(overlayCreator).map(
@@ -73,15 +77,28 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     wrapperOverlayCreator,
     paneId
   ) as string[];
+  // 附加 overlay_id
+  wrapperOverlayCreator.forEach((item, id) => {
+    item.extendData.overlay_id = overlayIds[id]! as string;
+    return item.extendData;
+  });
   // 创建覆层
   klineChartInstance.emitter.emit(
     "overlay:create",
-    getOverlayByIds(overlayIds)
+    wrapperOverlayCreator.map((item) => item.extendData)
   );
   // 获取
   return overlayIds;
 };
 const removeOverlay: ICommands["removeOverlay"] = (...args) => {
+  if (!args[0]) {
+    return updateDrawStore((state) => {
+      state.forEach((overlayExtend, _id) => {
+        klineChartInstance.chart.removeOverlay(overlayExtend.id);
+      });
+      return state;
+    });
+  }
   const overlayIds = arrifyOverlay(args[0]);
   // 移除覆层
   klineChartInstance.emitter.emit(
@@ -99,6 +116,8 @@ const getOverlayByIds: ICommands["getOverlayByIds"] = (...args) => {
     return klineChartInstance.chart.getOverlayById(idOrOption.id!);
   });
 };
+const overrideOverlay: ICommands["overrideOverlay"] = (...args) =>
+  klineChartInstance.chart.overrideOverlay(...args);
 const resize: ICommands["resize"] = () => {
   return klineChartInstance.chart?.resize();
 };
@@ -106,13 +125,14 @@ const commands: ICommands = {
   createOverlay,
   removeOverlay,
   getOverlayByIds,
-  resize
+  resize,
+  overrideOverlay
 };
 
 export function executeChartCommand<T extends keyof ICommands>(
   type: T,
-  ...args: Parameters<ICommands[T]>
-): ReturnType<ICommands[T]> {
+  ...args: ICommands[T] extends (...args: infer P) => any ? P : never[]
+): void {
   klineChartInstance.emitter.emit("command:setup", {
     type,
     args

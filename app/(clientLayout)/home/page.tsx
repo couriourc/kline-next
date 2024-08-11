@@ -1,9 +1,11 @@
 "use client";
 import { useAtom, useSetAtom } from "jotai";
 import {
+  curSelectedPlateAtom,
   curSelectedStockAtom,
+  labelKlineDownAtom,
   stockListAtom
-} from "@/app/utils/store/chartStore";
+} from "@/app/store/chartStore";
 import DataGrid, {
   type Column,
   type Renderers,
@@ -13,19 +15,26 @@ import DataGrid, {
 import "react-data-grid/lib/styles.css";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { css, cx } from "@emotion/css";
 import {
   ActionIcon,
   Badge,
   Blockquote,
   Flex,
+  Group,
   Loader,
   Menu,
-  Text
+  Text,
+  TextInput,
+  UnstyledButton
 } from "@mantine/core";
 import type { DynamicProps } from "@/app/types/misc";
 import _ from "underscore";
+import { useAtomValue } from "jotai/index";
+import { plateListAtom } from "@/app/store/userPlateStore";
+import type { IGetUserCustomPlateResponseContentItem } from "@/app/services/plate.api";
+import Fuse from "fuse.js";
 
 interface StockListRow {
   stock_code: string;
@@ -96,6 +105,124 @@ function DraggableRowRenderer<R, SR>({
     />
   );
 }
+
+//function SearchStockInput() {
+//  const updateCurSearchStockKeywordAtom = useSetAtom(curSearchStockKeywordAtom);
+//  const inputRef = useRef<HTMLInputElement | null>(null);
+//  const handleEnterSearch = getHotkeyHandler([
+//    [
+//      "Enter",
+//      (ev) => {
+//        // 聚焦搜索
+//        updateCurSearchStockKeywordAtom(ev.target.value);
+//      }
+//    ]
+//  ]);
+//  return (
+//    <Input
+//      ref={inputRef}
+//      placeholder={"搜索"}
+//      className={"!h-full"}
+//      onKeyDown={handleEnterSearch}
+//      rightSection={<i className={"i-mdi-search"} />}
+//      size="xs"
+//    />
+//  );
+//}
+// 侧边下拉菜单
+function AsideMenus() {
+  // 用户-自定义板块 列表 数据
+  const { data: plateList, isLoading } = useAtomValue(plateListAtom);
+  const [currentPlate, updateCurrentPlate] = useAtom(curSelectedPlateAtom);
+  const [searchValue, updateSearchValue] = useState("");
+
+  const handleUpdate = useCallback(
+    (plate: IGetUserCustomPlateResponseContentItem) => {
+      updateCurrentPlate(plate);
+    },
+    [updateCurrentPlate]
+  );
+
+  const list = useMemo(() => {
+    if (!plateList) return [];
+    const _list = plateList.content;
+    handleUpdate(_list[0]);
+    return _list ?? [];
+  }, [isLoading]);
+
+  const fuse = useMemo(
+    () =>
+      new Fuse(list, {
+        includeScore: true,
+        useExtendedSearch: true,
+        keys: ["plate_name"]
+      }),
+    [isLoading]
+  );
+  const filteredItems = useMemo(() => {
+    if (!searchValue?.trim().length) return list;
+
+    return fuse.search(searchValue).map(({ item }) => item);
+  }, [isLoading, searchValue]);
+  return (
+    <Menu closeOnItemClick={false}>
+      <Menu.Target>
+        <UnstyledButton className={"flex items-center"}>
+          <span className="i-[material-symbols-light--expand-circle-down-outline]"></span>
+          <Text size={"sm"}>{currentPlate?.plate_name}</Text>
+        </UnstyledButton>
+      </Menu.Target>
+      <Menu.Dropdown px={"xs"}>
+        <Menu.Item className={"!w-[200px] truncate"} p={"5px"}>
+          <TextInput
+            onChange={(ev) => {
+              updateSearchValue(ev.target.value);
+            }}
+            size={"xs"}
+            rightSection={<i className={"i-mdi-add"}></i>}
+            placeholder={"搜索或添加分组"}
+          ></TextInput>
+        </Menu.Item>
+        {filteredItems.map((plate, index) => (
+          <Menu.Item
+            className={cx(
+              `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,
+              {
+                active: plate.plate_id === currentPlate?.plate_id
+              }
+            )}
+            p={"5px"}
+            key={plate.plate_id + index}
+            onClick={() => {
+              handleUpdate(plate);
+            }}
+          >
+            <Text size={"xs"} className={""}>
+              {plate.plate_name}
+            </Text>
+          </Menu.Item>
+        )) ?? []}
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+
+function AsideHeader() {
+  const { mutate: download } = useAtomValue(labelKlineDownAtom);
+  return (
+    <Group justify={"space-between"} py={"4px"} className={"box-border"}>
+      <Group>
+        <AsideMenus />
+      </Group>
+      <Group mr={"12px"}>
+        <ActionIcon variant={"outline"} onClick={() => download()}>
+          <i className={"i-mdi-download"}></i>
+        </ActionIcon>
+      </Group>
+    </Group>
+  );
+}
+
 export default function Datasource() {
   const [{ data, isLoading }] = useAtom(stockListAtom);
   const updateCurSelectedStockAtom = useSetAtom(curSelectedStockAtom);
@@ -145,16 +272,6 @@ export default function Datasource() {
       width: 28,
       resizable: true,
       renderCell() {
-        //        const [{ isDragging }, drag] = useDrag({
-        //          type: "ROW_DRAG",
-        //          item: row,
-        //          collect: (monitor) => {
-        //            console.log(monitor.isDragging())
-        //            return {
-        //              isDragging: monitor.isDragging()
-        //            };
-        //          }
-        //        });
         return (
           <Menu shadow="md" trigger={"hover"}>
             <Menu.Target>
@@ -195,7 +312,8 @@ export default function Datasource() {
   };
 
   return (
-    <>
+    <Flex w={"100%"} p={"4px"} direction={"column"} gap={6}>
+      <AsideHeader />
       <div className={"h-full w-full grow"}>
         {isLoading ? (
           <Flex py={45} justify={"center"} align={"center"}>
@@ -230,6 +348,6 @@ export default function Datasource() {
           </Blockquote>
         )}
       </div>
-    </>
+    </Flex>
   );
 }
