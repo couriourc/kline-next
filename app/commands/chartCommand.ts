@@ -37,3 +37,4 @@ registerCommand("chart:command:visible", (visible: boolean) => {
     visible: visible
   });
 });
+/**/

@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { Text } from "@mantine/core";
 import Loading from "@/app/components/base/loading";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
+import { ActionType } from "couriourc-klinecharts";
+
 const klineChartMemo = KlineChartModule();
 
 export function KLineChart() {
@@ -36,8 +38,17 @@ export function KLineChart() {
     const indicator = klineChartMemo.chart.createIndicator("Custom", true, {
       id: "candle_pane"
     });
-
+    const callback = (data) => {
+      console.log(`[🪪]data-->`, data);
+    };
+    Object.keys(ActionType).forEach((type) => {
+      klineChartMemo.chart.subscribeAction(type as ActionType, callback);
+    });
     return () => {
+      Object.keys(ActionType).forEach((type) => {
+        klineChartMemo.chart.unsubscribeAction(type as ActionType, callback);
+      });
+
       klineChartMemo.chart.removeIndicator(rsi!);
       klineChartMemo.chart.removeIndicator(boll!);
       klineChartMemo.chart.removeIndicator(indicator!);

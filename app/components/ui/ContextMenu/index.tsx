@@ -1,59 +1,14 @@
 "use client";
 import { ContextMenu, ContextMenuItem } from "rctx-contextmenu";
 import "react-cmdk/dist/cmdk.css";
-import {
-  ActionIcon,
-  Flex,
-  Group,
-  Input,
-  List,
-  ScrollArea,
-  Tooltip
-} from "@mantine/core";
+import { Flex, Input, List, ScrollArea } from "@mantine/core";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { cx } from "@emotion/css";
-import { executeCommand } from "@/app/hooks/use-event-emitter";
 import _ from "underscore";
-import { CommandEnum, ContextMenuEnum, type ExecutionMenuItem } from "./types";
+import { ContextMenuEnum, type ExecutionMenuItem } from "./types";
 import Handlebars from "handlebars";
 import { useRouter } from "next/navigation";
-
-/**
- * 快捷方式的权重计算
- * 满足 category
- * 满足 equal
- * */
-const executionMenuList: ExecutionMenuItem[] = [
-  {
-    label: "搜索股票代码‘{{params.search}}’",
-    command: "createSelfGroup",
-    isEqual: (search) => {
-      return !!search.length;
-    },
-    category: CommandEnum.TABLE
-  },
-  {
-    label: "添加文本标记",
-    command: "createTextOverlay",
-    isEqual: () => true,
-    category: CommandEnum.CHART,
-    executor(args) {
-      executeCommand("chart:command:creator", args);
-    }
-  },
-  {
-    label: "下载本页标记",
-    isEqual: () => true
-  },
-  {
-    label: "查看涂层",
-    isEqual: () => true,
-    executor(args) {
-      args?.router?.push("/home/layers");
-      executeCommand("view:layers", "/home/layers");
-    }
-  }
-];
+import { executionMenuList } from "@/app/commands/contextMenuCommands";
 
 const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   const [inputValue, updateInputValue] = useState("");
@@ -106,6 +61,10 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   }
   function resolveLabel(item: ExecutionMenuItem) {
     if (!item.label) return item.label;
+    if (_.isFunction(item.label)) {
+      const ItemLabel = item.label;
+      return <ItemLabel search={inputValue} />;
+    }
     if (!_.isString(item.label)) return item.label;
     return Handlebars.compile(item.label)({
       params: {
@@ -127,18 +86,6 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
         size={"sm"}
         rightSection={<i className={"i-mdi-search"} />}
       />
-      <Group gap={2}>
-        <Tooltip label={"指令分类"}>
-          <ActionIcon>
-            <i className={"i-mdi-settings"}></i>
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label={"指令分类"}>
-          <ActionIcon>
-            <i className={"i-mdi-gift"}></i>
-          </ActionIcon>
-        </Tooltip>
-      </Group>
       <ScrollArea className={"w-full grow"} mah={400}>
         <List className={cx(`flex w-full flex-col gap-[6px]`)}>
           {filteredList.map((item) => {

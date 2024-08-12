@@ -45,6 +45,7 @@ export const KlineChartModule = (() => {
             styles: defaultTheme
           })!;
           emitter.emit("chart:setup", chartMemo);
+
           return () => {
             emitter.emit("chart:destroy", chartMemo);
             dispose(ref.current);

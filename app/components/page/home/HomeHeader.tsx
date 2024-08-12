@@ -8,6 +8,8 @@ import {
 import { NEXT_PUBLIC_CHART_WEBSITE_NAME } from "@/config";
 import { useRouter } from "next/navigation";
 import { PeriodBar } from "@/app/components/page/home/components/PeriodBar";
+import { SettingModal } from "@/app/components/modals/setting-modals";
+import { TimezoneModals } from "@/app/components/modals/timezone-modals";
 
 export function HomeHeader() {
   const router = useRouter();
@@ -32,9 +34,8 @@ export function HomeHeader() {
             <PeriodBar />
           </Group>
           <Group>
-            <ActionIcon variant={"outline"}>
-              <i className={"i-material-symbols-light-settings"} />
-            </ActionIcon>
+            <SettingModal />
+            <TimezoneModals />
             <ActionIcon
               variant={"outline"}
               onClick={() => router.push("/home/layers")}

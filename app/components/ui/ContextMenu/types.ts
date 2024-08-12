@@ -1,4 +1,5 @@
 import type { Events } from "@/app/hooks/use-event-emitter";
+import type { FC } from "react";
 
 export enum ContextMenuEnum {
   CHART = "ContextMenuEnumCHART",
@@ -10,7 +11,7 @@ export enum CommandEnum {
 }
 
 export interface ExecutionMenuItem {
-  label: string;
+  label: string | FC;
   description?: string;
   icon?: string;
   key?: string;

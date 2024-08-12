@@ -1,3 +1,5 @@
+"use client";
+import Router from "next/router";
 import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { OverlayMode } from "couriourc-klinecharts";
@@ -31,7 +33,7 @@ export const rightTools: ExecutionMenuItem[] = [
     }
   },
   {
-    label: "磁吸状态",
+    label: "磁吸",
     description: "磁吸",
     icon: "i-mdi-magnet ",
     key: "change-magnet",
@@ -41,9 +43,9 @@ export const rightTools: ExecutionMenuItem[] = [
     }
   },
   {
-    label: "磁吸状态",
-    description: "磁吸",
-    icon: "i-mdi-locker ",
+    label: "锁定",
+    description: "锁定所有绘图",
+    icon: "i-[mdi--lock-open-outline]",
     key: "change-lock",
     command: "changeMagnet",
     executor() {
@@ -51,13 +53,23 @@ export const rightTools: ExecutionMenuItem[] = [
     }
   },
   {
-    label: "磁吸状态",
-    description: "磁吸",
+    label: "隐藏",
+    description: "隐藏绘图",
     icon: "i-mdi-eye",
     key: "change-eye",
     command: "changeVisible",
     executor() {
       executeCommand("chart:command:visible");
+    }
+  },
+  {
+    label: "层级",
+    description: "层级",
+    icon: "i-[material-symbols-light--layers-outline-rounded]",
+    key: "change-layers",
+    command: "changeLayers",
+    executor() {
+      Router.push("/layers");
     }
   }
 ];

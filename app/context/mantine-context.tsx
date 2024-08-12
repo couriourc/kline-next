@@ -36,6 +36,12 @@ import "@mantine/core/styles/SimpleGrid.css";
 import "@mantine/core/styles/Fieldset.css";
 import "@mantine/core/styles/Divider.css";
 import "@mantine/core/styles/Button.css";
+import "@mantine/core/styles/Switch.css";
+import "@mantine/core/styles/ModalBase.css";
+import "@mantine/core/styles/Modal.css";
+import "@mantine/core/styles/Combobox.css";
+import "@mantine/core/styles/CloseButton.css";
+import "@mantine/core/styles/Overlay.css";
 // 布局样式
 
 // 插件样式

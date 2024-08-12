@@ -57,14 +57,13 @@ const AttributePanel = () => {
   });
   useEffect(() => {
     return reset;
-  }, [selectedLayer?.[0].id]);
+  }, [selectedLayer?.[0]?.id]);
   if (!selectedLayer?.length) return null;
   const label = register("label");
   const handleUpdate = (value: string) => {
     updateDrawStore((prev) => {
       selectedLayer.forEach((layer) => {
         layer.attributes.label = value ?? "";
-        console.log(layer.id);
         prev.set(layer.id, layer);
       });
       return prev;
