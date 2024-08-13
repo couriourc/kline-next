@@ -23,7 +23,7 @@
     "lint": "biome lint . --no-errors-on-unmatched",
     "lint:fix": "pnpm run lint --write",
     "prepare": "pnpm exec simple-git-hooks",
-    "test": "dotenvx run --env-file=.env.example --  playwright test -w"
+    "test": "dotenv --env-file=.env.example --  playwright test"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
@@ -45,12 +45,12 @@
     "@unocss/webpack": "^0.61.0",
     "ahooks": "^3.7.5",
     "axios": "^1.7.2",
+    "canvas-sketch-util": "^1.10.0",
     "canvas-txt": "^4.1.1",
     "copy-to-clipboard": "^3.3.3",
     "couriourc-klinecharts": "9.8.11",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.7",
-    "dotenv": "^16.4.5",
     "downloadjs": "^1.4.7",
     "emoji-mart": "^5.5.2",
     "framer-motion": "^11.2.12",
@@ -142,6 +142,8 @@
     "cp-cli": "^2.0.0",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.7",
     "lodash": "^4.17.21",

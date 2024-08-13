@@ -1,6 +1,6 @@
-import type { Figure } from "couriourc-klinecharts";
+import type { FigureTemplate } from "couriourc-klinecharts";
 
-const diamond: Figure = {
+const diamond: FigureTemplate = {
   name: "diamond",
   checkEventOn: (coordinate, attrs) => {
     const { x, y, width, height } = attrs;

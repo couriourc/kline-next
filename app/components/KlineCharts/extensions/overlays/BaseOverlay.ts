@@ -11,6 +11,7 @@ import {
   updateDrawStore
 } from "@/app/components/KlineCharts/stateFn/store";
 import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
+import _ from "underscore";
 
 export interface BaseOverlay extends OverlayTemplate {
   createPointFigures(
@@ -23,7 +24,7 @@ type DefineOverlay = (
   fn: () => Omit<BaseOverlay, "onDrawStart">
 ) => OverlayTemplate;
 export const create: DefineOverlay = (fn) => {
-  const pre = fn() as BaseOverlay;
+  const pre = (_.isFunction(fn) ? fn() : fn) as BaseOverlay;
   const dfs = (
     vm: WrappedOverlay | Overlay,
     key: string,

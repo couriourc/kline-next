@@ -1,6 +1,6 @@
-import type { Figure } from "couriourc-klinecharts";
+import type { FigureTemplate } from "couriourc-klinecharts";
 
-const icon: Figure = {
+const icon: FigureTemplate = {
   name: "icon",
   checkEventOn: (coordinate, attrs) => {
     const { x, y, width, height } = attrs;
@@ -8,6 +8,6 @@ const icon: Figure = {
     const yDis = Math.abs(coordinate.y - y);
     return xDis * height + yDis * width < (width * height) / 2;
   },
-  draw: (ctx, attrs, styles) => {}
+  draw: () => true
 };
 export default icon;
