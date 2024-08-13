@@ -4,6 +4,7 @@ import {
   curSelectedPlateAtom,
   curSelectedStockAtom,
   labelKlineDownAtom,
+  mutationUserCustomPlateA,
   stockListAtom
 } from "@/app/store/chartStore";
 import DataGrid, {
@@ -13,8 +14,7 @@ import DataGrid, {
   Row
 } from "react-data-grid";
 import "react-data-grid/lib/styles.css";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDrag, useDrop } from "react-dnd";
 import { useCallback, useMemo, useState } from "react";
 import { css, cx } from "@emotion/css";
 import {
@@ -111,6 +111,9 @@ function AsideMenus() {
   const [currentPlate, updateCurrentPlate] = useAtom(curSelectedPlateAtom);
   const [searchValue, updateSearchValue] = useState("");
 
+  const { mutate: mutateUserCustomPlateA } = useAtomValue(
+    mutationUserCustomPlateA
+  );
   const handleUpdate = useCallback(updateCurrentPlate, [updateCurrentPlate]);
 
   const list = useMemo(() => {
@@ -153,25 +156,39 @@ function AsideMenus() {
             placeholder={"搜索或添加分组"}
           ></TextInput>
         </Menu.Item>
-        {filteredItems.map((plate, index) => (
+        {filteredItems.length ? (
+          (filteredItems.map((plate, index) => (
+            <Menu.Item
+              className={cx(
+                `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,
+                {
+                  active: plate.plate_id === currentPlate?.plate_id
+                }
+              )}
+              p={"5px"}
+              key={plate.plate_id + index}
+              onClick={() => {
+                handleUpdate(plate);
+              }}
+            >
+              <Text size={"xs"} className={""}>
+                {plate.plate_name}
+              </Text>
+            </Menu.Item>
+          )) ?? [])
+        ) : (
           <Menu.Item
-            className={cx(
-              `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,
-              {
-                active: plate.plate_id === currentPlate?.plate_id
-              }
-            )}
             p={"5px"}
-            key={plate.plate_id + index}
             onClick={() => {
-              handleUpdate(plate);
+              mutateUserCustomPlateA({
+                plate_name: searchValue,
+                plate_code: ""
+              });
             }}
           >
-            <Text size={"xs"} className={""}>
-              {plate.plate_name}
-            </Text>
+            <Text size={"xs"}>新增‘{searchValue}’</Text>
           </Menu.Item>
-        )) ?? []}
+        )}
       </Menu.Dropdown>
     </Menu>
   );
@@ -245,7 +262,12 @@ export default function Datasource() {
         return (
           <Menu shadow="md" trigger={"hover"}>
             <Menu.Target>
-              <ActionIcon aria-label="menu" draggable>
+              <ActionIcon
+                aria-label="menu"
+                variant={"transparent"}
+                component={"button"}
+                draggable
+              >
                 <i className={"i-mdi-menu"} />
               </ActionIcon>
             </Menu.Target>
@@ -290,17 +312,15 @@ export default function Datasource() {
             <Loader />
           </Flex>
         ) : rows.length !== 0 ? (
-          <DndProvider backend={HTML5Backend}>
-            <DataGrid<StockListRow>
-              columns={columns}
-              className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
-              rows={rows}
-              rowKeyGetter={(state: StockListRow) =>
-                state.stock_code + _.uniqueId()
-              }
-              renderers={renderers}
-            />
-          </DndProvider>
+          <DataGrid<StockListRow>
+            columns={columns}
+            className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
+            rows={rows}
+            rowKeyGetter={(state: StockListRow) =>
+              state.stock_code + _.uniqueId()
+            }
+            renderers={renderers}
+          />
         ) : (
           <Blockquote
             w={"92%"}

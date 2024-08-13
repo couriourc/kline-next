@@ -1,15 +1,17 @@
 import { useAtom, useAtomValue } from "jotai/index";
 import {
   curSelectedStockAtom,
-  mutationLabelKlineA,
   stockMarketKlineChartAtom
 } from "@/app/store/chartStore";
 import { useEffect } from "react";
 import { Text } from "@mantine/core";
 import Loading from "@/app/components/base/loading";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
-import { ActionType } from "couriourc-klinecharts";
-import FloatingMenu from "@/app/components/ui/FloatingMenu";
+import { type ActionCallback, ActionType } from "couriourc-klinecharts";
+import Dock from "@/app/components/ui/Dock";
+import "./listeners";
+import { CommandPosition, useSetupCommandsByPosition } from "@/app/commands";
+
 const klineChartMemo = KlineChartModule();
 
 export function KLineChart() {
@@ -19,18 +21,6 @@ export function KLineChart() {
     stockMarketKlineChartAtom
   );
   const curSelectedStockCode = useAtomValue(curSelectedStockAtom);
-  const { mutate: handleMutationLabelKlineA } =
-    useAtomValue(mutationLabelKlineA);
-  klineChartMemo.useCommand("overlay:onDrawEnd", async (overlay) => {
-    return handleMutationLabelKlineA({
-      k_type: 0,
-      adjust_type: 0,
-      pos: "1713398400000",
-      label_type: "string",
-      label_text: "string",
-      user_id: "adata"
-    });
-  });
 
   useEffect(() => {
     const rsi = klineChartMemo.chart.createIndicator("RSI", true);
@@ -38,7 +28,7 @@ export function KLineChart() {
     const indicator = klineChartMemo.chart.createIndicator("Custom", true, {
       id: "candle_pane"
     });
-    const callback = (data) => {
+    const callback: ActionCallback = (data) => {
       console.log(`[🪪]data-->`, data);
     };
     Object.keys(ActionType).forEach((type) => {
@@ -54,6 +44,7 @@ export function KLineChart() {
       klineChartMemo.chart.removeIndicator(indicator!);
     };
   }, [klineChartMemo.chart]);
+
   useEffect(() => {
     if (!stockMarketKlineChartData?.content) return;
     klineChartMemo.chart.applyNewData?.(
@@ -61,6 +52,8 @@ export function KLineChart() {
     );
   }, [stockMarketKlineChartData?.content]);
 
+  /*setup with hook command*/
+  useSetupCommandsByPosition(CommandPosition.Main);
   return (
     <>
       <div className={"relative w-full grow"} ref={klineRef}>
@@ -83,7 +76,7 @@ export function KLineChart() {
           </div>
         )}
       </div>
-      <FloatingMenu />
+      <Dock />
     </>
   );
 }

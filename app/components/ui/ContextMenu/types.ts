@@ -1,5 +1,6 @@
 import type { Events } from "@/app/hooks/use-event-emitter";
 import type { FC } from "react";
+import type { CommandPosition } from "@/app/commands";
 
 export enum ContextMenuEnum {
   CHART = "ContextMenuEnumCHART",
@@ -27,4 +28,6 @@ export interface ExecutionMenuItem {
   onChildExecute?: (child: ExecutionMenuItem) => any;
   executor?: (args?: Events["chart:command:creator"]) => any;
   children?: ExecutionMenuItem[];
+  pos?: CommandPosition;
+  setup?: () => any;
 }

@@ -26,7 +26,9 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     } else {
       Object.assign(option, nameOrOption);
     }
-
+    // 内置信息
+    option.extendData = makeAttributes();
+    option.id = option.extendData.id;
     (
       [
         "onDrawStart",
@@ -45,15 +47,13 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
         "onDeselected"
       ] as const
     ).forEach((fnName) => {
-      let fn = option[fnName];
+      const fn = option[fnName];
       // turn all events into function that emits the corresponding event to the chart instance
       option[fnName] = (...args) => {
         const overlay = args[0].overlay;
-        klineChartInstance.emitter.emit(`overlay:${fnName}`, overlay);
+        klineChartInstance.emitter.emit(`overlay:${fnName}`, args[0]);
         return !!fn?.(...args);
       };
-
-      fn = option[fnName];
 
       switch (fnName) {
         case "onRightClick":
@@ -69,7 +69,7 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
           option[fnName] = (...args) => {
             const overlay = args[0].overlay;
             klineChartInstance.emitter.emit("overlay:removed", overlay);
-            removeDrawStore(overlay.extendData);
+            removeDrawStore([overlay.extendData]);
             fn?.(...args);
             return true;
           };
@@ -78,8 +78,6 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
           break;
       }
     });
-    // 内置信息
-    option.extendData = makeAttributes();
     return option as OverlayCreate;
   };
   const wrapperOverlayCreator = arrifyOverlay(overlayCreator).map(
@@ -94,25 +92,20 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
     item.extendData.overlay_id = overlayIds[id]! as string;
     return item.extendData;
   });
+  console.log(`[🪪]wrapperOverlayCreator-->`, wrapperOverlayCreator);
+
   // 创建覆层
-  klineChartInstance.emitter.emit(
-    "overlay:onCreated",
-    wrapperOverlayCreator.map((item) => item.extendData)
-  );
+  //  klineChartInstance.emitter.emit(
+  //    `overlay:${LifeCycle.}`,
+  //    wrapperOverlayCreator.map((item) => item.extendData)
+  //  );
   // 获取
   return overlayIds;
 };
-const removeOverlay: ICommands["removeOverlay"] = (...args) => {
-  if (!args[0]) {
-    return removeDrawStore();
-  }
-  const overlayIds = arrifyOverlay(args[0]);
-  // 移除覆层
-  klineChartInstance.emitter.emit(
-    "overlay:removed",
-    getOverlayByIds(overlayIds as string[])
-  );
-  return overlayIds.forEach((id) => klineChartInstance.chart.removeOverlay(id));
+const removeOverlay: ICommands["removeOverlay"] = (args) => {
+  console.log(`[🪪]args-->`, args);
+
+  KlineChartModule().chart.removeOverlay(args);
 };
 const getOverlayByIds: ICommands["getOverlayByIds"] = (...args) => {
   const overlayIds = arrifyOverlay(args[0]);

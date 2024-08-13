@@ -92,25 +92,17 @@ export default function requester<T>(
   method = method.toLowerCase();
   const methodFilter = ["post", "get", "delete", "put", "patch"];
   const paramsFilter = ["get", "delete"];
-  if (methodFilter.includes(method)) {
-    const isParams = paramsFilter.includes(method);
-    data = isParams
-      ? {
-          params: data
-        }
-      : { data };
-
-    return request({
-      method,
-      url,
-      headers: {},
-      ...data,
-      ...config
-    });
-  } else {
-    //    console.error("未知的method" + method);
+  if (!methodFilter.includes(method))
     return Promise.reject(`未知的method${method}`);
-  }
+  const isParams = paramsFilter.includes(method);
+  data = isParams ? { params: data } : { data };
+  return request({
+    method,
+    url,
+    headers: {},
+    ...data,
+    ...config
+  });
 }
 /*@ts-ignore*/
 export const withMockData: <T extends (...args: any) => any>(fn: T) => T =

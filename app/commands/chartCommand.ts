@@ -1,6 +1,8 @@
 import { registerCommand } from "@/app/hooks/use-event-emitter";
 import { executeChartCommand } from "@/app/components/KlineCharts/commands";
 import type { OverlayMode } from "couriourc-klinecharts";
+import { removeDrawStore } from "@/app/components/KlineCharts/stateFn/store";
+import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
 // ！！注册基本实例
 // 系统局部指令
 registerCommand("chart:command:resize", () => {
@@ -16,8 +18,14 @@ registerCommand("chart:command:creator", (args) => {
   });
 });
 // 移除图形指令
-registerCommand("chart:command:cleanup", (groupId) => {
-  executeChartCommand("removeOverlay", { groupId });
+registerCommand("chart:command:cleanup", (overlays: WrappedOverlay[]) => {
+  removeDrawStore(overlays);
+  overlays.forEach((overlay) => {
+    /*@ts-ignore*/
+    return executeChartCommand("removeOverlay", {
+      groupId: overlay.id as string
+    });
+  });
 });
 /*改变磁吸状态*/
 registerCommand("chart:command:magnet", (mode: OverlayMode) => {

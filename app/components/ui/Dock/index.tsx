@@ -4,9 +4,11 @@ import { SettingModal } from "@/app/components/modals/setting-modals";
 import { TimezoneModals } from "@/app/components/modals/timezone-modals";
 import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
-import { useHotkeys } from "@mantine/hooks";
-import type { HotkeyItem } from "@mantine/hooks/lib/use-hotkeys/use-hotkeys";
-import { CommandPosition, getCommandsByPosition } from "@/app/commands";
+import {
+  CommandPosition,
+  getCommandsByPosition,
+  useSetupCommandsByPosition
+} from "@/app/commands";
 
 export default function FloatingMenu() {
   const dockerTools = getCommandsByPosition(CommandPosition.Docker);
@@ -45,15 +47,7 @@ export default function FloatingMenu() {
     );
   };
 
-  useHotkeys(
-    dockerTools
-      .filter((item) => !item.disabled)
-      .filter((item) => item.shortcuts)
-      .map((tool) => {
-        if (!tool.shortcuts) return [] as unknown as HotkeyItem;
-        return [tool.shortcuts, () => tool.executor?.()] as HotkeyItem;
-      })
-  );
+  useSetupCommandsByPosition(CommandPosition.Docker);
 
   return (
     <div

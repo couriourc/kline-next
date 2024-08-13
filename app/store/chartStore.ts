@@ -10,7 +10,12 @@ import {
   type IPostLabelKlineA,
   postLabelKlineA
 } from "@/app/services/label.api";
-import type { IGetUserCustomPlateResponseContentItem } from "@/app/services/plate.api";
+import {
+  type IGetUserCustomPlateResponseContentItem,
+  type IPostUserCustomPlate,
+  postUserCustomPlateA
+} from "@/app/services/plate.api";
+import download from "downloadjs";
 
 // 当前选择的K线股票代码
 export const curSelectedStockAtom = atom<string | null>("600000");
@@ -66,9 +71,20 @@ export const labelKlineDownAtom = atomWithMutation((get) => {
       if (!curSelectedPlate) {
         return;
       }
-      return await getLabelKlineDown({
+      return getLabelKlineDown({
         plate_id: curSelectedPlate.plate_id
+      }).then((res) => {
+        download(res.content);
       });
+    }
+  };
+});
+
+export const mutationUserCustomPlateA = atomWithMutation((get) => {
+  return {
+    mutationKey: ["userCustomPlateA"],
+    mutationFn: async (data: IPostUserCustomPlate) => {
+      return await postUserCustomPlateA(data);
     }
   };
 });

@@ -1,12 +1,16 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { type Chart, dispose, init } from "couriourc-klinecharts";
+import {
+  type Chart,
+  dispose,
+  init,
+  type OverlayEvent
+} from "couriourc-klinecharts";
 import mitt, { type Emitter } from "mitt";
 import "./plugins/lang";
 import "./extensions";
 import { defaultTheme } from "./plugins/theme";
 import { formatDate } from "./stateFn";
-import type { WrappedOverlay } from "./types";
 
 export enum LifeCycle {
   onDrawStart = "onDrawStart",
@@ -24,7 +28,6 @@ export enum LifeCycle {
   onSelected = "onSelected",
   onDeselected = "onDeselected"
 }
-
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
@@ -34,20 +37,20 @@ export const KlineChartModule = (() => {
     ["chart:setup"]: any;
     ["command:setup"]: any;
 
-    ["overlay:onDrawStart"]: WrappedOverlay[];
-    ["overlay:onDrawing"]: WrappedOverlay[];
-    ["overlay:onDrawEnd"]: WrappedOverlay[];
-    ["overlay:onClick"]: WrappedOverlay[];
-    ["overlay:onDoubleClick"]: WrappedOverlay[];
-    ["overlay:onRightClick"]: WrappedOverlay[];
-    ["overlay:onPressedMoveStart"]: WrappedOverlay[];
-    ["overlay:onPressedMoving"]: WrappedOverlay[];
-    ["overlay:onPressedMoveEnd"]: WrappedOverlay[];
-    ["overlay:onMouseEnter"]: WrappedOverlay[];
-    ["overlay:onMouseLeave"]: WrappedOverlay[];
-    ["overlay:onRemoved"]: WrappedOverlay[];
-    ["overlay:onSelected"]: WrappedOverlay[];
-    ["overlay:onDeselected"]: WrappedOverlay[];
+    ["overlay:onDrawStart"]: OverlayEvent;
+    ["overlay:onDrawing"]: OverlayEvent;
+    ["overlay:onDrawEnd"]: OverlayEvent;
+    ["overlay:onClick"]: OverlayEvent;
+    ["overlay:onDoubleClick"]: OverlayEvent;
+    ["overlay:onRightClick"]: OverlayEvent;
+    ["overlay:onPressedMoveStart"]: OverlayEvent;
+    ["overlay:onPressedMoving"]: OverlayEvent;
+    ["overlay:onPressedMoveEnd"]: OverlayEvent;
+    ["overlay:onMouseEnter"]: OverlayEvent;
+    ["overlay:onMouseLeave"]: OverlayEvent;
+    ["overlay:onRemoved"]: OverlayEvent;
+    ["overlay:onSelected"]: OverlayEvent;
+    ["overlay:onDeselected"]: OverlayEvent;
   };
   const emitter: Emitter<EmitterType> = mitt();
 

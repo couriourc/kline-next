@@ -13,3 +13,10 @@ export type IGetUserCustomPlateResponse = WrapperResult<
 
 export const getUserCustomPlate = () =>
   requester.get<IGetUserCustomPlateResponse>("/user/custom/plate");
+
+export type IPostUserCustomPlate = {
+  plate_name: string;
+  plate_code: string;
+};
+export const postUserCustomPlateA = (data: IPostUserCustomPlate) =>
+  requester.post("/user/custom/plate/a", data);

@@ -1,7 +1,7 @@
 import { atom, useAtom } from "jotai";
 import { ActionIcon, Flex, Group, Modal, rem, Text } from "@mantine/core";
 import { getOptions } from "@/app/components/modals/setting-modals/data";
-import { OptionRender } from "@/app/components/modals/OptionRender";
+import { FormOptionRenderer } from "@/app/components/schema-render/form-option-renderer";
 
 export const SettingModalAtom = atom({
   open: false
@@ -31,7 +31,7 @@ export function SettingModal() {
       >
         <Group>
           {options.map((option) => {
-            const Component = OptionRender(option);
+            const Component = FormOptionRenderer(option);
             return (
               <Flex key={option.text} align={"center"}>
                 <Text w={rem(120)}>{option.text}</Text>

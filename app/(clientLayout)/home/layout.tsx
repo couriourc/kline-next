@@ -27,6 +27,7 @@ export default function KLineChartLayout({ children }: PropsWithChildren) {
           </ContextMenuTrigger>
         </Stack>
       </Split.Pane>
+
       <Split.Pane
         maxWidth={400}
         initialWidth={350}

@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   AppShell,
+  Burger,
   Group,
   Text,
   UnstyledButton
@@ -18,6 +19,7 @@ export function HomeHeader() {
           className={"flex h-full items-center justify-between"}
         >
           <Group>
+            <Burger />
             <UnstyledButton size={"sm"}>
               <Text
                 size="xl"

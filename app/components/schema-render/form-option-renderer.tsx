@@ -1,7 +1,7 @@
 import { ActionIcon, rem, Select, Switch } from "@mantine/core";
 import type { ComboboxData } from "@mantine/core/lib/components/Combobox/Combobox.types";
 
-export function OptionRender(props: any) {
+export function FormOptionRenderer(props: any) {
   const Component = props.component;
   switch (props.component) {
     case "select":

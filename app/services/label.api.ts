@@ -17,9 +17,7 @@ export interface IPostLabelKlineA {
   pos: string;
   label_type: string;
   label_text: string;
-  user_id: string;
 }
-export interface IPostLabelKlineA {}
 
 export const postLabelKlineA = (data: IPostLabelKlineA) =>
   requester.post("/label/kline/a", data);

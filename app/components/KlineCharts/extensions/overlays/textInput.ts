@@ -65,15 +65,6 @@ const textInput = {
         type: "text",
         attrs: texts,
         styles: { color: "#fff", fontSize: 12, fontWeight: "bold" }
-      },
-      {
-        type: "diamond",
-        attrs: {
-          x: args.coordinates[0].x,
-          y: args.coordinates[0].y,
-          width: 10,
-          height: 10
-        }
       }
     ];
   }

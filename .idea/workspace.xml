@@ -5,16 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
-      <change afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/baseFigure.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshot_home.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/commands/mainCommands.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/diamond.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/diamond.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/icon.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/icon.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/figures/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/BaseOverlay.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/BaseOverlay.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layers/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layers/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/chartCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/chartCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/homeNavTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/homeNavTools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/textInput.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/listeners.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/listeners.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/stateFn/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/stateFn/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/modals/OptionRender.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/schema-render/form-option-renderer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/modals/setting-modals/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/modals/setting-modals/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/modals/timezone-modals/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/modals/timezone-modals/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/FloatingMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/Dock/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/chart-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/chart-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/http.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/label.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/label.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/plate.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/plate.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/store/chartStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/types/shime.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/types/shime.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/home.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/home.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,31 +104,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Vitest.Page.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;21.7.3&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.2.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next/app/components/modals/timezone-modals&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;notes&quot;: &quot;&quot;,
-    &quot;npm.format.executor&quot;: &quot;Run&quot;,
-    &quot;npm.gen-icons.executor&quot;: &quot;Run&quot;,
-    &quot;npm.klinecharts &gt; build-dts.executor&quot;: &quot;Run&quot;,
-    &quot;npm.test.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Dockerfile.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Vitest.Page.executor": "Run",
+    "git-widget-placeholder": "main",
+    "javascript.nodejs.core.library.configured.version": "21.7.3",
+    "javascript.nodejs.core.library.typings.version": "22.2.0",
+    "last_opened_file_path": "D:/projects/kline-next/app/components/modals/timezone-modals",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "notes": "",
+    "npm.format.executor": "Run",
+    "npm.gen-icons.executor": "Run",
+    "npm.klinecharts > build-dts.executor": "Run",
+    "npm.test.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "D:\\projects\\kline-next\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\projects\kline-next\app\components\modals\timezone-modals" />
@@ -117,11 +138,11 @@
       <recent name="C:\Users\Administrator\Desktop\EuProjects\frontend\comprehensive_big_model\comprehensive_big_model\assets\home\card-center" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projects\kline-next\app\components\schema-render" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\app" />
       <recent name="D:\projects\kline-next\app\components\modals\setting-modals" />
       <recent name="D:\projects\kline-next\app\(clientLayout)" />
       <recent name="D:\projects\kline-next\app" />
-      <recent name="D:\projects\kline-next\app\(clientLayout)\home" />
     </key>
   </component>
   <component name="RunManager" selected="npm.test">
