@@ -3,27 +3,13 @@ import { cx } from "@emotion/css";
 import { SettingModal } from "@/app/components/modals/setting-modals";
 import { TimezoneModals } from "@/app/components/modals/timezone-modals";
 import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
-import {
-  fibonacciTool,
-  moreLineTool,
-  polyTool,
-  singleLineTool,
-  textTool,
-  waveTool
-} from "@/app/commands/homeNavTools";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { useHotkeys } from "@mantine/hooks";
 import type { HotkeyItem } from "@mantine/hooks/lib/use-hotkeys/use-hotkeys";
+import { CommandPosition, getCommandsByPosition } from "@/app/commands";
 
 export default function FloatingMenu() {
-  const allTools = [
-    singleLineTool,
-    moreLineTool,
-    polyTool,
-    fibonacciTool,
-    waveTool,
-    textTool
-  ];
+  const dockerTools = getCommandsByPosition(CommandPosition.Docker);
   const RenderRightTools = (
     root: ExecutionMenuItem[],
     parent?: ExecutionMenuItem
@@ -58,8 +44,9 @@ export default function FloatingMenu() {
       </>
     );
   };
+
   useHotkeys(
-    allTools
+    dockerTools
       .filter((item) => !item.disabled)
       .filter((item) => item.shortcuts)
       .map((tool) => {
@@ -77,7 +64,7 @@ export default function FloatingMenu() {
       <div
         className={`flex items-center justify-center gap-[12px] border-none`}
       >
-        {allTools.map((tools) => {
+        {dockerTools.map((tools) => {
           return (
             <Menu key={tools.key} withArrow>
               <Menu.Target>

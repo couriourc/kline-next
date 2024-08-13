@@ -10,10 +10,10 @@ export type WrappedOverlay = {
   attributes: {
     label: string;
     visible: boolean;
+    timestamp: number;
   };
   overlay_id?: string;
   styles: Record<string, any>;
-  timestamp: number;
 };
 
 export interface ICommands extends Partial<Chart> {

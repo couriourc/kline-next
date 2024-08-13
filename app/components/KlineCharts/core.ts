@@ -6,31 +6,50 @@ import "./plugins/lang";
 import "./extensions";
 import { defaultTheme } from "./plugins/theme";
 import { formatDate } from "./stateFn";
-import { updateDrawStore } from "@/app/components/KlineCharts/stateFn/store";
 import type { WrappedOverlay } from "./types";
+
+export enum LifeCycle {
+  onDrawStart = "onDrawStart",
+  onDrawing = "onDrawing",
+  onDrawEnd = "onDrawEnd",
+  onClick = "onClick",
+  onDoubleClick = "onDoubleClick",
+  onRightClick = "onRightClick",
+  onPressedMoveStart = "onPressedMoveStart",
+  onPressedMoving = "onPressedMoving",
+  onPressedMoveEnd = "onPressedMoveEnd",
+  onMouseEnter = "onMouseEnter",
+  onMouseLeave = "onMouseLeave",
+  onRemoved = "onRemoved",
+  onSelected = "onSelected",
+  onDeselected = "onDeselected"
+}
 
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
-  type EmitterName =
-    | string
-    | "chart:setup"
-    | "command:setup"
-    | "overlay:create";
   type EmitterType = {
-    [key: EmitterName]: any;
-    ["overlay:create"]: WrappedOverlay[];
+    [key: string]: any;
+
+    ["chart:setup"]: any;
+    ["command:setup"]: any;
+
+    ["overlay:onDrawStart"]: WrappedOverlay[];
+    ["overlay:onDrawing"]: WrappedOverlay[];
+    ["overlay:onDrawEnd"]: WrappedOverlay[];
+    ["overlay:onClick"]: WrappedOverlay[];
+    ["overlay:onDoubleClick"]: WrappedOverlay[];
+    ["overlay:onRightClick"]: WrappedOverlay[];
+    ["overlay:onPressedMoveStart"]: WrappedOverlay[];
+    ["overlay:onPressedMoving"]: WrappedOverlay[];
+    ["overlay:onPressedMoveEnd"]: WrappedOverlay[];
+    ["overlay:onMouseEnter"]: WrappedOverlay[];
+    ["overlay:onMouseLeave"]: WrappedOverlay[];
+    ["overlay:onRemoved"]: WrappedOverlay[];
+    ["overlay:onSelected"]: WrappedOverlay[];
+    ["overlay:onDeselected"]: WrappedOverlay[];
   };
   const emitter: Emitter<EmitterType> = mitt();
-
-  emitter.on("overlay:create", (overlays) => {
-    updateDrawStore((state) => {
-      overlays.forEach((overlay) => {
-        state.set(overlay.id, overlay);
-      });
-      return state;
-    });
-  });
 
   return () => {
     return {
@@ -60,7 +79,7 @@ export const KlineChartModule = (() => {
         return chartMemo!;
       },
       emitter: emitter,
-      useCommand: <T extends EmitterName>(
+      useCommand: <T extends keyof EmitterType>(
         command: T,
         params: (args: EmitterType[T]) => void
       ) => {

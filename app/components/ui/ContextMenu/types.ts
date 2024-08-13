@@ -6,8 +6,7 @@ export enum ContextMenuEnum {
   TEMP = "TEMP"
 }
 export enum CommandEnum {
-  CHART = "CHART",
-  TABLE = "TABLE"
+  CHART = "CHART"
 }
 
 export interface ExecutionMenuItem {

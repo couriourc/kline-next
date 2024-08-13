@@ -1,5 +1,5 @@
 "use client";
-import { KlineChartModule } from "@/app/components/KlineCharts/core";
+import { KlineChartModule, LifeCycle } from "@/app/components/KlineCharts/core";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useDisclosure, useForceUpdate } from "@mantine/hooks";
 import {
@@ -16,7 +16,6 @@ import { cx } from "@emotion/css";
 import { useForm } from "react-hook-form";
 import {
   drawStore,
-  pickOverlayId,
   updateDrawStore
 } from "@/app/components/KlineCharts/stateFn/store";
 import { unwrapAttributes } from "@/app/components/KlineCharts/utils/unwrapAttributes";
@@ -59,13 +58,9 @@ const OverlayController = (props: {
         <ActionIcon
           onClickCapture={() => {
             toggleVisible();
-            updateDrawStore((prev) => {
-              unwrappedOverlay.attributes.visible =
-                !unwrappedOverlay.attributes.visible;
-              prev.set(pickOverlayId(props.overlay), unwrappedOverlay);
-              updateLayerState?.();
-              return prev;
-            });
+            unwrappedOverlay.attributes.visible =
+              !unwrappedOverlay.attributes.visible;
+            updateDrawStore([unwrappedOverlay]);
           }}
           variant={visible ? "transparent" : "outline"}
         >
@@ -96,13 +91,10 @@ const AttributePanel = () => {
   if (!selectedLayer?.length) return null;
   const label = register("label");
   const handleUpdate = (value: string) => {
-    updateDrawStore((prev) => {
-      selectedLayer.forEach((layer) => {
-        layer.attributes.label = value ?? "";
-        prev.set(layer.id, layer);
-      });
-      return prev;
+    selectedLayer.forEach((layer) => {
+      layer.attributes.label = value ?? "";
     });
+    updateDrawStore(selectedLayer);
   };
   return (
     <div
@@ -158,8 +150,8 @@ export default function Layers() {
     [selectedLayer]
   );
 
-  klineChartModule.useCommand("overlay:create", update);
-  klineChartModule.useCommand("overlay:removed", update);
+  klineChartModule.useCommand(`overlay:${LifeCycle.onDrawStart}`, update);
+  klineChartModule.useCommand(`overlay:${LifeCycle.onRemoved}`, update);
 
   return (
     <LayersProvider

@@ -14,7 +14,8 @@ export const executionMenuList: ExecutionMenuItem[] = [
   {
     label: () => (
       <Text className={"flex items-center"}>
-        <i className={"i-mdi-refresh"}></i>重置图表视图
+        <i className={"i-mdi-refresh"}></i>
+        重置图表视图
       </Text>
     ),
     command: "refreshChartView",

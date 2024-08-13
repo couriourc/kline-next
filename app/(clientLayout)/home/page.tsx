@@ -72,7 +72,6 @@ function DraggableRowRenderer<R, SR>({
   const [{ isOver }, drop] = useDrop({
     accept: "ROW_DRAG",
     drop({ index }: { index: number }) {
-      console.log("drop", index);
       onRowReorder(index, rowIdx);
     },
     collect: (monitor) => ({

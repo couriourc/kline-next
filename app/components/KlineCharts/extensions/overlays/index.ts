@@ -17,6 +17,8 @@ import anyWaves from "./anyWaves";
 import abcd from "./abcd";
 import xabcd from "./xabcd";
 import textInput from "./textInput";
+import { create } from "./BaseOverlay";
+import type { OverlayTemplate } from "couriourc-klinecharts";
 
 const overlays = [
   arrow,
@@ -37,32 +39,5 @@ const overlays = [
   abcd,
   xabcd,
   textInput
-];
-export const OVERLAYS_DESCRIPTIONS = {
-  arrow: {
-    name: "箭头",
-    desc: "xxx"
-  },
-  circle: {
-    name: "圆",
-    desc: "xxx"
-  },
-  rect: { name: "rect" },
-  triangle: { name: "triangle" },
-  parallelogram: { name: "parallelogram" },
-  fibonacciCircle: { name: "fibonacciCircle" },
-  fibonacciSegment: { name: "fibonacciSegment" },
-  fibonacciSpiral: { name: "fibonacciSpiral" },
-  fibonacciSpeedResistanceFan: { name: "fibonacciSpeedResistanceFan" },
-  fibonacciExtension: { name: "fibonacciExtension" },
-  gannBox: { name: "gannBox" },
-  threeWaves: { name: "threeWaves" },
-  fiveWaves: { name: "fiveWaves" },
-  eightWaves: { name: "eightWaves" },
-  anyWaves: { name: "anyWaves" },
-  abcd: { name: "abcd" },
-  xabcd: { name: "xabcd" },
-  default: { name: "default" },
-  textInput: { name: "文本" }
-};
+].map(create) as OverlayTemplate[];
 export default overlays;

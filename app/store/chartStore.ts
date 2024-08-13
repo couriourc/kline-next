@@ -17,7 +17,7 @@ export const curSelectedStockAtom = atom<string | null>("600000");
 // 当前搜索关键字
 export const curSearchStockKeywordAtom = atom<string>("");
 export const curSelectedPlateAtom =
-  atom<IGetUserCustomPlateResponseContentItem>("000000");
+  atom<IGetUserCustomPlateResponseContentItem>();
 // 当前股票列表
 export const stockListAtom = atomWithQuery((get) => {
   return {

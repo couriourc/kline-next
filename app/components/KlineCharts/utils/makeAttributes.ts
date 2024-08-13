@@ -6,9 +6,9 @@ export function makeAttributes(): WrappedOverlay {
     id: _.uniqueId("overlay_"),
     attributes: {
       label: "未命名",
-      visible: true
+      visible: true,
+      timestamp: Date.now()
     },
-    styles: {},
-    timestamp: Date.now()
+    styles: {}
   };
 }

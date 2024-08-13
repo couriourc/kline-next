@@ -8,7 +8,7 @@ import _ from "underscore";
 import { ContextMenuEnum, type ExecutionMenuItem } from "./types";
 import Handlebars from "handlebars";
 import { useRouter } from "next/navigation";
-import { executionMenuList } from "@/app/commands/contextMenuCommands";
+import { CommandPosition, getCommandsByPosition } from "@/app/commands";
 
 const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   const [inputValue, updateInputValue] = useState("");
@@ -17,8 +17,8 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
     useState<number>(0);
   const router = useRouter();
   const filteredList = useMemo(() => {
-    const commands = executionMenuList.filter((item) =>
-      item.isEqual?.(inputValue, item, ContextMenuEnum.CHART)
+    const commands = getCommandsByPosition(CommandPosition.ContentMenu).filter(
+      (item) => item.isEqual?.(inputValue, item, ContextMenuEnum.CHART)
     )!;
     curSelectedItem.current = commands[0];
     return commands;

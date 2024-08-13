@@ -27,16 +27,15 @@
  */
 import type { TextAttrs } from "couriourc-klinecharts";
 
-import { create } from "./BaseOverlay";
+import type { BaseOverlay } from "./BaseOverlay";
 
-const textInput = create(() => ({
+const textInput = {
   name: "textInput",
   totalStep: 2,
   onDoubleClick(event) {
-    console.log(event);
     return true;
   },
-  createPointFigures: (args, store) => {
+  createPointFigures(args, store) {
     if (!store?.attributes.label) {
       return [
         {
@@ -78,6 +77,5 @@ const textInput = create(() => ({
       }
     ];
   }
-}));
-
+} as BaseOverlay;
 export default textInput;

@@ -10,7 +10,6 @@ import Loading from "@/app/components/base/loading";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import { ActionType } from "couriourc-klinecharts";
 import FloatingMenu from "@/app/components/ui/FloatingMenu";
-
 const klineChartMemo = KlineChartModule();
 
 export function KLineChart() {
@@ -22,8 +21,7 @@ export function KLineChart() {
   const curSelectedStockCode = useAtomValue(curSelectedStockAtom);
   const { mutate: handleMutationLabelKlineA } =
     useAtomValue(mutationLabelKlineA);
-  klineChartMemo.useCommand("overlay:create", async (overlay) => {
-    console.log(overlay);
+  klineChartMemo.useCommand("overlay:onDrawEnd", async (overlay) => {
     return handleMutationLabelKlineA({
       k_type: 0,
       adjust_type: 0,

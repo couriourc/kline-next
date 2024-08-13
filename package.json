@@ -22,7 +22,8 @@
     "copy-serve": "cpx .next/standalone/**/* ./.next/.output/ && cpx .next/static/**/* ./.next/.output/.nexts/static/",
     "lint": "biome lint . --no-errors-on-unmatched",
     "lint:fix": "pnpm run lint --write",
-    "prepare": "pnpm exec simple-git-hooks"
+    "prepare": "pnpm exec simple-git-hooks",
+    "test": "dotenvx run --env-file=.env.example --  playwright test -w"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
@@ -49,6 +50,7 @@
     "couriourc-klinecharts": "9.8.11",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.7",
+    "dotenv": "^16.4.5",
     "downloadjs": "^1.4.7",
     "emoji-mart": "^5.5.2",
     "framer-motion": "^11.2.12",
@@ -117,6 +119,7 @@
     "@iconify-json/material-symbols-light": "^1.1.25",
     "@iconify-json/mdi": "^1.1.67",
     "@iconify/react": "^5.0.2",
+    "@playwright/test": "^1.46.0",
     "@rgrove/parse-xml": "^4.1.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -159,7 +162,8 @@
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-dark-mode": "^1.1.7",
     "typescript": "4.9.5",
-    "uglify-js": "^3.17.4"
+    "uglify-js": "^3.17.4",
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "engines": {
     "node": ">=18.17.0"

@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import { type OverlayTemplate, utils } from "klinecharts";
+import { type OverlayTemplate, utils } from "couriourc-klinecharts";
 
 import { getRotateCoordinate } from "./utils";
 
