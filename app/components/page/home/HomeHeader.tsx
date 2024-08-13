@@ -1,14 +1,6 @@
-import {
-  ActionIcon,
-  AppShell,
-  Burger,
-  Group,
-  Text,
-  UnstyledButton
-} from "@mantine/core";
+import { AppShell, Burger, Group, Text, UnstyledButton } from "@mantine/core";
 import { NEXT_PUBLIC_CHART_WEBSITE_NAME } from "@/config";
 import { useRouter } from "next/navigation";
-import { PeriodBar } from "@/app/components/page/home/components/PeriodBar";
 
 export function HomeHeader() {
   const router = useRouter();
@@ -31,15 +23,6 @@ export function HomeHeader() {
                 {NEXT_PUBLIC_CHART_WEBSITE_NAME}
               </Text>
             </UnstyledButton>
-            <PeriodBar />
-          </Group>
-          <Group>
-            <ActionIcon
-              variant={"outline"}
-              onClick={() => router.push("/home/layers")}
-            >
-              <i className={"i-material-symbols-light-layers"} />
-            </ActionIcon>
           </Group>
         </AppShell.Section>
       </AppShell.Header>

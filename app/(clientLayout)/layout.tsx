@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AppShell, rem } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import { cx } from "@emotion/css";
-import useBreakpoints, { MediaType } from "@/app/hooks/use-breakpoints";
+import useBreakpoints from "@/app/hooks/use-breakpoints";
 import { useDisclosure } from "@mantine/hooks";
 import { HomeHeader } from "@/app/components/page/home/HomeHeader";
 import CommandInitor from "@/app/components/command-initor";
@@ -51,12 +51,6 @@ export default function ({ children }: { children: ReactNode }) {
                       )}
                     />
                   </AppShell.Main>
-
-                  {mediaType === MediaType.mobile ? (
-                    <AppShell.Footer withBorder h={rem(48)} p="md">
-                      <AppShell.Section>Footer</AppShell.Section>
-                    </AppShell.Footer>
-                  ) : null}
                 </AppShell>
               </DndProvider>
             </CommandInitor>

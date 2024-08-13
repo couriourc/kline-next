@@ -32,6 +32,7 @@ export const stockListAtom = atomWithQuery((get) => {
     }
   };
 });
+
 // 当前K线信息
 export const stockMarketKlineChartAtom = atomWithQuery((get) => {
   return {

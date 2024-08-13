@@ -20,3 +20,7 @@ export type IPostUserCustomPlate = {
 };
 export const postUserCustomPlateA = (data: IPostUserCustomPlate) =>
   requester.post("/user/custom/plate/a", data);
+
+export const getUserCustomPlateRel = (
+  data: Pick<IPostUserCustomPlate, "plate_code">
+) => requester.get("/user/custom/plate/rel", data);
