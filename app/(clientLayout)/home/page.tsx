@@ -33,7 +33,6 @@ import type { DynamicProps } from "@/app/types/misc";
 import _ from "underscore";
 import { useAtomValue } from "jotai/index";
 import { plateListAtom } from "@/app/store/userPlateStore";
-import type { IGetUserCustomPlateResponseContentItem } from "@/app/services/plate.api";
 import Fuse from "fuse.js";
 
 interface StockListRow {
@@ -82,10 +81,6 @@ function DraggableRowRenderer<R, SR>({
     })
   });
 
-  className = cx(className, {
-    [rowDraggingClassname]: isDragging,
-    [rowOverClassname]: isOver
-  });
   return (
     <Row
       ref={(ref) => {
@@ -99,6 +94,10 @@ function DraggableRowRenderer<R, SR>({
       draggable
       className={cx(
         className,
+        {
+          [`opacity-50`]: isDragging,
+          [`bg-[#ececec]`]: isOver
+        },
         "cursor-pointer !border-none !bg-[transparent] !outline-none"
       )}
       {...props}
@@ -106,29 +105,6 @@ function DraggableRowRenderer<R, SR>({
   );
 }
 
-//function SearchStockInput() {
-//  const updateCurSearchStockKeywordAtom = useSetAtom(curSearchStockKeywordAtom);
-//  const inputRef = useRef<HTMLInputElement | null>(null);
-//  const handleEnterSearch = getHotkeyHandler([
-//    [
-//      "Enter",
-//      (ev) => {
-//        // 聚焦搜索
-//        updateCurSearchStockKeywordAtom(ev.target.value);
-//      }
-//    ]
-//  ]);
-//  return (
-//    <Input
-//      ref={inputRef}
-//      placeholder={"搜索"}
-//      className={"!h-full"}
-//      onKeyDown={handleEnterSearch}
-//      rightSection={<i className={"i-mdi-search"} />}
-//      size="xs"
-//    />
-//  );
-//}
 // 侧边下拉菜单
 function AsideMenus() {
   // 用户-自定义板块 列表 数据
@@ -136,12 +112,7 @@ function AsideMenus() {
   const [currentPlate, updateCurrentPlate] = useAtom(curSelectedPlateAtom);
   const [searchValue, updateSearchValue] = useState("");
 
-  const handleUpdate = useCallback(
-    (plate: IGetUserCustomPlateResponseContentItem) => {
-      updateCurrentPlate(plate);
-    },
-    [updateCurrentPlate]
-  );
+  const handleUpdate = useCallback(updateCurrentPlate, [updateCurrentPlate]);
 
   const list = useMemo(() => {
     if (!plateList) return [];

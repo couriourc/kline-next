@@ -37,7 +37,7 @@ importers:
         specifier: ^3.3.4
         version: 3.9.0(react-hook-form@7.52.1(react@18.2.0))
       '@lexical/react':
-        specifier: ^0.16.0
+        specifier: ^0.16.1
         version: 0.16.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(yjs@13.6.18)
       '@mantine/core':
         specifier: ^7.11.2
@@ -69,6 +69,9 @@ importers:
       axios:
         specifier: ^1.7.2
         version: 1.7.3
+      canvas-txt:
+        specifier: ^4.1.1
+        version: 4.1.1
       copy-to-clipboard:
         specifier: ^3.3.3
         version: 3.3.3
@@ -115,7 +118,7 @@ importers:
         specifier: ^0.0.14
         version: 0.0.14
       lexical:
-        specifier: ^0.16.0
+        specifier: ^0.16.1
         version: 0.16.1
       mantine-contextmenu:
         specifier: ^7.11.3
@@ -2893,6 +2896,9 @@ packages:
 
   caniuse-lite@1.0.30001646:
     resolution: {integrity: sha512-dRg00gudiBDDTmUhClSdv3hqRfpbOnU28IpI1T6PBTLWa+kOj0681C8uML3PifYfREuBrVjDGhL3adYpBT6spw==}
+
+  canvas-txt@4.1.1:
+    resolution: {integrity: sha512-kD47Nh9PC7HiZ+MHZn9/DKNbnMGT+xuLZHLOgbcWZo84jo7gRDTFCBqpehZBT+OFSSpYw2GKHl5hPvDa1q4y8A==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -9356,6 +9362,8 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001646: {}
+
+  canvas-txt@4.1.1: {}
 
   chalk@2.4.2:
     dependencies:

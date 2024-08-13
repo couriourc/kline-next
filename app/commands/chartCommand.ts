@@ -9,7 +9,7 @@ registerCommand("chart:command:resize", () => {
 // 创建图形指令
 registerCommand("chart:command:creator", (args) => {
   executeChartCommand("createOverlay", {
-    name: "textInput",
+    name: args.params.command!,
     extendData: {
       text: args.params.search ?? ""
     }

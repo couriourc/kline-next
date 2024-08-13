@@ -1,8 +1,9 @@
 "use client";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { useForceUpdate } from "@mantine/hooks";
+import { useDisclosure, useForceUpdate } from "@mantine/hooks";
 import {
+  ActionIcon,
   AppShell,
   Divider,
   Fieldset,
@@ -15,17 +16,32 @@ import { cx } from "@emotion/css";
 import { useForm } from "react-hook-form";
 import {
   drawStore,
+  pickOverlayId,
   updateDrawStore
 } from "@/app/components/KlineCharts/stateFn/store";
 import { unwrapAttributes } from "@/app/components/KlineCharts/utils/unwrapAttributes";
 
+const LayersContext = createContext<{
+  selectedLayer?: WrappedOverlay[];
+  updateSelected?: (overlay: WrappedOverlay[]) => void;
+  selectedLayerIds?: string[];
+  layerState?: Map<WrappedOverlay["id"], WrappedOverlay>;
+  updateLayerState?: () => void;
+}>({});
+
+const LayersProvider = LayersContext.Provider;
 const klineChartModule = KlineChartModule();
 const OverlayController = (props: {
   overlay: WrappedOverlay;
   index: number;
 }) => {
   const unwrappedOverlay = unwrapAttributes(props.overlay);
-  const { updateSelected, selectedLayerIds } = useContext(LayersContext);
+  const { updateSelected, selectedLayerIds, updateLayerState } =
+    useContext(LayersContext);
+
+  const [visible, { toggle: toggleVisible }] = useDisclosure(
+    unwrappedOverlay.attributes.visible
+  );
 
   return (
     <li
@@ -38,10 +54,29 @@ const OverlayController = (props: {
       }}
       key={props.overlay.id}
     >
-      <div className={"flex w-full items-center gap-[4px]"}>
+      <div className={"relative flex w-full items-center gap-[4px]"}>
+        {/*{JSON.stringify(unwrappedOverlay)}*/}
+        <ActionIcon
+          onClickCapture={() => {
+            toggleVisible();
+            updateDrawStore((prev) => {
+              unwrappedOverlay.attributes.visible =
+                !unwrappedOverlay.attributes.visible;
+              prev.set(pickOverlayId(props.overlay), unwrappedOverlay);
+              updateLayerState?.();
+              return prev;
+            });
+          }}
+          variant={visible ? "transparent" : "outline"}
+        >
+          <i className={visible ? "i-mdi-eye" : "i-mdi-eye-off"} />
+        </ActionIcon>
+
         <Text className={"w-full"} truncate>
           {unwrappedOverlay.attributes.label}
         </Text>
+
+        <i className={"i-mdi-close absolute right-0"}></i>
       </div>
     </li>
   );
@@ -93,16 +128,13 @@ const AttributePanel = () => {
 };
 
 function LayerList() {
-  const update = useForceUpdate();
-  const [layerState] = useState(drawStore());
-  klineChartModule.useCommand("overlay:create", update);
-
+  const { layerState } = useContext(LayersContext);
   return (
     <>
-      <AppShell.Section>
+      <AppShell.Section className={"w-full"}>
         <ul className={"flex h-[400px] w-full select-none flex-col"}>
-          {[...layerState.keys()].map((overlayId, index) => {
-            const overlay = layerState.get(overlayId)!;
+          {[...layerState!.keys()].map((overlayId, index) => {
+            const overlay = layerState!.get(overlayId)!;
             return (
               <OverlayController
                 key={overlayId}
@@ -117,25 +149,26 @@ function LayerList() {
   );
 }
 
-const LayersContext = createContext<{
-  selectedLayer?: WrappedOverlay[];
-  updateSelected?: (overlay: WrappedOverlay[]) => void;
-  selectedLayerIds?: string[];
-}>({});
-
-const LayersProvider = LayersContext.Provider;
-
 export default function Layers() {
+  const update = useForceUpdate();
   const [selectedLayer, updateSelected] = useState<WrappedOverlay[]>([]);
-  const selectedLayerIds = useMemo(() => {
-    return selectedLayer?.map((layer) => layer.id!) ?? ([] as string[]);
-  }, [selectedLayer]);
+  const [layerState] = useState(drawStore());
+  const selectedLayerIds = useMemo(
+    () => selectedLayer?.map((layer) => layer.id!) ?? ([] as string[]),
+    [selectedLayer]
+  );
+
+  klineChartModule.useCommand("overlay:create", update);
+  klineChartModule.useCommand("overlay:removed", update);
+
   return (
     <LayersProvider
       value={{
         selectedLayer,
         selectedLayerIds: selectedLayerIds!,
-        updateSelected
+        updateSelected,
+        layerState,
+        updateLayerState: update
       }}
     >
       <div className={"relative flex-col"}>

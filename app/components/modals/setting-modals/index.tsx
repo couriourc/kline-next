@@ -12,7 +12,7 @@ export function SettingModal() {
   return (
     <>
       <ActionIcon
-        variant={"outline"}
+        variant={"transparent"}
         onClick={() => {
           updateSettingModal((state) => ({ ...state, open: true }));
         }}

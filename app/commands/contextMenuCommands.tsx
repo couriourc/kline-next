@@ -25,7 +25,10 @@ export const executionMenuList: ExecutionMenuItem[] = [
     label: "刷新",
     command: "refresh",
     isEqual: () => true,
-    category: CommandEnum.CHART
+    category: CommandEnum.CHART,
+    executor() {
+      location.reload();
+    }
   },
   {
     label: "复制价格",
@@ -63,7 +66,11 @@ export const executionMenuList: ExecutionMenuItem[] = [
     isEqual: () => true,
     category: CommandEnum.CHART,
     executor(args) {
-      executeCommand("chart:command:creator", args);
+      executeCommand("chart:command:creator", {
+        params: {
+          command: "textInput"
+        }
+      });
     }
   },
   {

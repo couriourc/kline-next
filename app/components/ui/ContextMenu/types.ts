@@ -16,12 +16,16 @@ export interface ExecutionMenuItem {
   icon?: string;
   key?: string;
   command?: string;
+  shortcuts?: string;
+  disabled?: boolean;
+  hidden?: boolean;
   category?: CommandEnum;
   isEqual?: (
     item: string,
     raw: ExecutionMenuItem,
     paneId?: ContextMenuEnum
   ) => boolean;
+  onChildExecute?: (child: ExecutionMenuItem) => any;
   executor?: (args?: Events["chart:command:creator"]) => any;
   children?: ExecutionMenuItem[];
 }

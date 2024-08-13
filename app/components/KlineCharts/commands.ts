@@ -58,6 +58,10 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
           option[fnName] = (...args) => {
             const overlay = args[0].overlay;
             klineChartInstance.emitter.emit("overlay:removed", overlay);
+            updateDrawStore((state) => {
+              state.delete(option.extendData.id);
+              return state;
+            });
             fn?.(...args);
             return true;
           };

@@ -12,7 +12,7 @@ export function TimezoneModals() {
   return (
     <>
       <ActionIcon
-        variant={"outline"}
+        variant={"transparent"}
         onClick={() => {
           updateTimezoneModal((state) => ({ ...state, open: true }));
         }}

@@ -9,6 +9,7 @@ import { Text } from "@mantine/core";
 import Loading from "@/app/components/base/loading";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import { ActionType } from "couriourc-klinecharts";
+import FloatingMenu from "@/app/components/ui/FloatingMenu";
 
 const klineChartMemo = KlineChartModule();
 
@@ -21,11 +22,12 @@ export function KLineChart() {
   const curSelectedStockCode = useAtomValue(curSelectedStockAtom);
   const { mutate: handleMutationLabelKlineA } =
     useAtomValue(mutationLabelKlineA);
-  klineChartMemo.useCommand("overlay:create", async () => {
+  klineChartMemo.useCommand("overlay:create", async (overlay) => {
+    console.log(overlay);
     return handleMutationLabelKlineA({
       k_type: 0,
       adjust_type: 0,
-      pos: "string",
+      pos: "1713398400000",
       label_type: "string",
       label_text: "string",
       user_id: "adata"
@@ -83,6 +85,7 @@ export function KLineChart() {
           </div>
         )}
       </div>
+      <FloatingMenu />
     </>
   );
 }

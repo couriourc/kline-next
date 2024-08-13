@@ -34,7 +34,7 @@ export default function KLineChartLayout({ children }: PropsWithChildren) {
         minWidth={300}
         key={"right"}
       >
-        {children}
+        <div className={"w-full"}>{children}</div>
       </Split.Pane>
     </Split>
   );

@@ -12,7 +12,6 @@ import { HomeHeader } from "@/app/components/page/home/HomeHeader";
 import HomeNav from "@/app/components/page/home/HomeNav";
 import CommandInitor from "@/app/components/command-initor";
 import KlineChartsInitor from "@/app/components/kline-initor";
-import FloatingMenu from "@/app/components/ui/FloatingMenu";
 
 export default function ({ children }: { children: ReactNode }) {
   const mediaType = useBreakpoints();
@@ -63,7 +62,6 @@ export default function ({ children }: { children: ReactNode }) {
                     <AppShell.Section>Footer</AppShell.Section>
                   </AppShell.Footer>
                 ) : null}
-                <FloatingMenu />
               </AppShell>
             </CommandInitor>
           </KlineChartsInitor>

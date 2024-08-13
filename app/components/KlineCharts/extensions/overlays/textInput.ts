@@ -28,19 +28,15 @@
 import type { TextAttrs } from "couriourc-klinecharts";
 
 import { create } from "./BaseOverlay";
-import {
-  drawStore,
-  pickOverlayId
-} from "@/app/components/KlineCharts/stateFn/store";
-import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
 
 const textInput = create(() => ({
   name: "textInput",
   totalStep: 2,
-  createPointFigures: (args) => {
-    const id = pickOverlayId(args.overlay.extendData as WrappedOverlay);
-    const store = drawStore().get(id);
-
+  onDoubleClick(event) {
+    console.log(event);
+    return true;
+  },
+  createPointFigures: (args, store) => {
     if (!store?.attributes.label) {
       return [
         {
@@ -70,6 +66,15 @@ const textInput = create(() => ({
         type: "text",
         attrs: texts,
         styles: { color: "#fff", fontSize: 12, fontWeight: "bold" }
+      },
+      {
+        type: "diamond",
+        attrs: {
+          x: args.coordinates[0].x,
+          y: args.coordinates[0].y,
+          width: 10,
+          height: 10
+        }
       }
     ];
   }

@@ -7,7 +7,7 @@ import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.
 export type Events = {
   ["chart:command:resize"]: any;
   ["chart:command:creator"]: {
-    params: { search: string; command?: string };
+    params: { search?: string; command?: string };
     router?: AppRouterInstance;
   };
   ["chart:command:cleanup"]: any;

@@ -1,5 +1,4 @@
 import type { IndicatorTemplate } from "couriourc-klinecharts";
-import wrapper from "./wrapper";
 
-const indicators: IndicatorTemplate[] = [wrapper];
+const indicators: IndicatorTemplate[] = [];
 export default indicators;

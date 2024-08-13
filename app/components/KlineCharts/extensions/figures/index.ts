@@ -1,1 +1,3 @@
-export default [];
+import diamond from "./diamond";
+
+export default [diamond];

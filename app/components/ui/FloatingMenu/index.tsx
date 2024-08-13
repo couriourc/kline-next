@@ -1,7 +1,73 @@
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Menu, ThemeIcon, Tooltip } from "@mantine/core";
 import { cx } from "@emotion/css";
+import { SettingModal } from "@/app/components/modals/setting-modals";
+import { TimezoneModals } from "@/app/components/modals/timezone-modals";
+import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
+import {
+  fibonacciTool,
+  moreLineTool,
+  polyTool,
+  singleLineTool,
+  textTool,
+  waveTool
+} from "@/app/commands/homeNavTools";
+import { executeCommand } from "@/app/hooks/use-event-emitter";
+import { useHotkeys } from "@mantine/hooks";
+import type { HotkeyItem } from "@mantine/hooks/lib/use-hotkeys/use-hotkeys";
 
 export default function FloatingMenu() {
+  const allTools = [
+    singleLineTool,
+    moreLineTool,
+    polyTool,
+    fibonacciTool,
+    waveTool,
+    textTool
+  ];
+  const RenderRightTools = (
+    root: ExecutionMenuItem[],
+    parent?: ExecutionMenuItem
+  ) => {
+    return (
+      <>
+        {root
+          .filter((item) => !item.hidden)
+          .filter((item) => !item.disabled)
+          .map((item) => {
+            return (
+              <Menu.Item
+                key={item.key}
+                className={`mb-[12px] flex w-full items-center justify-center`}
+              >
+                <Tooltip label={item.description}>
+                  <ThemeIcon
+                    variant="outline"
+                    radius={"sm"}
+                    className={cx("mx-auto cursor-pointer")}
+                    onClick={() => {
+                      item.executor?.();
+                      parent?.onChildExecute?.(item);
+                    }}
+                  >
+                    <i className={cx(item.icon)}></i>
+                  </ThemeIcon>
+                </Tooltip>
+              </Menu.Item>
+            );
+          })}
+      </>
+    );
+  };
+  useHotkeys(
+    allTools
+      .filter((item) => !item.disabled)
+      .filter((item) => item.shortcuts)
+      .map((tool) => {
+        if (!tool.shortcuts) return [] as unknown as HotkeyItem;
+        return [tool.shortcuts, () => tool.executor?.()] as HotkeyItem;
+      })
+  );
+
   return (
     <div
       className={cx(
@@ -11,20 +77,35 @@ export default function FloatingMenu() {
       <div
         className={`flex items-center justify-center gap-[12px] border-none`}
       >
-        <Menu withArrow>
-          <Menu.Target>
-            <ActionIcon variant={"transparent"} radius={"full"}>
-              <i className={"i-mdi-cursor-pointer"}></i>
-            </ActionIcon>
-          </Menu.Target>
+        {allTools.map((tools) => {
+          return (
+            <Menu key={tools.key} withArrow>
+              <Menu.Target>
+                <ActionIcon
+                  variant={"transparent"}
+                  radius={"full"}
+                  onClickCapture={() => tools.executor?.()}
+                >
+                  <i className={tools.icon}></i>
+                </ActionIcon>
+              </Menu.Target>
+              {tools.children?.length ? (
+                <Menu.Dropdown>
+                  {RenderRightTools(tools.children!, tools)}
+                </Menu.Dropdown>
+              ) : null}
+            </Menu>
+          );
+        })}
 
-          <Menu.Dropdown>
-            <Menu.Item>添加文本标记</Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-        <ActionIcon component={"button"} variant={"transparent"}>
-          <i className={"i-mdi-settings"} />
+        <ActionIcon
+          onClick={() => executeCommand("chart:command:cleanup")}
+          variant={"transparent"}
+        >
+          <i className={"i-mdi-trash"}></i>
         </ActionIcon>
+        <TimezoneModals />
+        <SettingModal />
       </div>
     </div>
   );

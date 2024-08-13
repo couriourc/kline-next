@@ -9,6 +9,7 @@ export type WrappedOverlay = {
   id: string;
   attributes: {
     label: string;
+    visible: boolean;
   };
   overlay_id?: string;
   styles: Record<string, any>;
