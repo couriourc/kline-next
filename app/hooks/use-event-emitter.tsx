@@ -1,39 +1,22 @@
 "use client";
 
 import mitt, { type Emitter } from "mitt";
-import { useUnmount } from "ahooks";
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export type Events = {
-  ["chart:command:resize"]: any;
-  ["chart:command:creator"]: {
-    params: { search?: string; command?: string };
-    router?: AppRouterInstance;
-  };
-  ["chart:command:cleanup"]: any;
-  [event: "command:execute" | string]: any;
+  ["chart:overlay:resize"]: any;
+  ["chart:overlay:creator"]: any;
+  ["chart:overlay:cleanup"]: any;
+  ["chart:overlay:magnet"]: any;
+  ["chart:overlay:lock"]: any;
+  ["chart:overlay:visible"]: any;
+  ["chart:command:execute"]: any;
+  [event: string]: any;
 };
 type TEmitter = Emitter<Events>;
 
 const eventEmitterContextEmitter: TEmitter = mitt();
-export function useEventEmitterOn<T extends keyof Events>(
-  type: T,
-  fn: (event: any) => void
-) {
-  eventEmitterContextEmitter.on<T>(type, (...args) => {
-    fn(...args);
-  });
-  useUnmount(() => {
-    eventEmitterContextEmitter.off(type, fn);
-  });
-}
 
-export function registerCommand<T extends keyof Events>(
-  type: T,
-  fn: (event: Events[T]) => void
-) {
-  return eventEmitterContextEmitter.on(type, fn);
-}
+export default eventEmitterContextEmitter;
 export function executeCommand<T extends keyof Events>(
   type: T,
   args?: Events[T]

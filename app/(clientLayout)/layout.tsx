@@ -6,8 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { AppShell, rem } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import { cx } from "@emotion/css";
-import useBreakpoints from "@/app/hooks/use-breakpoints";
-import { useDisclosure } from "@mantine/hooks";
 import { HomeHeader } from "@/app/components/page/home/HomeHeader";
 import CommandInitor from "@/app/components/command-initor";
 import KlineChartsInitor from "@/app/components/kline-initor";
@@ -15,14 +13,12 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 export default function ({ children }: { children: ReactNode }) {
-  const mediaType = useBreakpoints();
-  const [opened] = useDisclosure();
   return (
     <>
       <SwrInitor>
-        <MantineProvider>
-          <KlineChartsInitor>
-            <CommandInitor>
+        <CommandInitor>
+          <MantineProvider>
+            <KlineChartsInitor>
               <DndProvider backend={HTML5Backend}>
                 <AppShell
                   layout="default"
@@ -33,8 +29,6 @@ export default function ({ children }: { children: ReactNode }) {
                   }}
                 >
                   <HomeHeader />
-                  {/*<HomeNav />*/}
-
                   <AppShell.Main h={"100vh"} className={"pb-[48px]"}>
                     {children}
                     <ToastContainer
@@ -53,9 +47,9 @@ export default function ({ children }: { children: ReactNode }) {
                   </AppShell.Main>
                 </AppShell>
               </DndProvider>
-            </CommandInitor>
-          </KlineChartsInitor>
-        </MantineProvider>
+            </KlineChartsInitor>
+          </MantineProvider>
+        </CommandInitor>
       </SwrInitor>
     </>
   );

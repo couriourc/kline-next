@@ -8,7 +8,8 @@ import _ from "underscore";
 import { ContextMenuEnum, type ExecutionMenuItem } from "./types";
 import Handlebars from "handlebars";
 import { useRouter } from "next/navigation";
-import { CommandPosition, getCommandsByPosition } from "@/app/commands";
+import { CommandPosition } from "@/app/commands";
+import { getCommandsByPosition } from "@/app/commands/register";
 
 const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   const [inputValue, updateInputValue] = useState("");
@@ -38,8 +39,7 @@ const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   const handleCheckCommand = (item: ExecutionMenuItem) => {
     item?.executor?.({
       params: {
-        search: inputValue,
-        command: item.command
+        search: inputValue
       },
       router
     });

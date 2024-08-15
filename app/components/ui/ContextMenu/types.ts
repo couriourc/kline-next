@@ -1,4 +1,3 @@
-import type { Events } from "@/app/hooks/use-event-emitter";
 import type { FC } from "react";
 import type { CommandPosition } from "@/app/commands";
 
@@ -11,7 +10,7 @@ export enum CommandEnum {
 }
 
 export interface ExecutionMenuItem {
-  label: string | FC;
+  label: string | FC<{ search?: string }>;
   description?: string;
   icon?: string;
   key?: string;
@@ -26,8 +25,9 @@ export interface ExecutionMenuItem {
     paneId?: ContextMenuEnum
   ) => boolean;
   onChildExecute?: (child: ExecutionMenuItem) => any;
-  executor?: (args?: Events["chart:command:creator"]) => any;
+  executor?: (args?: any) => any;
   children?: ExecutionMenuItem[];
   pos?: CommandPosition;
   setup?: () => any;
+  listen?: string | string[];
 }

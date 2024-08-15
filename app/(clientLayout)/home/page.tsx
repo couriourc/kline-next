@@ -5,7 +5,6 @@ import {
   Group,
   Loader,
   Menu,
-  rem,
   Tabs,
   Text,
   TextInput,
@@ -22,6 +21,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import { cx } from "@emotion/css";
 import LayerMain from "@/app/components/page/home/Sidebars/LayerMain";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function AsideMenus() {
   // 用户-自定义板块 列表 数据
@@ -65,83 +65,83 @@ function AsideMenus() {
     reset();
   }, [isPending]);
   return (
-    <Menu closeOnItemClick={false}>
-      <Menu.Target>
-        <UnstyledButton className={"flex items-center"}>
-          <span className="i-[material-symbols-light--expand-circle-down-outline]"></span>
-          <Text truncate size={"sm"}>
-            {currentPlate?.plate_name}
-          </Text>
-        </UnstyledButton>
-      </Menu.Target>
-      <Menu.Dropdown px={"xs"}>
-        <Menu.Item className={"!w-[200px] truncate"} p={"5px"}>
-          <TextInput
-            onChange={(ev) => {
-              updateSearchValue(ev.target.value);
-            }}
-            size={"xs"}
-            rightSection={
-              isPending ? (
-                <Loader size={"xs"}></Loader>
-              ) : (
-                <i
-                  className={"i-mdi-add"}
-                  onClick={() => {
-                    handleUserCustomPlateA({
-                      plate_name: searchValue,
-                      plate_code: ""
-                    });
-                  }}
-                />
-              )
-            }
-            placeholder={"搜索或添加分组"}
-          ></TextInput>
-        </Menu.Item>
-        <div className={"h-[200px] overflow-y-auto overflow-x-hidden"}>
-          {filteredItems.length ? (
-            (filteredItems.map((plate, index) => (
-              <Menu.Item
-                className={cx(
-                  `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,
-                  {
-                    active: plate.plate_id === currentPlate?.plate_id
-                  }
-                )}
-                p={"5px"}
-                key={plate.plate_id + index}
-                onClick={() => {
-                  handleUpdate(plate);
-                }}
-              >
-                <Text size={"xs"} className={""}>
-                  {plate.plate_name}
-                </Text>
-              </Menu.Item>
-            )) ?? [])
-          ) : (
-            <Menu.Item
-              p={"5px"}
-              onClick={() => {
-                handleUserCustomPlateA({
-                  plate_name: searchValue,
-                  plate_code: ""
-                });
+    <UnstyledButton className={"flex items-center"}>
+      <Menu closeOnItemClick={false}>
+        <Menu.Target>
+          <i className="i-[material-symbols-light--expand-circle-down-outline]"></i>
+        </Menu.Target>
+        <Menu.Dropdown px={"xs"}>
+          <Menu.Item className={"!w-[200px] truncate"} p={"5px"}>
+            <TextInput
+              onChange={(ev) => {
+                updateSearchValue(ev.target.value);
               }}
-              className={"flex items-center"}
-            >
-              <Text size={"xs"}>新增‘{searchValue}’</Text>
-            </Menu.Item>
-          )}
-        </div>
-      </Menu.Dropdown>
-    </Menu>
+              size={"xs"}
+              rightSection={
+                isPending ? (
+                  <Loader size={"xs"}></Loader>
+                ) : (
+                  <i
+                    className={"i-mdi-add"}
+                    onClick={() => {
+                      handleUserCustomPlateA({
+                        plate_name: searchValue,
+                        plate_code: ""
+                      });
+                    }}
+                  />
+                )
+              }
+              placeholder={"搜索或添加分组"}
+            ></TextInput>
+          </Menu.Item>
+          <div className={"h-[200px] overflow-y-auto overflow-x-hidden"}>
+            {filteredItems.length ? (
+              (filteredItems.map((plate, index) => (
+                <Menu.Item
+                  className={cx(
+                    `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,
+                    {
+                      active: plate.plate_id === currentPlate?.plate_id
+                    }
+                  )}
+                  p={"5px"}
+                  key={plate.plate_id + index}
+                  onClick={() => {
+                    handleUpdate(plate);
+                  }}
+                >
+                  <Text size={"xs"} className={""}>
+                    {plate.plate_name}
+                  </Text>
+                </Menu.Item>
+              )) ?? [])
+            ) : (
+              <Menu.Item
+                p={"5px"}
+                onClick={() => {
+                  handleUserCustomPlateA({
+                    plate_name: searchValue,
+                    plate_code: ""
+                  });
+                }}
+                className={"flex items-center"}
+              >
+                <Text size={"xs"}>新增‘{searchValue}’</Text>
+              </Menu.Item>
+            )}
+          </div>
+        </Menu.Dropdown>
+      </Menu>
+
+      <Text truncate size={"sm"}>
+        {currentPlate?.plate_name}
+      </Text>
+    </UnstyledButton>
   );
 }
 
 function AsideHeader() {
-  //  const { mutate: download } =
   return (
     <Group justify={"space-between"} className={"box-border"}>
       <Group>
@@ -151,6 +151,23 @@ function AsideHeader() {
   );
 }
 export default function Datasource() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") || "0";
+
+  const tabs = [
+    {
+      title: <AsideHeader />,
+      key: "self-selected-group-list",
+      panel: <DatasourceMain />
+    },
+    {
+      title: <Text size={"sm"}>标记信息</Text>,
+      key: "self-selected-group-list",
+      panel: <LayerMain />
+    }
+  ];
   return (
     <Flex
       w={"100%"}
@@ -159,21 +176,26 @@ export default function Datasource() {
       direction={"column"}
       gap={6}
     >
-      <Tabs className={"h-full"} defaultValue="自选组列表">
+      <Tabs
+        className={"h-full"}
+        defaultValue={tab}
+        variant={"outline"}
+        onChange={(index) => {
+          router.push(`${pathname}?tab=${index}`);
+        }}
+      >
         <Tabs.List>
-          <Tabs.Tab value="自选组列表">
-            <AsideHeader />
-          </Tabs.Tab>
-          <Tabs.Tab value="标记信息">标记信息</Tabs.Tab>
+          {tabs.map((tab, index) => (
+            <Tabs.Tab size={"xs"} value={`${index}`} key={tab.key}>
+              {tab.title}
+            </Tabs.Tab>
+          ))}
         </Tabs.List>
-
-        <Tabs.Panel pt={rem(12)} value="自选组列表">
-          <DatasourceMain />
-        </Tabs.Panel>
-
-        <Tabs.Panel className={"h-full"} pt={rem(12)} value="标记信息">
-          <LayerMain />
-        </Tabs.Panel>
+        {tabs.map((tab, index) => (
+          <Tabs.Panel value={`${index}`} key={tab.key}>
+            {tab.panel}
+          </Tabs.Panel>
+        ))}
       </Tabs>
     </Flex>
   );

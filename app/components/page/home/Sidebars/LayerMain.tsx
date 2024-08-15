@@ -1,5 +1,4 @@
 "use client";
-import { KlineChartModule } from "@/app/components/KlineCharts/core";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useDisclosure, useForceUpdate } from "@mantine/hooks";
 import {
@@ -8,6 +7,7 @@ import {
   Divider,
   Fieldset,
   rem,
+  ScrollArea,
   Stack,
   Text,
   TextInput
@@ -34,14 +34,12 @@ const LayersContext = createContext<{
 }>({});
 
 const LayersProvider = LayersContext.Provider;
-const klineChartModule = KlineChartModule();
 const OverlayController = (props: {
   overlay: WrappedOverlay;
   index: number;
 }) => {
   const unwrappedOverlay = unwrapAttributes(props.overlay);
-  const { updateSelected, selectedLayerIds, updateLayerState, selectedLayer } =
-    useContext(LayersContext);
+  const { updateSelected, selectedLayerIds } = useContext(LayersContext);
 
   const [visible, { toggle: toggleVisible }] = useDisclosure(
     unwrappedOverlay.attributes.visible
@@ -86,7 +84,7 @@ const OverlayController = (props: {
             if (isSelected) {
               updateSelected?.([]);
             }
-            executeCommand("chart:command:cleanup", [unwrappedOverlay]);
+            executeCommand("chart:overlay:cleanup", unwrappedOverlay);
           }}
         />
       </div>
@@ -95,7 +93,7 @@ const OverlayController = (props: {
 };
 const AttributePanel = () => {
   const { selectedLayer } = useContext(LayersContext);
-  const { register, setValue, reset } = useForm<{
+  const { register, reset } = useForm<{
     label: string;
   }>();
   useEffect(() => {
@@ -142,7 +140,12 @@ function LayerList() {
   const { layerState } = useContext(LayersContext);
   return (
     <>
-      <ul className={"flex h-[400px] w-full select-none flex-col"}>
+      <ScrollArea
+        component={"ul"}
+        className={
+          "flex h-[900px] w-full select-none flex-col overflow-y-auto overflow-x-hidden"
+        }
+      >
         {[...layerState!.keys()].map((overlayId, index) => {
           const overlay = layerState!.get(overlayId)!;
           return (
@@ -153,7 +156,7 @@ function LayerList() {
             />
           );
         })}
-      </ul>
+      </ScrollArea>
     </>
   );
 }
@@ -187,7 +190,7 @@ export default function LayerMain() {
             my={rem(60)}
             mx={"auto"}
             onClick={() =>
-              executeCommand("chart:command:creator", {
+              executeCommand("chart:overlay:creator", {
                 params: {
                   search: "",
                   command: "textInput"

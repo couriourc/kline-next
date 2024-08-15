@@ -5,19 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
-      <change afterPath="$PROJECT_DIR$/app/components/page/home/Sidebars/DatasourceMain.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_6_23_36_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_6_23_36__Changes_.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/commands/backgroundCommand.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/commands/register.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/styles/globals.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/styles/variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/datasource/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Sidebars/LayerMain.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layers/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/logs/page.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/chartCommand.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/contextMenuCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/contextMenuCommands.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/homeNavTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/dockerCommands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/indicatorCommands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/indicatorCommands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/mainCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/mainCommands.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/textInput.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/listeners.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/listeners.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/stateFn/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/stateFn/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/utils/makeAttributes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/utils/makeAttributes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/base/command-initor/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/base/command-initor/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/command-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/context/mantine-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/plate.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/plate.api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/Sidebars/DatasourceMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Sidebars/DatasourceMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/Sidebars/LayerMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Sidebars/LayerMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/Dock/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/Dock/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/store/chartStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/store/userPlateStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/store/userPlateStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/styles/globals.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +113,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Vitest.Page.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature/data__apis",
     "javascript.nodejs.core.library.configured.version": "18.19.1",
     "javascript.nodejs.core.library.typings.version": "",
     "last_opened_file_path": "D:/projects/kline-next/app/components/modals/timezone-modals",
@@ -262,7 +283,8 @@
       <workItem from="1723459252999" duration="9300000" />
       <workItem from="1723506494183" duration="1494000" />
       <workItem from="1723532202224" duration="9531000" />
-      <workItem from="1723589154366" duration="3126000" />
+      <workItem from="1723589154366" duration="6664000" />
+      <workItem from="1723721295993" duration="9956000" />
     </task>
     <servers />
   </component>

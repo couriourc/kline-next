@@ -81,7 +81,7 @@ export const labelKlineDownAtom = atomWithMutation((get) => {
   };
 });
 
-export const mutationUserCustomPlateA = atomWithMutation((get) => {
+export const mutationUserCustomPlateA = atomWithMutation(() => {
   return {
     mutationKey: ["userCustomPlateA"],
     mutationFn: async (data: IPostUserCustomPlate) => {

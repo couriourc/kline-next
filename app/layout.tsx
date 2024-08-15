@@ -4,7 +4,7 @@ import Topbar from "./components/base/topbar";
 
 import { PublicEnvScript } from "next-runtime-env";
 import type { ReactNode } from "react";
-import "./styles/globals.css";
+import "./styles/globals.scss";
 import { ColorSchemeScript } from "@mantine/core";
 import { NEXT_PUBLIC_CHART_WEBSITE_NAME } from "@/config";
 

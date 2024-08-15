@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import {
+  ActionType,
   type Chart,
   dispose,
   init,
@@ -68,7 +69,25 @@ export const KlineChartModule = (() => {
           })!;
           emitter.emit("chart:setup", chartMemo);
 
+          const callback = (type: ActionType, data: any) => {
+            emitter.emit(`chart:${type}`, data);
+          };
+          const cleanup = [
+            ActionType.OnDataReady,
+            ActionType.OnZoom,
+            ActionType.OnScroll,
+            ActionType.OnVisibleRangeChange,
+            ActionType.OnTooltipIconClick,
+            ActionType.OnCrosshairChange,
+            ActionType.OnCandleBarClick,
+            ActionType.OnPaneDrag
+          ].map((type) => {
+            const _callback = (data: any) => callback(type, data);
+            chartMemo.subscribeAction(type, _callback);
+            return () => chartMemo.unsubscribeAction(type, _callback);
+          });
           return () => {
+            cleanup.forEach((fn) => fn?.());
             emitter.emit("chart:destroy", chartMemo);
             dispose(ref.current);
           };

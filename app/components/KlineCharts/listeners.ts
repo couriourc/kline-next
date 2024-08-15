@@ -7,6 +7,5 @@ emitter.on(`overlay:${LifeCycle.onDrawEnd}`, (overlays) => {
   (overlays.overlay.extendData as WrappedOverlay).overlay_id =
     overlays.overlay.id;
   (overlays.overlay.extendData as WrappedOverlay)._event = overlays;
-
   updateDrawStore(overlays.overlay.extendData);
 });

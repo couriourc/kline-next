@@ -4,6 +4,8 @@ import {
 } from "@/app/components/ui/ContextMenu/types";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { Text } from "@mantine/core";
+import { registerCommand } from "@/app/commands/register";
+import { CommandPosition } from "@/app/commands/index";
 
 /**
  * 快捷方式的权重计算
@@ -53,7 +55,10 @@ export const executionMenuList: ExecutionMenuItem[] = [
     label: "移除绘图",
     command: "removeDrawLayer",
     isEqual: () => true,
-    category: CommandEnum.CHART
+    category: CommandEnum.CHART,
+    executor() {
+      executeCommand("chart:overlay:cleanup");
+    }
   },
   {
     label: "移除指标",
@@ -67,8 +72,10 @@ export const executionMenuList: ExecutionMenuItem[] = [
     isEqual: () => true,
     category: CommandEnum.CHART,
     executor(args) {
-      executeCommand("chart:command:creator", {
+      executeCommand("chart:overlay:creator", {
+        ...args,
         params: {
+          ...(args.params ?? {}),
           command: "textInput"
         }
       });
@@ -87,3 +94,10 @@ export const executionMenuList: ExecutionMenuItem[] = [
     }
   }
 ];
+
+executionMenuList.forEach((item) =>
+  registerCommand({
+    ...item,
+    pos: CommandPosition.ContentMenu
+  })
+);

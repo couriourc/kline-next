@@ -1,14 +1,17 @@
-import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { OverlayMode } from "couriourc-klinecharts";
+import { registerCommand } from "@/app/commands/register";
+import { CommandPosition } from "@/app/commands/index";
 
-export const singleLineTool: ExecutionMenuItem = {
-  label: "",
+/*DockerCommand*/
+registerCommand({
+  label: "singleLine",
   key: "singleLine",
   icon: "i-material-symbols-light-line-end [&.active]:text-blue",
   command: "singleLine",
+  pos: CommandPosition.Docker,
   onChildExecute: (child) => {
-    executeCommand("chart:command:creator", {
+    executeCommand("chart:overlay:creator", {
       params: {
         search: "",
         command: child.key
@@ -55,14 +58,16 @@ export const singleLineTool: ExecutionMenuItem = {
     { description: "arrow", label: "arrow", key: "arrow" },
     { description: "priceLine", label: "priceLine", key: "priceLine" }
   ]
-};
-export const moreLineTool: ExecutionMenuItem = {
-  label: "",
+});
+
+registerCommand({
+  label: "moreLine",
   key: "moreLine",
   icon: "i-material-symbols-light-line-weight [&.active]:text-blue",
   command: "moreLine",
+  pos: CommandPosition.Docker,
   onChildExecute: (child) => {
-    executeCommand("chart:command:creator", {
+    executeCommand("chart:overlay:creator", {
       params: {
         search: "",
         command: child.key
@@ -81,14 +86,15 @@ export const moreLineTool: ExecutionMenuItem = {
       label: "parallelStraightLine"
     }
   ]
-};
-export const polyTool: ExecutionMenuItem = {
+});
+registerCommand({
   label: "",
   key: "polygon",
   icon: "i-mdi-vector-polygon [&.active]:text-blue",
   command: "polygon",
+  pos: CommandPosition.Docker,
   onChildExecute: (child) => {
-    executeCommand("chart:command:creator", {
+    executeCommand("chart:overlay:creator", {
       params: {
         search: "",
         command: child.key
@@ -105,15 +111,16 @@ export const polyTool: ExecutionMenuItem = {
     },
     { description: "triangle", key: "triangle", label: "triangle" }
   ]
-};
-
-export const fibonacciTool: ExecutionMenuItem = {
+});
+//export const polyTool: ExecutionMenuItem = ;
+registerCommand({
   label: "",
   key: "fibonacci",
   icon: "i-mdi-math-integral [&.active]:text-blue",
   command: "fibonacci",
+  pos: CommandPosition.Docker,
   onChildExecute: (child) => {
-    executeCommand("chart:command:creator", {
+    executeCommand("chart:overlay:creator", {
       params: {
         search: "",
         command: child.key
@@ -153,15 +160,16 @@ export const fibonacciTool: ExecutionMenuItem = {
     },
     { description: "gannBox", key: "gannBox", label: "gannBox" }
   ]
-};
+});
 
-export const waveTool: ExecutionMenuItem = {
+registerCommand({
   label: "",
   key: "wave",
   icon: "i-mdi-sine-wave [&.active]:text-blue",
   command: "wave",
+  pos: CommandPosition.Docker,
   onChildExecute: (child) => {
-    executeCommand("chart:command:creator", {
+    executeCommand("chart:overlay:creator", {
       params: {
         search: "",
         command: child.key
@@ -176,54 +184,61 @@ export const waveTool: ExecutionMenuItem = {
     { key: "eightWaves", label: "eightWaves", description: "eightWaves" },
     { key: "anyWaves", label: "anyWaves", description: "anyWaves" }
   ]
-};
-
-export const textTool: ExecutionMenuItem = {
+});
+registerCommand({
   label: "添加文本",
   description: "添加标记文本",
   icon: "i-material-symbols-light-text-fields ",
   key: "add-text",
   command: "createTextOverlay",
   shortcuts: "t",
+  pos: CommandPosition.Docker,
   executor() {
-    executeCommand("chart:command:creator", {
+    executeCommand("chart:overlay:creator", {
       params: {
         search: "",
         command: "textInput"
       }
     });
   }
-};
+});
 
-export const homeNavTools: ExecutionMenuItem[] = [
-  {
-    label: "磁吸",
-    description: "磁吸",
-    icon: "i-mdi-magnet ",
-    key: "change-magnet",
-    command: "changeMagnet",
-    executor() {
-      executeCommand("chart:command:magnet", OverlayMode.StrongMagnet);
+registerCommand({
+  label: "工具箱",
+  description: "工具箱",
+  icon: "i-material-symbols-light-box ",
+  key: "toolkit",
+  pos: CommandPosition.Docker,
+  children: [
+    {
+      label: "磁吸",
+      description: "磁吸",
+      icon: "i-mdi-magnet ",
+      key: "change-magnet",
+      command: "changeMagnet",
+      executor() {
+        executeCommand("chart:overlay:magnet", OverlayMode.StrongMagnet);
+      }
+    },
+    {
+      label: "锁定",
+      description: "锁定所有绘图",
+      icon: "i-[mdi--lock-open-outline]",
+      key: "change-lock",
+      command: "changeMagnet",
+      executor() {
+        executeCommand("chart:overlay:magnet", OverlayMode.StrongMagnet);
+      }
+    },
+    {
+      label: "隐藏",
+      description: "隐藏绘图",
+      icon: "i-mdi-eye",
+      key: "change-eye",
+      command: "changeVisible",
+      executor() {
+        executeCommand("chart:overlay:visible");
+      }
     }
-  },
-  {
-    label: "锁定",
-    description: "锁定所有绘图",
-    icon: "i-[mdi--lock-open-outline]",
-    key: "change-lock",
-    command: "changeMagnet",
-    executor() {
-      executeCommand("chart:command:magnet", OverlayMode.StrongMagnet);
-    }
-  },
-  {
-    label: "隐藏",
-    description: "隐藏绘图",
-    icon: "i-mdi-eye",
-    key: "change-eye",
-    command: "changeVisible",
-    executor() {
-      executeCommand("chart:command:visible");
-    }
-  }
-];
+  ]
+});

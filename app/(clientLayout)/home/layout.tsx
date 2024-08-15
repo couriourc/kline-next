@@ -15,7 +15,7 @@ export default function KLineChartLayout({ children }: PropsWithChildren) {
         key="left"
         grow
         onResizeEnd={() => {
-          executeCommand("chart:command:resize");
+          executeCommand("chart:overlay:resize");
         }}
       >
         <Stack className={"h-100vh flex w-full flex-col"}>

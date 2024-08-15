@@ -32,7 +32,7 @@ import type { BaseOverlay } from "./BaseOverlay";
 const textInput = {
   name: "textInput",
   totalStep: 2,
-  onDoubleClick(event) {
+  onDoubleClick() {
     return true;
   },
   createPointFigures(args, store) {

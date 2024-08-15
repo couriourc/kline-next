@@ -1,5 +1,5 @@
 "use client";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { curSelectedStockAtom } from "@/app/store/chartStore";
 import DataGrid, {
   type Column,
@@ -8,7 +8,6 @@ import DataGrid, {
   Row
 } from "react-data-grid";
 import "react-data-grid/lib/styles.css";
-import { useDrag, useDrop } from "react-dnd";
 import { useMemo } from "react";
 import { cx } from "@emotion/css";
 import {
@@ -41,44 +40,12 @@ function DraggableRowRenderer<R, SR>({
   onRowReorder,
   ...props
 }: DynamicProps<DraggableRowRenderProps<R, SR>>) {
-  const [{ isDragging }, drag] = useDrag({
-    type: "ROW_DRAG",
-    item: { index: rowIdx },
-    collect: (monitor) => {
-      return {
-        isDragging: monitor.isDragging()
-      };
-    }
-  });
-
-  const [{ isOver }, drop] = useDrop({
-    accept: "ROW_DRAG",
-    drop({ index }: { index: number }) {
-      onRowReorder(index, rowIdx);
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
-  });
-
   return (
     <Row
-      ref={(ref) => {
-        if (ref) {
-          drag(ref.firstElementChild);
-        }
-        drop(ref);
-      }}
       rowIdx={rowIdx}
-      isRowSelected={true}
-      draggable
+      isRowSelected={false}
       className={cx(
         className,
-        {
-          [`opacity-50`]: isDragging,
-          [`bg-[#ececec]`]: isOver
-        },
         "cursor-pointer !border-none !bg-[transparent] !outline-none"
       )}
       {...props}
@@ -90,7 +57,8 @@ function DraggableRowRenderer<R, SR>({
 
 export default function DatasourceMain() {
   const [{ data, isLoading }] = useAtom(plateListRelAtom);
-  const updateCurSelectedStockAtom = useSetAtom(curSelectedStockAtom);
+  const [currentStock, updateCurSelectedStockAtom] =
+    useAtom(curSelectedStockAtom);
 
   const columns: Column<StockListRow>[] = [
     {
@@ -98,7 +66,7 @@ export default function DatasourceMain() {
       name: "股票代码",
 
       headerCellClass: "text-start",
-      width: 60,
+      width: 70,
       cellClass: "text-start flex items-center justify-start",
       renderCell(row) {
         return (
@@ -108,7 +76,13 @@ export default function DatasourceMain() {
             }}
             c="blue"
           >
-            {row.row.stock_code}
+            <span
+              className={cx({
+                underline: currentStock === row.row.stock_code
+              })}
+            >
+              {row.row.stock_code}
+            </span>
           </Text>
         );
       }

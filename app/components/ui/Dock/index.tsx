@@ -4,13 +4,14 @@ import { SettingModal } from "@/app/components/modals/setting-modals";
 import { TimezoneModals } from "@/app/components/modals/timezone-modals";
 import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
+import { CommandPosition } from "@/app/commands";
 import {
-  CommandPosition,
   getCommandsByPosition,
   useSetupCommandsByPosition
-} from "@/app/commands";
+} from "@/app/commands/register";
 
 export default function FloatingMenu() {
+  useSetupCommandsByPosition(CommandPosition.Docker);
   const dockerTools = getCommandsByPosition(CommandPosition.Docker);
   const RenderRightTools = (
     root: ExecutionMenuItem[],
@@ -47,8 +48,6 @@ export default function FloatingMenu() {
     );
   };
 
-  useSetupCommandsByPosition(CommandPosition.Docker);
-
   return (
     <div
       className={cx(
@@ -80,7 +79,7 @@ export default function FloatingMenu() {
         })}
 
         <ActionIcon
-          onClick={() => executeCommand("chart:command:cleanup")}
+          onClick={() => executeCommand("chart:overlay:cleanup")}
           variant={"transparent"}
         >
           <i className={"i-mdi-trash"}></i>

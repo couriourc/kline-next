@@ -1,9 +1,7 @@
-import { AppShell, Burger, Group, Text, UnstyledButton } from "@mantine/core";
+import { AppShell, Group, Text, UnstyledButton } from "@mantine/core";
 import { NEXT_PUBLIC_CHART_WEBSITE_NAME } from "@/config";
-import { useRouter } from "next/navigation";
 
 export function HomeHeader() {
-  const router = useRouter();
   return (
     <>
       <AppShell.Header px={16}>
@@ -11,7 +9,6 @@ export function HomeHeader() {
           className={"flex h-full items-center justify-between"}
         >
           <Group>
-            <Burger />
             <UnstyledButton size={"sm"}>
               <Text
                 size="xl"

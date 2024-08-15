@@ -7,14 +7,17 @@ import { useEffect } from "react";
 import { Text } from "@mantine/core";
 import Loading from "@/app/components/base/loading";
 import { KlineChartModule } from "@/app/components/KlineCharts/core";
-import { type ActionCallback, ActionType } from "couriourc-klinecharts";
 import Dock from "@/app/components/ui/Dock";
 import "./listeners";
-import { CommandPosition, useSetupCommandsByPosition } from "@/app/commands";
+import { CommandPosition } from "@/app/commands";
+import { useSetupCommandsByPosition } from "@/app/commands/register";
 
 const klineChartMemo = KlineChartModule();
 
 export function KLineChart() {
+  /*setup with hook command*/
+  useSetupCommandsByPosition(CommandPosition.Main);
+
   const { init } = klineChartMemo;
   const { ref: klineRef } = init();
   const [{ data: stockMarketKlineChartData, isLoading }] = useAtom(
@@ -25,23 +28,9 @@ export function KLineChart() {
   useEffect(() => {
     const rsi = klineChartMemo.chart.createIndicator("RSI", true);
     const boll = klineChartMemo.chart.createIndicator("BOLL", true);
-    const indicator = klineChartMemo.chart.createIndicator("Custom", true, {
-      id: "candle_pane"
-    });
-    const callback: ActionCallback = (data) => {
-      console.log(`[🪪]data-->`, data);
-    };
-    Object.keys(ActionType).forEach((type) => {
-      klineChartMemo.chart.subscribeAction(type as ActionType, callback);
-    });
     return () => {
-      Object.keys(ActionType).forEach((type) => {
-        klineChartMemo.chart.unsubscribeAction(type as ActionType, callback);
-      });
-
       klineChartMemo.chart.removeIndicator(rsi!);
       klineChartMemo.chart.removeIndicator(boll!);
-      klineChartMemo.chart.removeIndicator(indicator!);
     };
   }, [klineChartMemo.chart]);
 
@@ -52,8 +41,6 @@ export function KLineChart() {
     );
   }, [stockMarketKlineChartData?.content]);
 
-  /*setup with hook command*/
-  useSetupCommandsByPosition(CommandPosition.Main);
   return (
     <>
       <div className={"relative w-full grow"} ref={klineRef}>
