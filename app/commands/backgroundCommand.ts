@@ -1,16 +1,12 @@
-//import { executeChartCommand } from "@/app/components/KlineCharts/commands";
-//import type { OverlayMode } from "couriourc-klinecharts";
-//import { removeDrawStore } from "@/app/components/KlineCharts/stateFn/store";
-//import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
 import { CommandPosition } from "@/app/commands/index";
-import { executeChartCommand } from "@/app/components/KlineCharts/commands";
+import { executeChartCommand } from "@components/KlineCharts/commands";
 import { registerCommand } from "@/app/commands/register";
 import type {
   Overlay,
   OverlayMode,
   OverlayRemove
 } from "couriourc-klinecharts";
-import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
+import type { WrappedOverlay } from "@components/KlineCharts/types";
 
 //// ！！注册基本实例
 registerCommand({

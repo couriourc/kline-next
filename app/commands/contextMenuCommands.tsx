@@ -1,7 +1,7 @@
 import {
   CommandEnum,
   type ExecutionMenuItem
-} from "@/app/components/ui/ContextMenu/types";
+} from "@components/ui/ContextMenu/types";
 import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { Text } from "@mantine/core";
 import { registerCommand } from "@/app/commands/register";

@@ -1,4 +1,4 @@
-import type { ExecutionMenuItem } from "@/app/components/ui/ContextMenu/types";
+import type { ExecutionMenuItem } from "@components/ui/ContextMenu/types";
 import { CommandPosition } from "@/app/commands/index";
 import { useHotkeys } from "@mantine/hooks";
 import type { HotkeyItem } from "@mantine/hooks/lib/use-hotkeys/use-hotkeys";

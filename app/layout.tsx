@@ -1,6 +1,6 @@
 import type { Viewport } from "next";
-import BrowerInitor from "./components/browser-initor";
-import Topbar from "./components/base/topbar";
+import BrowerInitor from "@components/browser-initor";
+import Topbar from "@components/base/topbar";
 
 import { PublicEnvScript } from "next-runtime-env";
 import type { ReactNode } from "react";

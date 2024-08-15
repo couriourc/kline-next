@@ -48,7 +48,7 @@ import "@mantine/core/styles/Tabs.css";
 
 // 插件样式
 import "@mantine/nprogress/styles.css";
-import { ContextMenus } from "@/app/components/ui/ContextMenu";
+import { ContextMenus } from "@components/ui/ContextMenu";
 
 const theme = createTheme({});
 

@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai/index";
 import { mutationLabelKlineA } from "@/app/store/chartStore";
-import { KlineChartModule, LifeCycle } from "@/app/components/KlineCharts/core";
-import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
+import { KlineChartModule, LifeCycle } from "@components/KlineCharts/core";
+import type { WrappedOverlay } from "@components/KlineCharts/types";
 import { registerCommand } from "@/app/commands/register";
 import { CommandPosition } from "@/app/commands/index";
 

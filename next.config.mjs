@@ -27,7 +27,8 @@ const nextConfig = {
       klinecharts: path.resolve(
         __dirname,
         "node_modules/couriourc-klinecharts/"
-      )
+      ),
+      "@components/": path.resolve(__dirname, "app/components/"),
     };
     config.plugins.push(codeInspectorPlugin({ bundler: "webpack" }));
 
