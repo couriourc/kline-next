@@ -1,235 +1,202 @@
 "use client";
-import { useAtom, useSetAtom } from "jotai";
-import {
-  curSelectedStockAtom,
-  stockListAtom
-} from "@/app/utils/store/chartStore";
-import DataGrid, {
-  type Column,
-  type Renderers,
-  type RenderRowProps,
-  Row
-} from "react-data-grid";
 import "react-data-grid/lib/styles.css";
-import { DndProvider, useDrag, useDrop } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { useMemo } from "react";
-import { css, cx } from "@emotion/css";
 import {
-  ActionIcon,
-  Badge,
-  Blockquote,
   Flex,
+  Group,
   Loader,
   Menu,
-  Text
+  Tabs,
+  Text,
+  TextInput,
+  UnstyledButton
 } from "@mantine/core";
-import type { DynamicProps } from "@/app/types/misc";
-import _ from "underscore";
+import DatasourceMain from "@/app/components/page/home/Sidebars/DatasourceMain";
+import { useAtom, useAtomValue } from "jotai/index";
+import { plateListAtom } from "@/app/store/userPlateStore";
+import {
+  curSelectedPlateAtom,
+  mutationUserCustomPlateA
+} from "@/app/store/chartStore";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Fuse from "fuse.js";
+import { cx } from "@emotion/css";
+import LayerMain from "@/app/components/page/home/Sidebars/LayerMain";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-interface StockListRow {
-  stock_code: string;
-  code_type: string;
-  exchange: string;
-  short_name: string;
-}
-const rowDraggingClassname = css`
-  opacity: 0.5;
-`;
+function AsideMenus() {
+  // 用户-自定义板块 列表 数据
+  const { data: plateList, isLoading, refetch } = useAtomValue(plateListAtom);
+  const [currentPlate, updateCurrentPlate] = useAtom(curSelectedPlateAtom);
+  const [searchValue, updateSearchValue] = useState("");
 
-const rowOverClassname = css`
-  background-color: #ececec;
-`;
-interface DraggableRowRenderProps<R, SR> extends RenderRowProps<R, SR> {
-  onRowReorder: (sourceIndex: number, targetIndex: number) => void;
-}
+  const { mutate: handleUserCustomPlateA, isPending } = useAtomValue(
+    mutationUserCustomPlateA
+  );
+  const handleUpdate = useCallback(updateCurrentPlate, [updateCurrentPlate]);
 
-function DraggableRowRenderer<R, SR>({
-  rowIdx,
-  isRowSelected,
-  className,
-  onRowReorder,
-  ...props
-}: DynamicProps<DraggableRowRenderProps<R, SR>>) {
-  const [{ isDragging }, drag] = useDrag({
-    type: "ROW_DRAG",
-    item: { index: rowIdx },
-    collect: (monitor) => {
-      return {
-        isDragging: monitor.isDragging()
-      };
-    }
-  });
+  const list = useMemo(() => {
+    if (!plateList) return [];
+    const _list = plateList.content;
+    handleUpdate(_list[0]);
+    return _list ?? [];
+  }, [isLoading]);
 
-  const [{ isOver }, drop] = useDrop({
-    accept: "ROW_DRAG",
-    drop({ index }: { index: number }) {
-      console.log("drop", index);
-      onRowReorder(index, rowIdx);
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
-  });
+  const fuse = useMemo(
+    () =>
+      new Fuse(list, {
+        includeScore: true,
+        useExtendedSearch: true,
+        keys: ["plate_name"]
+      }),
+    [isLoading]
+  );
+  const filteredItems = useMemo(() => {
+    if (!searchValue?.trim().length) return list;
 
-  className = cx(className, {
-    [rowDraggingClassname]: isDragging,
-    [rowOverClassname]: isOver
-  });
+    return fuse.search(searchValue).map(({ item }) => item);
+  }, [isLoading, searchValue]);
+
+  const reset = () => {
+    updateSearchValue("");
+    refetch();
+  };
+
+  useEffect(() => {
+    reset();
+  }, [isPending]);
   return (
-    <Row
-      ref={(ref) => {
-        if (ref) {
-          drag(ref.firstElementChild);
-        }
-        drop(ref);
-      }}
-      rowIdx={rowIdx}
-      isRowSelected={true}
-      draggable
-      className={cx(
-        className,
-        "cursor-pointer !border-none !bg-[transparent] !outline-none"
-      )}
-      {...props}
-    />
+    <UnstyledButton className={"flex items-center"}>
+      <Menu closeOnItemClick={false}>
+        <Menu.Target>
+          <i className="i-[material-symbols-light--expand-circle-down-outline]"></i>
+        </Menu.Target>
+        <Menu.Dropdown px={"xs"}>
+          <Menu.Item className={"!w-[200px] truncate"} p={"5px"}>
+            <TextInput
+              onChange={(ev) => {
+                updateSearchValue(ev.target.value);
+              }}
+              size={"xs"}
+              rightSection={
+                isPending ? (
+                  <Loader size={"xs"}></Loader>
+                ) : (
+                  <i
+                    className={"i-mdi-add"}
+                    onClick={() => {
+                      handleUserCustomPlateA({
+                        plate_name: searchValue,
+                        plate_code: ""
+                      });
+                    }}
+                  />
+                )
+              }
+              placeholder={"搜索或添加分组"}
+            ></TextInput>
+          </Menu.Item>
+          <div className={"h-[200px] overflow-y-auto overflow-x-hidden"}>
+            {filteredItems.length ? (
+              (filteredItems.map((plate, index) => (
+                <Menu.Item
+                  className={cx(
+                    `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,
+                    {
+                      active: plate.plate_id === currentPlate?.plate_id
+                    }
+                  )}
+                  p={"5px"}
+                  key={plate.plate_id + index}
+                  onClick={() => {
+                    handleUpdate(plate);
+                  }}
+                >
+                  <Text size={"xs"} className={""}>
+                    {plate.plate_name}
+                  </Text>
+                </Menu.Item>
+              )) ?? [])
+            ) : (
+              <Menu.Item
+                p={"5px"}
+                onClick={() => {
+                  handleUserCustomPlateA({
+                    plate_name: searchValue,
+                    plate_code: ""
+                  });
+                }}
+                className={"flex items-center"}
+              >
+                <Text size={"xs"}>新增‘{searchValue}’</Text>
+              </Menu.Item>
+            )}
+          </div>
+        </Menu.Dropdown>
+      </Menu>
+
+      <Text truncate size={"sm"}>
+        {currentPlate?.plate_name}
+      </Text>
+    </UnstyledButton>
+  );
+}
+
+function AsideHeader() {
+  return (
+    <Group justify={"space-between"} className={"box-border"}>
+      <Group>
+        <AsideMenus />
+      </Group>
+    </Group>
   );
 }
 export default function Datasource() {
-  const [{ data, isLoading }] = useAtom(stockListAtom);
-  const updateCurSelectedStockAtom = useSetAtom(curSelectedStockAtom);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab") || "0";
 
-  const columns: Column<StockListRow>[] = [
+  const tabs = [
     {
-      key: "stock_code",
-      name: "股票代码",
-
-      headerCellClass: "text-start",
-      width: 60,
-      cellClass: "text-start flex items-center justify-start",
-      renderCell(row) {
-        return (
-          <Text
-            onClickCapture={() => {
-              updateCurSelectedStockAtom(() => row.row.stock_code);
-            }}
-            c="blue"
-          >
-            {row.row.stock_code}
-          </Text>
-        );
-      }
+      title: <AsideHeader />,
+      key: "self-selected-group-list",
+      panel: <DatasourceMain />
     },
     {
-      key: "code_type",
-      name: "类型",
-      width: 30,
-      headerCellClass: "text-center",
-      cellClass: "text-center flex items-center justify-center",
-      renderCell(row) {
-        return <Badge>{row.row.code_type}</Badge>;
-      }
-    },
-    {
-      key: "exchange",
-      name: "交易所",
-      width: 58,
-      headerCellClass: "text-center",
-      cellClass: "text-center"
-    },
-    { key: "short_name", name: "名称", resizable: true },
-    {
-      key: "control",
-      name: "操作",
-      width: 28,
-      resizable: true,
-      renderCell() {
-        //        const [{ isDragging }, drag] = useDrag({
-        //          type: "ROW_DRAG",
-        //          item: row,
-        //          collect: (monitor) => {
-        //            console.log(monitor.isDragging())
-        //            return {
-        //              isDragging: monitor.isDragging()
-        //            };
-        //          }
-        //        });
-        return (
-          <Menu shadow="md" trigger={"hover"}>
-            <Menu.Target>
-              <ActionIcon aria-label="menu" draggable>
-                <i className={"i-mdi-menu"} />
-              </ActionIcon>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item leftSection={<i className={"i-mdi-add"} />}>
-                <Text size={"sm"}>加入自选组</Text>
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        );
-      }
+      title: <Text size={"sm"}>标记信息</Text>,
+      key: "self-selected-group-list",
+      panel: <LayerMain />
     }
   ];
-  const rows = useMemo(() => {
-    if (!data?.content) return [];
-    return data.content;
-  }, [data]);
-
-  const renderers: Renderers<StockListRow, unknown> = {
-    renderRow(_info, props) {
-      return (
-        <DraggableRowRenderer
-          {...props}
-          rowIdx={props.rowIdx}
-          isRowSelected={props.isRowSelected}
-          onRowReorder={() => {
-            console.log(
-              `Row ${props.rowIdx} was reordered to ${props.rowIdx + 1}`
-            );
-          }}
-        />
-      );
-    }
-  };
-
   return (
-    <>
-      <div className={"h-full w-full grow"}>
-        {isLoading ? (
-          <Flex py={45} justify={"center"} align={"center"}>
-            <Loader />
-          </Flex>
-        ) : rows.length !== 0 ? (
-          <DndProvider backend={HTML5Backend}>
-            <DataGrid<StockListRow>
-              columns={columns}
-              className={`!h-full grow !bg-[var(--mantine-color-body)] ![--rdg-background-color:var(--mantine-color-body)] ![--rdg-color:var(--mantine-color-text)] ![--rdg-header-background-color:var(--mantine-color-body)] ![--rdg-selection-color:var(--mantine-color-white-7)]`}
-              rows={rows}
-              rowKeyGetter={(state: StockListRow) =>
-                state.stock_code + _.uniqueId()
-              }
-              renderers={renderers}
-            />
-          </DndProvider>
-        ) : (
-          <Blockquote
-            w={"92%"}
-            iconSize={30}
-            radius="xs"
-            className={"cursor-pointer"}
-            color="rgba(199, 199, 199, 1)"
-            cite="– Forrest Gump"
-            icon={<i className={"i-mdi-question-answer text-xl"} />}
-            mt="sm"
-            mx={"auto"}
-          >
-            Life is like an npm install – you never know what you are going to
-            get.
-          </Blockquote>
-        )}
-      </div>
-    </>
+    <Flex
+      w={"100%"}
+      p={"4px"}
+      className={"h-full"}
+      direction={"column"}
+      gap={6}
+    >
+      <Tabs
+        className={"h-full"}
+        defaultValue={tab}
+        variant={"outline"}
+        onChange={(index) => {
+          router.push(`${pathname}?tab=${index}`);
+        }}
+      >
+        <Tabs.List>
+          {tabs.map((tab, index) => (
+            <Tabs.Tab size={"xs"} value={`${index}`} key={tab.key}>
+              {tab.title}
+            </Tabs.Tab>
+          ))}
+        </Tabs.List>
+        {tabs.map((tab, index) => (
+          <Tabs.Panel value={`${index}`} key={tab.key}>
+            {tab.panel}
+          </Tabs.Panel>
+        ))}
+      </Tabs>
+    </Flex>
   );
 }

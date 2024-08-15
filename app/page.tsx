@@ -1,5 +1,9 @@
 import Link from "next/link";
 import Loading from "@/app/components/base/loading";
+import { NEXT_PUBLIC_CHART_WEBSITE_NAME } from "@/config";
+export const metadata = {
+  title: NEXT_PUBLIC_CHART_WEBSITE_NAME
+};
 
 const Home = async () => {
   return (

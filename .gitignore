@@ -54,4 +54,7 @@ package-lock.json
 !.env.example
 
 dist
-
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

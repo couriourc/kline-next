@@ -5,16 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/commands/backgroundCommand.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/commands/register.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/styles/globals.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/styles/variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/logs/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/chartCommand.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/contextMenuCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/contextMenuCommands.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/homeNavTools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/dockerCommands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/indicatorCommands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/indicatorCommands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/commands/mainCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/commands/mainCommands.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/commands.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/core.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/extensions/overlays/textInput.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/listeners.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/listeners.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/stateFn/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/stateFn/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/KlineCharts/utils/makeAttributes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/KlineCharts/utils/makeAttributes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/base/command-initor/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/base/command-initor/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/command-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/command-initor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/HomeNav.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/store/chartStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/Sidebars/DatasourceMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Sidebars/DatasourceMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/page/home/Sidebars/LayerMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/page/home/Sidebars/LayerMain.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/ContextMenu/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ui/Dock/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ui/Dock/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/store/chartStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/styles/globals.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/command_overlay" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -83,59 +107,59 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.19.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;18.19.43&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;notes&quot;: &quot;&quot;,
-    &quot;npm.format.executor&quot;: &quot;Run&quot;,
-    &quot;npm.gen-icons.executor&quot;: &quot;Run&quot;,
-    &quot;npm.klinecharts &gt; build-dts.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\projects\\kline-next\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.Dockerfile.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Vitest.Page.executor": "Run",
+    "git-widget-placeholder": "feature/data__apis",
+    "javascript.nodejs.core.library.configured.version": "18.19.1",
+    "javascript.nodejs.core.library.typings.version": "",
+    "last_opened_file_path": "D:/projects/kline-next/app/components/modals/timezone-modals",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "notes": "",
+    "npm.format.executor": "Run",
+    "npm.gen-icons.executor": "Run",
+    "npm.klinecharts > build-dts.executor": "Run",
+    "npm.test.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.customizations",
+    "ts.external.directory.path": "D:\\projects\\kline-next\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\kline-next\app\components\modals\timezone-modals" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\vendors" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\app\components\base" />
       <recent name="C:\Users\Administrator\Desktop\EuProjects\frontend\comprehensive_big_model\comprehensive_big_model\assets" />
       <recent name="C:\Users\Administrator\Desktop\EuProjects\frontend\comprehensive_big_model\comprehensive_big_model\assets\home\card-center" />
-      <recent name="C:\Users\Administrator\Desktop\EuProjects\frontend\comprehensive_big_model\comprehensive_big_model\.deploy" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\projects\kline-next\app\hooks" />
-      <recent name="D:\projects\kline-next\app\(clientLayout)\home" />
-      <recent name="D:\projects\kline-next" />
-      <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\vendors" />
+      <recent name="D:\projects\kline-next\app\components\schema-render" />
       <recent name="C:\Users\Administrator\Desktop\Paradise\kline-next\app" />
+      <recent name="D:\projects\kline-next\app\components\modals\setting-modals" />
+      <recent name="D:\projects\kline-next\app\(clientLayout)" />
+      <recent name="D:\projects\kline-next\app" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.Dockerfile">
-    <configuration name="save.sh" type="ShConfigurationType" temporary="true">
-      <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/save.sh" />
-      <option name="SCRIPT_OPTIONS" value="" />
-      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="powershell.exe" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="EXECUTE_IN_TERMINAL" value="true" />
-      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+  <component name="RunManager" selected="npm.test">
+    <configuration name="Page" type="JavaScriptTestRunnerVitest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <vitest-options value="--run" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/app/__tests__/pages/home.test.tsx" />
+      <test-names>
+        <test-name value="Page" />
+      </test-names>
       <method v="2" />
     </configuration>
     <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
@@ -171,16 +195,6 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="gen-icons" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="gen-icons" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <configuration name="klinecharts &gt; build-dts" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/vendors/klinecharts/package.json" />
       <command value="run" />
@@ -191,20 +205,30 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Docker.Dockerfile" />
+      <item itemvalue="npm.test" />
       <item itemvalue="npm.format" />
-      <item itemvalue="npm.gen-icons" />
       <item itemvalue="npm.klinecharts &gt; build-dts" />
-      <item itemvalue="Shell Script.save.sh" />
+      <item itemvalue="Vitest.Page" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.test" />
+        <item itemvalue="Vitest.Page" />
         <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="npm.klinecharts &gt; build-dts" />
         <item itemvalue="npm.format" />
-        <item itemvalue="npm.gen-icons" />
-        <item itemvalue="Shell Script.save.sh" />
       </list>
     </recent_temporary>
   </component>
@@ -250,7 +274,17 @@
       <workItem from="1722899844613" duration="3692000" />
       <workItem from="1722918182153" duration="19000" />
       <workItem from="1722951166959" duration="5784000" />
-      <workItem from="1722985247947" duration="7759000" />
+      <workItem from="1722985247947" duration="11052000" />
+      <workItem from="1723074179401" duration="1643000" />
+      <workItem from="1723245406177" duration="21141000" />
+      <workItem from="1723279880477" duration="2831000" />
+      <workItem from="1723340324620" duration="21530000" />
+      <workItem from="1723417655067" duration="4927000" />
+      <workItem from="1723459252999" duration="9300000" />
+      <workItem from="1723506494183" duration="1494000" />
+      <workItem from="1723532202224" duration="9531000" />
+      <workItem from="1723589154366" duration="6664000" />
+      <workItem from="1723721295993" duration="9956000" />
     </task>
     <servers />
   </component>

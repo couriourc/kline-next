@@ -1,3 +1,5 @@
+import type { WrappedOverlay } from "@/app/components/KlineCharts/types";
+
 /**
  * @Description: 全局声明
  * @Date: 2024-07-09 11:51:42
@@ -9,5 +11,11 @@ interface Window {
     mock_max_interval: number;
     mock_json_path: string;
     need_mock: boolean;
+  };
+}
+
+declare interface OverlayEvent {
+  overlay: {
+    extendData: WrappedOverlay;
   };
 }

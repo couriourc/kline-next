@@ -1,26 +1,26 @@
 "use client";
 import type { PropsWithChildren } from "react";
-import { registerCommand } from "@/app/hooks/use-event-emitter";
-import { executeChartCommand } from "@/app/components/KlineCharts/commands";
-// ！！注册基本实例
-// 系统局部指令
-registerCommand("chart:command:resize", () => {
-  executeChartCommand("resize");
-});
-// 创建图形指令
-registerCommand("chart:command:creator", (args) => {
-  executeChartCommand("createOverlay", {
-    name: "textInput",
-    extendData: {
-      text: args.params.search ?? "asd"
-    }
+import {
+  getCommandsByPosition,
+  useSetupCommandsByPosition
+} from "@/app/commands/register";
+import { CommandPosition } from "@/app/commands";
+import _ from "underscore";
+import emitter from "@/app/hooks/use-event-emitter";
+import "./base/command-initor";
+
+// 监听后台任务
+getCommandsByPosition(CommandPosition.Background)
+  .filter((command) => command.listen)
+  .map((item) => {
+    const listen = _.isString(item.listen) ? [item.listen] : item.listen!;
+    listen.forEach((listenItem) => {
+      emitter.on(listenItem, (...args) => item.executor?.(...args));
+    });
   });
-});
-// 移除图形指令
-//registerCommand("chart:command:remove", (args) => {
-//
-//})
 const CommandInitor = ({ children }: PropsWithChildren) => {
+  useSetupCommandsByPosition(CommandPosition.Background);
+
   return <>{children}</>;
 };
 
