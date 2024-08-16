@@ -1,11 +1,11 @@
 import type { AxiosInstance, AxiosResponse } from "axios";
 import axios, { type AxiosRequestConfig } from "axios";
+import { NEXT_PUBLIC_PUBLIC_API_PREFIX } from "@/config";
 import type {
   DynamicProps,
   FunctionOrValue,
   WithMessageProps
-} from "@/app/types/misc";
-import { NEXT_PUBLIC_PUBLIC_API_PREFIX } from "@/config";
+} from "$types/misc";
 
 interface AxiosRequestType extends AxiosRequestConfig {
   baseURL?: string;

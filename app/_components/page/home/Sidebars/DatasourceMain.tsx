@@ -1,6 +1,6 @@
 "use client";
 import { useAtom } from "jotai";
-import { curSelectedStockAtom } from "@/app/store/chartStore";
+import { curSelectedStockAtom } from "@lib/store/chartStore";
 import DataGrid, {
   type Column,
   type Renderers,
@@ -19,9 +19,9 @@ import {
   Menu,
   Text
 } from "@mantine/core";
-import type { DynamicProps } from "@/app/types/misc";
+import type { DynamicProps } from "$types/misc";
 import _ from "underscore";
-import { plateListRelAtom } from "@/app/store/userPlateStore";
+import { plateListRelAtom } from "@lib/store/userPlateStore";
 
 interface StockListRow {
   stock_code: string;

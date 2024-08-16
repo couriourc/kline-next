@@ -2,15 +2,15 @@ import { useAtom, useAtomValue } from "jotai/index";
 import {
   curSelectedStockAtom,
   stockMarketKlineChartAtom
-} from "@/app/store/chartStore";
+} from "@lib/store/chartStore";
 import { useEffect } from "react";
 import { Text } from "@mantine/core";
 import Loading from "@components/base/loading";
 import { KlineChartModule } from "@components/KlineCharts/core";
 import Dock from "@components/ui/Dock";
 import "./listeners";
-import { CommandPosition } from "@/app/commands";
-import { useSetupCommandsByPosition } from "@/app/commands/register";
+import { CommandPosition } from "@lib/commands";
+import { useSetupCommandsByPosition } from "@lib/commands/register";
 
 const klineChartMemo = KlineChartModule();
 

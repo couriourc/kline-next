@@ -1,14 +1,4 @@
-import requester from "@/app/services/http";
-
-//{
-//  "stock_code": "string",
-//  "k_type": 0,
-//  "adjust_type": 0,
-//  "pos": "string",
-//  "label_type": "string",
-//  "label_text": "string",
-//  "user_id": "adata"
-//}
+import requester from "./http";
 
 export interface IPostLabelKlineA {
   stock_code: string;

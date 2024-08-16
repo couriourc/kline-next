@@ -3,7 +3,7 @@ import { KlineChartModule, LifeCycle } from "@components/KlineCharts/core";
 import type { WrappedOverlay } from "@components/KlineCharts/types";
 
 const { emitter } = KlineChartModule();
-emitter.on(`overlay:${LifeCycle.onDrawEnd}`, (overlays) => {
+emitter.on(`chart:overlay:${LifeCycle.onDrawEnd}`, (overlays) => {
   (overlays.overlay.extendData as WrappedOverlay).overlay_id =
     overlays.overlay.id;
   (overlays.overlay.extendData as WrappedOverlay)._event = overlays;

@@ -3,12 +3,12 @@ import { cx } from "@emotion/css";
 import { SettingModal } from "@components/modals/setting-modals";
 import { TimezoneModals } from "@components/modals/timezone-modals";
 import type { ExecutionMenuItem } from "@components/ui/ContextMenu/types";
-import { executeCommand } from "@/app/hooks/use-event-emitter";
-import { CommandPosition } from "@/app/commands";
+import { executeCommand } from "@lib/hooks/use-event-emitter";
+import { CommandPosition } from "@lib/commands";
 import {
   getCommandsByPosition,
   useSetupCommandsByPosition
-} from "@/app/commands/register";
+} from "@lib/commands/register";
 
 export default function FloatingMenu() {
   useSetupCommandsByPosition(CommandPosition.Docker);

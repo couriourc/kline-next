@@ -1,17 +1,12 @@
 "use client";
 import { useEffect, useRef } from "react";
-import {
-  ActionType,
-  type Chart,
-  dispose,
-  init,
-  type OverlayEvent
-} from "couriourc-klinecharts";
-import mitt, { type Emitter } from "mitt";
+import { ActionType, type Chart, dispose, init } from "couriourc-klinecharts";
+
 import "./plugins/lang";
 import "./extensions";
 import { defaultTheme } from "./plugins/theme";
 import { formatDate } from "./stateFn";
+import emitter from "@lib/hooks/use-event-emitter";
 
 export enum LifeCycle {
   onDrawStart = "onDrawStart",
@@ -32,29 +27,6 @@ export enum LifeCycle {
 export const KlineChartModule = (() => {
   let chartMemo: Chart;
 
-  type EmitterType = {
-    [key: string]: any;
-
-    ["chart:setup"]: any;
-    ["command:setup"]: any;
-
-    ["overlay:onDrawStart"]: OverlayEvent;
-    ["overlay:onDrawing"]: OverlayEvent;
-    ["overlay:onDrawEnd"]: OverlayEvent;
-    ["overlay:onClick"]: OverlayEvent;
-    ["overlay:onDoubleClick"]: OverlayEvent;
-    ["overlay:onRightClick"]: OverlayEvent;
-    ["overlay:onPressedMoveStart"]: OverlayEvent;
-    ["overlay:onPressedMoving"]: OverlayEvent;
-    ["overlay:onPressedMoveEnd"]: OverlayEvent;
-    ["overlay:onMouseEnter"]: OverlayEvent;
-    ["overlay:onMouseLeave"]: OverlayEvent;
-    ["overlay:onRemoved"]: OverlayEvent;
-    ["overlay:onSelected"]: OverlayEvent;
-    ["overlay:onDeselected"]: OverlayEvent;
-  };
-  const emitter: Emitter<EmitterType> = mitt();
-
   return () => {
     return {
       // 注册初始化实例
@@ -70,7 +42,7 @@ export const KlineChartModule = (() => {
           emitter.emit("chart:setup", chartMemo);
 
           const callback = (type: ActionType, data: any) => {
-            emitter.emit(`chart:${type}`, data);
+            emitter.emit(`chart:action:${type}`, data);
           };
           const cleanup = [
             ActionType.OnDataReady,
@@ -100,16 +72,7 @@ export const KlineChartModule = (() => {
       get chart() {
         return chartMemo!;
       },
-      emitter: emitter,
-      useCommand: <T extends keyof EmitterType>(
-        command: T,
-        params: (args: EmitterType[T]) => void
-      ) => {
-        useEffect(() => {
-          emitter.on(command, params);
-          return () => emitter.off(command, params);
-        }, []);
-      }
+      emitter: emitter
     };
   };
 })();

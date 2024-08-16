@@ -1,12 +1,13 @@
-import { CommandPosition } from "@/app/commands/index";
+import { CommandPosition } from ".";
+import { registerCommand } from "./register";
 import { executeChartCommand } from "@components/KlineCharts/commands";
-import { registerCommand } from "@/app/commands/register";
 import type {
   Overlay,
   OverlayMode,
   OverlayRemove
 } from "couriourc-klinecharts";
 import type { WrappedOverlay } from "@components/KlineCharts/types";
+import { updateDrawStore } from "@components/KlineCharts/stateFn";
 
 //// ！！注册基本实例
 registerCommand({
@@ -78,5 +79,17 @@ registerCommand({
     return executeChartCommand("overrideOverlay", {
       visible
     });
+  }
+});
+
+registerCommand({
+  pos: CommandPosition.Background,
+  label: "chart:post",
+  listen: "chart:overlay:post",
+  executor: (overlays) => {
+    (overlays.overlay.extendData as WrappedOverlay).overlay_id =
+      overlays.overlay.id;
+    (overlays.overlay.extendData as WrappedOverlay)._event = overlays;
+    updateDrawStore(overlays.overlay.extendData);
   }
 });

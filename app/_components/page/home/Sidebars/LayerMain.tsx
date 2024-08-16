@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useDisclosure, useForceUpdate } from "@mantine/hooks";
 import {
   ActionIcon,
+  Badge,
   Button,
   Divider,
   Fieldset,
@@ -21,7 +22,7 @@ import {
 } from "@components/KlineCharts/stateFn/store";
 import { unwrapAttributes } from "@components/KlineCharts/utils/unwrapAttributes";
 import { useAtom } from "jotai";
-import { executeCommand } from "@/app/hooks/use-event-emitter";
+import { executeCommand } from "@lib/hooks/use-event-emitter";
 
 const LayersContext = createContext<{
   selectedLayer?: WrappedOverlay[];
@@ -131,6 +132,12 @@ const AttributePanel = () => {
             <TextInput placeholder="标记信息" />
           </Stack>
         </Fieldset>
+
+        <div>
+          <Badge>asd</Badge>
+          <Badge>asd</Badge>
+          <Badge>asd</Badge>
+        </div>
       </div>
     </div>
   );

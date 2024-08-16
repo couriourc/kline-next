@@ -52,7 +52,10 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
       const fn = option[fnName];
       // turn all events into function that emits the corresponding event to the chart instance
       option[fnName] = (...args) => {
-        klineChartInstance.emitter.emit(`overlay:${fnName}`, args[0]);
+        klineChartInstance.emitter.emit(
+          `chart:overlay:${fnName as LifeCycle}`,
+          args[0]
+        );
         return !!fn?.(...args);
       };
 
@@ -64,7 +67,7 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
             event.preventDefault?.();
             fn?.(...args);
             klineChartInstance.emitter.emit(
-              `overlay:${LifeCycle.onRightClick}`,
+              `chart:overlay:${LifeCycle.onRightClick}`,
               args[0]
             );
             return true;
@@ -74,7 +77,7 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
           option[fnName] = (...args) => {
             const overlay = args[0].overlay;
             klineChartInstance.emitter.emit(
-              `overlay:${LifeCycle.onRemoved}`,
+              `chart:overlay:${LifeCycle.onRemoved}`,
               args[0]
             );
             removeDrawStore([overlay.extendData]);

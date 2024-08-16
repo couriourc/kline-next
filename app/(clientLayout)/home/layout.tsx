@@ -2,7 +2,7 @@
 import "@gfazioli/mantine-split-pane/styles.css";
 import { Split } from "@gfazioli/mantine-split-pane";
 import { Stack } from "@mantine/core";
-import { executeCommand } from "@/app/hooks/use-event-emitter";
+import { executeCommand } from "@lib/hooks/use-event-emitter";
 import type { PropsWithChildren } from "react";
 import { ContextMenuTrigger } from "rctx-contextmenu";
 import { ContextMenuEnum } from "@components/ui/ContextMenu/types";

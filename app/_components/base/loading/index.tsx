@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 import "./style.css";
-import type { BaseProps } from "@/app/types/misc";
+import type { BaseProps } from "$types/misc";
 import { cx } from "@emotion/css";
 
 type ILoadingProps = {

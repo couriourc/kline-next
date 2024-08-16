@@ -8,8 +8,8 @@ import _ from "underscore";
 import { ContextMenuEnum, type ExecutionMenuItem } from "./types";
 import Handlebars from "handlebars";
 import { useRouter } from "next/navigation";
-import { CommandPosition } from "@/app/commands";
-import { getCommandsByPosition } from "@/app/commands/register";
+import { CommandPosition } from "@lib/commands";
+import { getCommandsByPosition } from "@lib/commands/register";
 
 const ExecuteSearchContextMenu = ({ hidden }: { hidden: Function }) => {
   const [inputValue, updateInputValue] = useState("");

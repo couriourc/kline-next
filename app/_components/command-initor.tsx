@@ -3,11 +3,11 @@ import type { PropsWithChildren } from "react";
 import {
   getCommandsByPosition,
   useSetupCommandsByPosition
-} from "@/app/commands/register";
-import { CommandPosition } from "@/app/commands";
+} from "@lib/commands/register";
+import { CommandPosition } from "@lib/commands";
 import _ from "underscore";
-import emitter from "@/app/hooks/use-event-emitter";
-import "./base/command-initor";
+import emitter from "@lib/hooks/use-event-emitter";
+import "@lib/commands/command-initor";
 
 // 监听后台任务
 getCommandsByPosition(CommandPosition.Background)

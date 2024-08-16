@@ -5,7 +5,7 @@ import {
   MantineProvider as Provider
 } from "@mantine/core";
 import type { PropsWithChildren } from "react";
-import "./mantine-override.scss";
+import "@/app/_styles/mantine-override.scss";
 import { NavigationProgress } from "@mantine/nprogress";
 import { Notifications } from "@mantine/notifications";
 // 基本样式
@@ -45,7 +45,6 @@ import "@mantine/core/styles/Overlay.css";
 import "@mantine/core/styles/Burger.css";
 import "@mantine/core/styles/Tabs.css";
 // 布局样式
-
 // 插件样式
 import "@mantine/nprogress/styles.css";
 import { ContextMenus } from "@components/ui/ContextMenu";

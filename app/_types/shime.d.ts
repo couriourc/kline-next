@@ -1,4 +1,4 @@
-import type { WrappedOverlay } from "@/app/_components/KlineCharts/types";
+import type { WrappedOverlay } from "@components/KlineCharts/types";
 
 /**
  * @Description: 全局声明

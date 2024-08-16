@@ -1,7 +1,7 @@
 "use client";
 import type { ReactNode } from "react";
 import SwrInitor from "@components/swr-initor";
-import { MantineProvider } from "@/app/context/mantine-context";
+import { MantineProvider } from "@lib/context/mantine-context";
 import "react-toastify/dist/ReactToastify.css";
 import { AppShell, rem } from "@mantine/core";
 import { ToastContainer } from "react-toastify";

@@ -2,10 +2,10 @@ import {
   CommandEnum,
   type ExecutionMenuItem
 } from "@components/ui/ContextMenu/types";
-import { executeCommand } from "@/app/hooks/use-event-emitter";
+import { executeCommand } from "../hooks/use-event-emitter";
 import { Text } from "@mantine/core";
-import { registerCommand } from "@/app/commands/register";
-import { CommandPosition } from "@/app/commands/index";
+import { registerCommand } from "../commands/register";
+import { CommandPosition } from "../commands/index";
 
 /**
  * 快捷方式的权重计算

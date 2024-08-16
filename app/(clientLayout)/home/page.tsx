@@ -12,11 +12,11 @@ import {
 } from "@mantine/core";
 import DatasourceMain from "@components/page/home/Sidebars/DatasourceMain";
 import { useAtom, useAtomValue } from "jotai/index";
-import { plateListAtom } from "@/app/store/userPlateStore";
+import { plateListAtom } from "@lib/store/userPlateStore";
 import {
   curSelectedPlateAtom,
   mutationUserCustomPlateA
-} from "@/app/store/chartStore";
+} from "@lib/store/chartStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import { cx } from "@emotion/css";

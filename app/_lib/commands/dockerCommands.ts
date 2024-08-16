@@ -1,7 +1,7 @@
-import { executeCommand } from "@/app/hooks/use-event-emitter";
 import { OverlayMode } from "couriourc-klinecharts";
-import { registerCommand } from "@/app/commands/register";
-import { CommandPosition } from "@/app/commands/index";
+import { executeCommand } from "../hooks/use-event-emitter";
+import { registerCommand } from "../commands/register";
+import { CommandPosition } from "../commands/index";
 
 /*DockerCommand*/
 registerCommand({

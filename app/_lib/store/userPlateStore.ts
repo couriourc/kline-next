@@ -6,8 +6,8 @@ import {
   getUserCustomPlateRel,
   type IGetUserCustomPlateResponse,
   type IGetUserCustomPlateResponseContentItem
-} from "@/app/services/plate.api";
-import { curSelectedPlateAtom } from "@/app/store/chartStore";
+} from "@services/plate.api";
+import { curSelectedPlateAtom } from "@lib/store/chartStore";
 
 // 获取 用户-自定义板块 列表
 export const plateListAtom = atomWithQuery<IGetUserCustomPlateResponse>(() => {

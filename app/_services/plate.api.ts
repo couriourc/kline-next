@@ -1,5 +1,5 @@
-import type { WrapperResult } from "@/app/services/types";
-import requester from "@/app/services/http";
+import type { WrapperResult } from "./types";
+import requester from "./http";
 
 export type IGetUserCustomPlateResponseContentItem = {
   plate_id: string;

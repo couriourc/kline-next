@@ -4,7 +4,7 @@ import Topbar from "@components/base/topbar";
 
 import { PublicEnvScript } from "next-runtime-env";
 import type { ReactNode } from "react";
-import "./styles/globals.scss";
+import "@styles/globals.scss";
 import { ColorSchemeScript } from "@mantine/core";
 import { NEXT_PUBLIC_CHART_WEBSITE_NAME } from "@/config";
 
@@ -27,6 +27,10 @@ const LocaleLayout = ({ children }: { children: ReactNode }) => {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
         <PublicEnvScript></PublicEnvScript>
         <ColorSchemeScript
           forceColorScheme={"dark"}

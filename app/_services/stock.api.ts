@@ -1,4 +1,4 @@
-import requester from "@/app/services/http";
+import requester from "./http";
 
 export interface IGetStockInfoSearch {
   kw?: string;

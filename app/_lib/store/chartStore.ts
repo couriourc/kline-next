@@ -1,20 +1,17 @@
 import { atom } from "jotai";
 
 import { atomWithMutation, atomWithQuery } from "jotai-tanstack-query";
-import {
-  getStockInfoSearch,
-  getStockMarketKline
-} from "@/app/services/stock.api";
+import { getStockInfoSearch, getStockMarketKline } from "@services/stock.api";
 import {
   getLabelKlineDown,
   type IPostLabelKlineA,
   postLabelKlineA
-} from "@/app/services/label.api";
+} from "@services/label.api";
 import {
   type IGetUserCustomPlateResponseContentItem,
   type IPostUserCustomPlate,
   postUserCustomPlateA
-} from "@/app/services/plate.api";
+} from "@services/plate.api";
 import download from "downloadjs";
 
 // 当前选择的K线股票代码
