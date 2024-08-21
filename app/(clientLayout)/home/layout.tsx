@@ -2,11 +2,11 @@
 import "@gfazioli/mantine-split-pane/styles.css";
 import { Split } from "@gfazioli/mantine-split-pane";
 import { Stack } from "@mantine/core";
-import { executeCommand } from "@/app/hooks/use-event-emitter";
+import { executeCommand } from "@lib/hooks/use-event-emitter";
 import type { PropsWithChildren } from "react";
 import { ContextMenuTrigger } from "rctx-contextmenu";
-import { ContextMenuEnum } from "@/app/components/ui/ContextMenu/types";
-import { KLineChart } from "@/app/components/KlineCharts";
+import { ContextMenuEnum } from "@components/ui/ContextMenu/types";
+import { KLineChart } from "@components/KlineCharts";
 
 export default function KLineChartLayout({ children }: PropsWithChildren) {
   return (

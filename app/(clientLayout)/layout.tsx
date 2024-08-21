@@ -1,14 +1,14 @@
 "use client";
 import type { ReactNode } from "react";
-import SwrInitor from "@/app/components/swr-initor";
-import { MantineProvider } from "@/app/context/mantine-context";
+import SwrInitor from "@components/swr-initor";
+import { MantineProvider } from "@lib/context/mantine-context";
 import "react-toastify/dist/ReactToastify.css";
 import { AppShell, rem } from "@mantine/core";
 import { ToastContainer } from "react-toastify";
 import { cx } from "@emotion/css";
-import { HomeHeader } from "@/app/components/page/home/HomeHeader";
-import CommandInitor from "@/app/components/command-initor";
-import KlineChartsInitor from "@/app/components/kline-initor";
+import { HomeHeader } from "@components/page/home/HomeHeader";
+import CommandInitor from "@components/command-initor";
+import KlineChartsInitor from "@components/kline-initor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 

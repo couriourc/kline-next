@@ -48,7 +48,7 @@ RUN ln -s /usr/share/zoneinfo/${TZ} /etc/localtime \
 RUN yarn global add pm2 \
     && yarn cache clean
 
-WORKDIR /app/web
+WORKDIR /app
 COPY --from=builder /app/web/public ./public
 COPY --from=builder /app/web/.next/standalone ./
 COPY --from=builder /app/web/.next/static ./.next/static

@@ -10,17 +10,17 @@ import {
   TextInput,
   UnstyledButton
 } from "@mantine/core";
-import DatasourceMain from "@/app/components/page/home/Sidebars/DatasourceMain";
+import DatasourceMain from "@components/page/home/Sidebars/DatasourceMain";
 import { useAtom, useAtomValue } from "jotai/index";
-import { plateListAtom } from "@/app/store/userPlateStore";
+import { plateListAtom } from "@lib/store/userPlateStore";
 import {
   curSelectedPlateAtom,
   mutationUserCustomPlateA
-} from "@/app/store/chartStore";
+} from "@lib/store/chartStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import { cx } from "@emotion/css";
-import LayerMain from "@/app/components/page/home/Sidebars/LayerMain";
+import LayerMain from "@components/page/home/Sidebars/LayerMain";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function AsideMenus() {
