@@ -35,24 +35,18 @@ const textInput = {
   onDoubleClick() {
     return true;
   },
+  onSelected(overlayFigure, store) {
+    console.log(overlayFigure);
+    return true;
+  },
+  onDeselected() {
+    return true;
+  },
+  onMouseEnter(overlayFigure) {
+    console.log(overlayFigure);
+    return true;
+  },
   createPointFigures(args, store) {
-    if (!store?.attributes.label) {
-      return [
-        {
-          type: "circle",
-          attrs: {
-            x: args.coordinates[0].x,
-            y: args.coordinates[0].y,
-            r: 5
-          },
-          styles: {
-            fill: "#ff0000",
-            stroke: "#ff0000",
-            strokeWidth: 2
-          }
-        }
-      ];
-    }
     const texts: TextAttrs[] = args.coordinates.map((coordinate) => {
       return {
         ...coordinate,
@@ -60,10 +54,20 @@ const textInput = {
         baseline: "top"
       };
     });
+
     return [
       {
         type: "text",
         attrs: texts,
+        styles: { color: "#fff", fontSize: 12, fontWeight: "bold" }
+      },
+      {
+        type: "icon",
+        attrs: {
+          x: args.coordinates[0].x - 8,
+          y: args.coordinates[0].y - 8,
+          icon: "close"
+        },
         styles: { color: "#fff", fontSize: 12, fontWeight: "bold" }
       }
     ];

@@ -1,17 +1,20 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { useDisclosure, useForceUpdate } from "@mantine/hooks";
+import { createContext, useEffect, useMemo } from "react";
+import { useDisclosure } from "@mantine/hooks";
 import {
   ActionIcon,
   Badge,
   Button,
   Divider,
   Fieldset,
+  Flex,
+  Group,
   rem,
   ScrollArea,
   Stack,
   Text,
-  TextInput
+  TextInput,
+  UnstyledButton
 } from "@mantine/core";
 import type { WrappedOverlay } from "@components/KlineCharts/types";
 import { cx } from "@emotion/css";
@@ -21,8 +24,37 @@ import {
   updateDrawStore
 } from "@components/KlineCharts/stateFn/store";
 import { unwrapAttributes } from "@components/KlineCharts/utils/unwrapAttributes";
-import { useAtom } from "jotai";
+import { atom, useSetAtom } from "jotai";
 import { executeCommand } from "@lib/hooks/use-event-emitter";
+import { selectAtom } from "jotai/utils";
+import { useAtomValue } from "jotai/index";
+import {
+  type LabelInfo,
+  LabelManagerModel,
+  LabelsAtom
+} from "@components/modals/label-manager";
+
+export const selectedLayerIdsAtom = selectAtom(
+  ChartStoreAtom,
+  (chartStore) => chartStore.selectedOverlayIds
+);
+export const selectedLayerAtom = atom(
+  (get) => {
+    const selectedIds = get(selectedLayerIdsAtom);
+    const overlayCollection = get(overlayCollectionAtom);
+    return selectedIds.map((id) => overlayCollection.get(id)!);
+  },
+  (_get, set, args: WrappedOverlay[]) => {
+    set(ChartStoreAtom, (prev) => ({
+      ...prev,
+      selectedOverlayIds: args.map((overlay) => overlay.id)
+    }));
+  }
+);
+export const overlayCollectionAtom = selectAtom(
+  ChartStoreAtom,
+  (chartStore) => chartStore.overlays
+);
 
 const LayersContext = createContext<{
   selectedLayer?: WrappedOverlay[];
@@ -40,7 +72,8 @@ const OverlayController = (props: {
   index: number;
 }) => {
   const unwrappedOverlay = unwrapAttributes(props.overlay);
-  const { updateSelected, selectedLayerIds } = useContext(LayersContext);
+  const updateSelected = useSetAtom(selectedLayerAtom);
+  const selectedLayerIds = useAtomValue(selectedLayerIdsAtom);
 
   const [visible, { toggle: toggleVisible }] = useDisclosure(
     unwrappedOverlay.attributes.visible
@@ -50,6 +83,7 @@ const OverlayController = (props: {
     () => selectedLayerIds?.includes(props.overlay.id!),
     [selectedLayerIds]
   );
+
   return (
     <li
       className={cx(
@@ -93,23 +127,25 @@ const OverlayController = (props: {
   );
 };
 const AttributePanel = () => {
-  const { selectedLayer } = useContext(LayersContext);
-  const { register, reset } = useForm<{
-    label: string;
-  }>();
+  const selectedLayer = useAtomValue(selectedLayerAtom);
+  const { register, reset, getValues, setValue } = useForm<LabelInfo>();
   useEffect(() => {
     reset({
-      label: selectedLayer?.[0]?.attributes?.label!
+      labelDisplayName: selectedLayer?.[0]?.attributes?.label!
     });
-  }, [selectedLayer?.[0].id]);
-  if (!selectedLayer?.length) return null;
-  const label = register("label");
-  const handleUpdate = (value: string) => {
+  }, [selectedLayer?.[0]?.id]);
+
+  const labelDisplayName = register("labelDisplayName");
+  const labelData = register("labelData");
+  const labels = useAtomValue(LabelsAtom);
+  const handleUpdate = (value: LabelInfo) => {
     selectedLayer.forEach((layer) => {
-      layer.attributes.label = value ?? "";
+      layer.attributes.label = value.labelDisplayName;
     });
     updateDrawStore(selectedLayer);
   };
+
+  if (!selectedLayer.length) return null;
   return (
     <div className={`absolute bottom-0 flex w-full shrink-0 flex-col`}>
       <Divider w={"100%"} />
@@ -118,33 +154,71 @@ const AttributePanel = () => {
           "m-0 flex h-[500px] flex-col gap-[6px] overflow-y-auto overflow-x-hidden px-[12px]"
         }
       >
-        <Text truncate>{selectedLayer!.map((item) => item.id).join(",")}</Text>
+        <Group justify={"space-between"}>
+          <Text truncate>
+            {selectedLayer!.map((item) => item.id).join(",")}
+          </Text>
+        </Group>
         <Fieldset w={"100%"} variant="unstyled">
           <Stack>
             <TextInput
-              {...label}
+              {...labelDisplayName}
               onChange={(e) => {
-                label.onChange(e);
-                handleUpdate(e.target.value);
+                labelDisplayName.onChange(e);
+                handleUpdate(getValues());
               }}
               placeholder="显示文本"
             />
-            <TextInput placeholder="标记信息" />
+            <TextInput {...labelData} placeholder="标记信息" />
           </Stack>
         </Fieldset>
-
-        <div>
-          <Badge>asd</Badge>
-          <Badge>asd</Badge>
-          <Badge>asd</Badge>
-        </div>
+        <Flex wrap={"wrap"} gap={rem(12)}>
+          {labels.map((labelInfo) => {
+            return (
+              <UnstyledButton key={labelInfo.labelDisplayName}>
+                <Badge
+                  onClick={() => {
+                    handleUpdate(labelInfo);
+                    Object.keys(labelInfo).forEach((key) => {
+                      setValue(
+                        key as keyof LabelInfo,
+                        labelInfo[key as keyof LabelInfo]
+                      );
+                    });
+                  }}
+                >
+                  {labelInfo.tagName}
+                </Badge>
+              </UnstyledButton>
+            );
+          })}
+          <LabelManagerModel />
+        </Flex>
       </div>
     </div>
   );
 };
 
 function LayerList() {
-  const { layerState } = useContext(LayersContext);
+  const layerState = useAtomValue(overlayCollectionAtom);
+  if (!layerState?.size)
+    return (
+      <Button
+        size={"xs"}
+        my={rem(60)}
+        mx={"auto"}
+        onClick={() =>
+          executeCommand("chart:overlay:creator", {
+            params: {
+              search: "",
+              command: "textInput"
+            }
+          })
+        }
+      >
+        添加文本标记
+      </Button>
+    );
   return (
     <>
       <ScrollArea
@@ -169,47 +243,10 @@ function LayerList() {
 }
 
 export default function LayerMain() {
-  const update = useForceUpdate();
-  const [selectedLayer, updateSelected] = useState<WrappedOverlay[]>([]);
-  const selectedLayerIds = useMemo(
-    () => selectedLayer?.map((layer) => layer.id!) ?? ([] as string[]),
-    [selectedLayer]
-  );
-
-  const [{ overlays }] = useAtom(ChartStoreAtom);
-
   return (
-    <LayersProvider
-      value={{
-        selectedLayer,
-        selectedLayerIds: selectedLayerIds!,
-        updateSelected,
-        layerState: overlays,
-        updateLayerState: update
-      }}
-    >
-      <div className={"relative flex h-full w-full flex-col items-center"}>
-        {overlays.size ? (
-          <LayerList />
-        ) : (
-          <Button
-            size={"xs"}
-            my={rem(60)}
-            mx={"auto"}
-            onClick={() =>
-              executeCommand("chart:overlay:creator", {
-                params: {
-                  search: "",
-                  command: "textInput"
-                }
-              })
-            }
-          >
-            添加文本标记
-          </Button>
-        )}
-        {selectedLayer.length ? <AttributePanel /> : null}
-      </div>
-    </LayersProvider>
+    <div className={"relative flex h-full w-full flex-col items-center"}>
+      <LayerList />
+      <AttributePanel />
+    </div>
   );
 }

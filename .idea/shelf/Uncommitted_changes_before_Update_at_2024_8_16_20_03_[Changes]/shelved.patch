@@ -1,0 +1,465 @@
+Index: app/layout.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import type { Viewport } from \"next\";\r\nimport BrowerInitor from \"@components/browser-initor\";\r\nimport Topbar from \"@components/base/topbar\";\r\n\r\nimport { PublicEnvScript } from \"next-runtime-env\";\r\nimport type { ReactNode } from \"react\";\r\nimport \"@styles/globals.scss\";\r\nimport { ColorSchemeScript } from \"@mantine/core\";\r\nimport { NEXT_PUBLIC_CHART_WEBSITE_NAME } from \"@/config\";\r\n\r\nexport const metadata = {\r\n  title: NEXT_PUBLIC_CHART_WEBSITE_NAME\r\n};\r\n\r\nexport const viewport: Viewport = {\r\n  width: \"device-width\",\r\n  initialScale: 1,\r\n  maximumScale: 1,\r\n  viewportFit: \"cover\",\r\n  userScalable: false\r\n};\r\n\r\nconst LocaleLayout = ({ children }: { children: ReactNode }) => {\r\n  return (\r\n    <html lang={\"zh-Hans\"} className=\"h-full\">\r\n      <head>\r\n        <meta name=\"mobile-web-app-capable\" content=\"yes\" />\r\n        <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" />\r\n        <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"default\" />\r\n        <meta\r\n          httpEquiv=\"Content-Security-Policy\"\r\n          content=\"upgrade-insecure-requests\"\r\n        />\r\n        <PublicEnvScript></PublicEnvScript>\r\n        <ColorSchemeScript\r\n          forceColorScheme={\"dark\"}\r\n          defaultColorScheme=\"dark\"\r\n        />\r\n      </head>\r\n      <body className=\"h-full select-auto\">\r\n        <Topbar />\r\n        <BrowerInitor>{children}</BrowerInitor>\r\n      </body>\r\n    </html>\r\n  );\r\n};\r\n\r\nexport default LocaleLayout;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/layout.tsx b/app/layout.tsx
+--- a/app/layout.tsx	(revision 24e485a4eba63c18ae3039ee9ce172fe7a43b819)
++++ b/app/layout.tsx	(date 1723806904626)
+@@ -29,7 +29,7 @@
+         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+         <meta
+           httpEquiv="Content-Security-Policy"
+-          content="upgrade-insecure-requests"
++          content="mixed-content"
+         />
+         <PublicEnvScript></PublicEnvScript>
+         <ColorSchemeScript
+Index: app/(clientLayout)/home/page.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport \"react-data-grid/lib/styles.css\";\r\nimport {\r\n  Flex,\r\n  Group,\r\n  Loader,\r\n  Menu,\r\n  Tabs,\r\n  Text,\r\n  TextInput,\r\n  UnstyledButton\r\n} from \"@mantine/core\";\r\nimport DatasourceMain from \"@components/page/home/Sidebars/DatasourceMain\";\r\nimport { useAtom, useAtomValue } from \"jotai/index\";\r\nimport { plateListAtom } from \"@lib/store/userPlateStore\";\r\nimport {\r\n  curSelectedPlateAtom,\r\n  mutationUserCustomPlateA\r\n} from \"@lib/store/chartStore\";\r\nimport { useCallback, useEffect, useMemo, useState } from \"react\";\r\nimport Fuse from \"fuse.js\";\r\nimport { cx } from \"@emotion/css\";\r\nimport LayerMain from \"@components/page/home/Sidebars/LayerMain\";\r\nimport { usePathname, useRouter, useSearchParams } from \"next/navigation\";\r\n\r\nfunction AsideMenus() {\r\n  // 用户-自定义板块 列表 数据\r\n  const { data: plateList, isLoading, refetch } = useAtomValue(plateListAtom);\r\n  const [currentPlate, updateCurrentPlate] = useAtom(curSelectedPlateAtom);\r\n  const [searchValue, updateSearchValue] = useState(\"\");\r\n\r\n  const { mutate: handleUserCustomPlateA, isPending } = useAtomValue(\r\n    mutationUserCustomPlateA\r\n  );\r\n  const handleUpdate = useCallback(updateCurrentPlate, [updateCurrentPlate]);\r\n\r\n  const list = useMemo(() => {\r\n    if (!plateList) return [];\r\n    const _list = plateList.content;\r\n    handleUpdate(_list[0]);\r\n    return _list ?? [];\r\n  }, [isLoading]);\r\n\r\n  const fuse = useMemo(\r\n    () =>\r\n      new Fuse(list, {\r\n        includeScore: true,\r\n        useExtendedSearch: true,\r\n        keys: [\"plate_name\"]\r\n      }),\r\n    [isLoading]\r\n  );\r\n  const filteredItems = useMemo(() => {\r\n    if (!searchValue?.trim().length) return list;\r\n\r\n    return fuse.search(searchValue).map(({ item }) => item);\r\n  }, [isLoading, searchValue]);\r\n\r\n  const reset = () => {\r\n    updateSearchValue(\"\");\r\n    refetch();\r\n  };\r\n\r\n  useEffect(() => {\r\n    reset();\r\n  }, [isPending]);\r\n  return (\r\n    <UnstyledButton className={\"flex items-center\"}>\r\n      <Menu closeOnItemClick={false}>\r\n        <Menu.Target>\r\n          <i className=\"i-[material-symbols-light--expand-circle-down-outline]\"></i>\r\n        </Menu.Target>\r\n        <Menu.Dropdown px={\"xs\"}>\r\n          <Menu.Item className={\"!w-[200px] truncate\"} p={\"5px\"}>\r\n            <TextInput\r\n              onChange={(ev) => {\r\n                updateSearchValue(ev.target.value);\r\n              }}\r\n              size={\"xs\"}\r\n              rightSection={\r\n                isPending ? (\r\n                  <Loader size={\"xs\"}></Loader>\r\n                ) : (\r\n                  <i\r\n                    className={\"i-mdi-add\"}\r\n                    onClick={() => {\r\n                      handleUserCustomPlateA({\r\n                        plate_name: searchValue,\r\n                        plate_code: \"\"\r\n                      });\r\n                    }}\r\n                  />\r\n                )\r\n              }\r\n              placeholder={\"搜索或添加分组\"}\r\n            ></TextInput>\r\n          </Menu.Item>\r\n          <div className={\"h-[200px] overflow-y-auto overflow-x-hidden\"}>\r\n            {filteredItems.length ? (\r\n              (filteredItems.map((plate, index) => (\r\n                <Menu.Item\r\n                  className={cx(\r\n                    `!w-[200px] truncate hover:bg-[var(--mantine-default-hover)] [&_.active]:bg-[var(--mantine-default-hover)]`,\r\n                    {\r\n                      active: plate.plate_id === currentPlate?.plate_id\r\n                    }\r\n                  )}\r\n                  p={\"5px\"}\r\n                  key={plate.plate_id + index}\r\n                  onClick={() => {\r\n                    handleUpdate(plate);\r\n                  }}\r\n                >\r\n                  <Text size={\"xs\"} className={\"\"}>\r\n                    {plate.plate_name}\r\n                  </Text>\r\n                </Menu.Item>\r\n              )) ?? [])\r\n            ) : (\r\n              <Menu.Item\r\n                p={\"5px\"}\r\n                onClick={() => {\r\n                  handleUserCustomPlateA({\r\n                    plate_name: searchValue,\r\n                    plate_code: \"\"\r\n                  });\r\n                }}\r\n                className={\"flex items-center\"}\r\n              >\r\n                <Text size={\"xs\"}>新增‘{searchValue}’</Text>\r\n              </Menu.Item>\r\n            )}\r\n          </div>\r\n        </Menu.Dropdown>\r\n      </Menu>\r\n\r\n      <Text truncate size={\"sm\"}>\r\n        {currentPlate?.plate_name}\r\n      </Text>\r\n    </UnstyledButton>\r\n  );\r\n}\r\n\r\nfunction AsideHeader() {\r\n  return (\r\n    <Group justify={\"space-between\"} className={\"box-border\"}>\r\n      <Group>\r\n        <AsideMenus />\r\n      </Group>\r\n    </Group>\r\n  );\r\n}\r\nexport default function Datasource() {\r\n  const router = useRouter();\r\n  const pathname = usePathname();\r\n  const searchParams = useSearchParams();\r\n  const tab = searchParams.get(\"tab\") || \"0\";\r\n\r\n  const tabs = [\r\n    {\r\n      title: <AsideHeader />,\r\n      key: \"self-selected-group-list\",\r\n      panel: <DatasourceMain />\r\n    },\r\n    {\r\n      title: <Text size={\"sm\"}>标记信息</Text>,\r\n      key: \"self-selected-group-list\",\r\n      panel: <LayerMain />\r\n    }\r\n  ];\r\n  return (\r\n    <Flex\r\n      w={\"100%\"}\r\n      p={\"4px\"}\r\n      className={\"h-full\"}\r\n      direction={\"column\"}\r\n      gap={6}\r\n    >\r\n      <Tabs\r\n        className={\"h-full\"}\r\n        defaultValue={tab}\r\n        variant={\"outline\"}\r\n        onChange={(index) => {\r\n          router.push(`${pathname}?tab=${index}`);\r\n        }}\r\n      >\r\n        <Tabs.List>\r\n          {tabs.map((tab, index) => (\r\n            <Tabs.Tab size={\"xs\"} value={`${index}`} key={tab.key}>\r\n              {tab.title}\r\n            </Tabs.Tab>\r\n          ))}\r\n        </Tabs.List>\r\n        {tabs.map((tab, index) => (\r\n          <Tabs.Panel value={`${index}`} key={tab.key}>\r\n            {tab.panel}\r\n          </Tabs.Panel>\r\n        ))}\r\n      </Tabs>\r\n    </Flex>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/(clientLayout)/home/page.tsx b/app/(clientLayout)/home/page.tsx
+--- a/app/(clientLayout)/home/page.tsx	(revision 24e485a4eba63c18ae3039ee9ce172fe7a43b819)
++++ b/app/(clientLayout)/home/page.tsx	(date 1723809481568)
+@@ -1,27 +1,25 @@
+ "use client";
+ import "react-data-grid/lib/styles.css";
+-import {
+-  Flex,
+-  Group,
+-  Loader,
+-  Menu,
+-  Tabs,
+-  Text,
+-  TextInput,
+-  UnstyledButton
+-} from "@mantine/core";
++import { Flex, Group, Loader, Menu, Tabs, Text, TextInput, UnstyledButton } from "@mantine/core";
+ import DatasourceMain from "@components/page/home/Sidebars/DatasourceMain";
+ import { useAtom, useAtomValue } from "jotai/index";
+ import { plateListAtom } from "@lib/store/userPlateStore";
+-import {
+-  curSelectedPlateAtom,
+-  mutationUserCustomPlateA
+-} from "@lib/store/chartStore";
++import { curSelectedPlateAtom, mutationUserCustomPlateA } from "@lib/store/chartStore";
+ import { useCallback, useEffect, useMemo, useState } from "react";
+ import Fuse from "fuse.js";
+ import { cx } from "@emotion/css";
+-import LayerMain from "@components/page/home/Sidebars/LayerMain";
++import LayerMain, { selectedLayerAtom } from "@components/page/home/Sidebars/LayerMain";
+ import { usePathname, useRouter, useSearchParams } from "next/navigation";
++import { useCommand } from "@lib/hooks/use-event-emitter";
++import { LifeCycle } from "@components/KlineCharts/core";
++import { useSetAtom } from "jotai";
++import { WrappedOverlay } from "@components/KlineCharts/types";
++
++export enum SideEnum  {
++  SelfSelectedGroupListLayout = 'SelfSelectedGroupListLayout',
++  LabelLayout = 'LabelLayout',
++
++}
+ 
+ function AsideMenus() {
+   // 用户-自定义板块 列表 数据
+@@ -150,24 +148,40 @@
+     </Group>
+   );
+ }
++
++
+ export default function Datasource() {
+   const router = useRouter();
+   const pathname = usePathname();
+   const searchParams = useSearchParams();
+-  const tab = searchParams.get("tab") || "0";
++  const [tab,setTab] = useState<SideEnum>((searchParams.get("tab") as SideEnum) ?? SideEnum.SelfSelectedGroupListLayout);
+ 
+-  const tabs = [
++
++  const handleReplaceLayout = useCallback((key:SideEnum)=>{
++    setTab(key)
++    router.replace(`${pathname}?tab=${key}`);
++  },[pathname, tab])
++  const tabs =useMemo(() =>  [
+     {
+       title: <AsideHeader />,
+-      key: "self-selected-group-list",
++      key: SideEnum.SelfSelectedGroupListLayout,
+       panel: <DatasourceMain />
+     },
+     {
+       title: <Text size={"sm"}>标记信息</Text>,
+-      key: "self-selected-group-list",
++      key: SideEnum.LabelLayout,
+       panel: <LayerMain />
+     }
+-  ];
++  ],[pathname,tab]);
++
++  const updateSelectedLayerAtom= useSetAtom(selectedLayerAtom)
++
++  useCommand(`chart:overlay:${LifeCycle.onDoubleClick}`,(info)=>{
++    handleReplaceLayout(SideEnum.LabelLayout);
++    updateSelectedLayerAtom([info.overlay.extendData] as WrappedOverlay[])
++  });
++
++
+   return (
+     <Flex
+       w={"100%"}
+@@ -180,19 +194,20 @@
+         className={"h-full"}
+         defaultValue={tab}
+         variant={"outline"}
+-        onChange={(index) => {
+-          router.push(`${pathname}?tab=${index}`);
++        onChange={(key) => {
++          handleReplaceLayout(key as SideEnum)
+         }}
++        value={tab}
+       >
+         <Tabs.List>
+           {tabs.map((tab, index) => (
+-            <Tabs.Tab size={"xs"} value={`${index}`} key={tab.key}>
++            <Tabs.Tab size={"xs"} value={tab.key} key={tab.key}>
+               {tab.title}
+             </Tabs.Tab>
+           ))}
+         </Tabs.List>
+         {tabs.map((tab, index) => (
+-          <Tabs.Panel value={`${index}`} key={tab.key}>
++          <Tabs.Panel value={tab.key} key={tab.key}>
+             {tab.panel}
+           </Tabs.Panel>
+         ))}
+Index: app/_components/page/home/Sidebars/LayerMain.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport { createContext, useContext, useEffect, useMemo, useState } from \"react\";\r\nimport { useDisclosure, useForceUpdate } from \"@mantine/hooks\";\r\nimport {\r\n  ActionIcon,\r\n  Badge,\r\n  Button,\r\n  Divider,\r\n  Fieldset,\r\n  rem,\r\n  ScrollArea,\r\n  Stack,\r\n  Text,\r\n  TextInput\r\n} from \"@mantine/core\";\r\nimport type { WrappedOverlay } from \"@components/KlineCharts/types\";\r\nimport { cx } from \"@emotion/css\";\r\nimport { useForm } from \"react-hook-form\";\r\nimport {\r\n  ChartStoreAtom,\r\n  updateDrawStore\r\n} from \"@components/KlineCharts/stateFn/store\";\r\nimport { unwrapAttributes } from \"@components/KlineCharts/utils/unwrapAttributes\";\r\nimport { useAtom } from \"jotai\";\r\nimport { executeCommand } from \"@lib/hooks/use-event-emitter\";\r\n\r\nconst LayersContext = createContext<{\r\n  selectedLayer?: WrappedOverlay[];\r\n  updateSelected?: (\r\n    overlay: WrappedOverlay[] | ((pre: WrappedOverlay[]) => any)\r\n  ) => void;\r\n  selectedLayerIds?: string[];\r\n  layerState?: Map<WrappedOverlay[\"id\"], WrappedOverlay>;\r\n  updateLayerState?: () => void;\r\n}>({});\r\n\r\nconst LayersProvider = LayersContext.Provider;\r\nconst OverlayController = (props: {\r\n  overlay: WrappedOverlay;\r\n  index: number;\r\n}) => {\r\n  const unwrappedOverlay = unwrapAttributes(props.overlay);\r\n  const { updateSelected, selectedLayerIds } = useContext(LayersContext);\r\n\r\n  const [visible, { toggle: toggleVisible }] = useDisclosure(\r\n    unwrappedOverlay.attributes.visible\r\n  );\r\n\r\n  const isSelected = useMemo(\r\n    () => selectedLayerIds?.includes(props.overlay.id!),\r\n    [selectedLayerIds]\r\n  );\r\n  return (\r\n    <li\r\n      className={cx(\r\n        \"flex w-full cursor-pointer justify-between py-[4px] pr-[12px] [&.active]:bg-black\",\r\n        { active: isSelected }\r\n      )}\r\n      onClick={() => {\r\n        updateSelected?.([props.overlay]);\r\n      }}\r\n      key={props.overlay.id}\r\n    >\r\n      <div className={\"relative flex w-full items-center gap-[4px]\"}>\r\n        {/*{JSON.stringify(unwrappedOverlay)}*/}\r\n        <ActionIcon\r\n          onClickCapture={() => {\r\n            toggleVisible();\r\n            unwrappedOverlay.attributes.visible =\r\n              !unwrappedOverlay.attributes.visible;\r\n            updateDrawStore([unwrappedOverlay]);\r\n          }}\r\n          variant={visible ? \"transparent\" : \"outline\"}\r\n        >\r\n          <i className={visible ? \"i-mdi-eye\" : \"i-mdi-eye-off\"} />\r\n        </ActionIcon>\r\n\r\n        <Text className={\"w-full\"} truncate>\r\n          {unwrappedOverlay.attributes.label}\r\n        </Text>\r\n\r\n        <i\r\n          className={\"i-mdi-close absolute right-0 cursor-pointer\"}\r\n          onClickCapture={() => {\r\n            if (isSelected) {\r\n              updateSelected?.([]);\r\n            }\r\n            executeCommand(\"chart:overlay:cleanup\", unwrappedOverlay);\r\n          }}\r\n        />\r\n      </div>\r\n    </li>\r\n  );\r\n};\r\nconst AttributePanel = () => {\r\n  const { selectedLayer } = useContext(LayersContext);\r\n  const { register, reset } = useForm<{\r\n    label: string;\r\n  }>();\r\n  useEffect(() => {\r\n    reset({\r\n      label: selectedLayer?.[0]?.attributes?.label!\r\n    });\r\n  }, [selectedLayer?.[0].id]);\r\n  if (!selectedLayer?.length) return null;\r\n  const label = register(\"label\");\r\n  const handleUpdate = (value: string) => {\r\n    selectedLayer.forEach((layer) => {\r\n      layer.attributes.label = value ?? \"\";\r\n    });\r\n    updateDrawStore(selectedLayer);\r\n  };\r\n  return (\r\n    <div className={`absolute bottom-0 flex w-full shrink-0 flex-col`}>\r\n      <Divider w={\"100%\"} />\r\n      <div\r\n        className={\r\n          \"m-0 flex h-[500px] flex-col gap-[6px] overflow-y-auto overflow-x-hidden px-[12px]\"\r\n        }\r\n      >\r\n        <Text truncate>{selectedLayer!.map((item) => item.id).join(\",\")}</Text>\r\n        <Fieldset w={\"100%\"} variant=\"unstyled\">\r\n          <Stack>\r\n            <TextInput\r\n              {...label}\r\n              onChange={(e) => {\r\n                label.onChange(e);\r\n                handleUpdate(e.target.value);\r\n              }}\r\n              placeholder=\"显示文本\"\r\n            />\r\n            <TextInput placeholder=\"标记信息\" />\r\n          </Stack>\r\n        </Fieldset>\r\n\r\n        <div>\r\n          <Badge>asd</Badge>\r\n          <Badge>asd</Badge>\r\n          <Badge>asd</Badge>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n};\r\n\r\nfunction LayerList() {\r\n  const { layerState } = useContext(LayersContext);\r\n  return (\r\n    <>\r\n      <ScrollArea\r\n        component={\"ul\"}\r\n        className={\r\n          \"flex h-[900px] w-full select-none flex-col overflow-y-auto overflow-x-hidden\"\r\n        }\r\n      >\r\n        {[...layerState!.keys()].map((overlayId, index) => {\r\n          const overlay = layerState!.get(overlayId)!;\r\n          return (\r\n            <OverlayController\r\n              key={overlayId}\r\n              overlay={overlay}\r\n              index={index}\r\n            />\r\n          );\r\n        })}\r\n      </ScrollArea>\r\n    </>\r\n  );\r\n}\r\n\r\nexport default function LayerMain() {\r\n  const update = useForceUpdate();\r\n  const [selectedLayer, updateSelected] = useState<WrappedOverlay[]>([]);\r\n  const selectedLayerIds = useMemo(\r\n    () => selectedLayer?.map((layer) => layer.id!) ?? ([] as string[]),\r\n    [selectedLayer]\r\n  );\r\n\r\n  const [{ overlays }] = useAtom(ChartStoreAtom);\r\n\r\n  return (\r\n    <LayersProvider\r\n      value={{\r\n        selectedLayer,\r\n        selectedLayerIds: selectedLayerIds!,\r\n        updateSelected,\r\n        layerState: overlays,\r\n        updateLayerState: update\r\n      }}\r\n    >\r\n      <div className={\"relative flex h-full w-full flex-col items-center\"}>\r\n        {overlays.size ? (\r\n          <LayerList />\r\n        ) : (\r\n          <Button\r\n            size={\"xs\"}\r\n            my={rem(60)}\r\n            mx={\"auto\"}\r\n            onClick={() =>\r\n              executeCommand(\"chart:overlay:creator\", {\r\n                params: {\r\n                  search: \"\",\r\n                  command: \"textInput\"\r\n                }\r\n              })\r\n            }\r\n          >\r\n            添加文本标记\r\n          </Button>\r\n        )}\r\n        {selectedLayer.length ? <AttributePanel /> : null}\r\n      </div>\r\n    </LayersProvider>\r\n  );\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/_components/page/home/Sidebars/LayerMain.tsx b/app/_components/page/home/Sidebars/LayerMain.tsx
+--- a/app/_components/page/home/Sidebars/LayerMain.tsx	(revision 24e485a4eba63c18ae3039ee9ce172fe7a43b819)
++++ b/app/_components/page/home/Sidebars/LayerMain.tsx	(date 1723809143197)
+@@ -1,28 +1,20 @@
+ "use client";
+-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+-import { useDisclosure, useForceUpdate } from "@mantine/hooks";
+-import {
+-  ActionIcon,
+-  Badge,
+-  Button,
+-  Divider,
+-  Fieldset,
+-  rem,
+-  ScrollArea,
+-  Stack,
+-  Text,
+-  TextInput
+-} from "@mantine/core";
++import { createContext, useEffect, useMemo } from "react";
++import { useDisclosure } from "@mantine/hooks";
++import { ActionIcon, Badge, Button, Divider, Fieldset, rem, ScrollArea, Stack, Text, TextInput } from "@mantine/core";
+ import type { WrappedOverlay } from "@components/KlineCharts/types";
+ import { cx } from "@emotion/css";
+ import { useForm } from "react-hook-form";
+-import {
+-  ChartStoreAtom,
+-  updateDrawStore
+-} from "@components/KlineCharts/stateFn/store";
++import { ChartStoreAtom, updateDrawStore } from "@components/KlineCharts/stateFn/store";
+ import { unwrapAttributes } from "@components/KlineCharts/utils/unwrapAttributes";
+-import { useAtom } from "jotai";
++import { atom, useSetAtom } from "jotai";
+ import { executeCommand } from "@lib/hooks/use-event-emitter";
++import { selectAtom } from "jotai/utils";
++import { useAtomValue } from "jotai/index";
++
++export const selectedLayerAtom= atom<WrappedOverlay[]>([]);
++export const selectedLayerIdsAtom= atom<WrappedOverlay['id'][]>((get)=>get(selectedLayerAtom).map(overlay=>overlay.id));
++export const overlayCollectionAtom= selectAtom(ChartStoreAtom,(chartStore)=>chartStore.overlays);
+ 
+ const LayersContext = createContext<{
+   selectedLayer?: WrappedOverlay[];
+@@ -40,7 +32,9 @@
+   index: number;
+ }) => {
+   const unwrappedOverlay = unwrapAttributes(props.overlay);
+-  const { updateSelected, selectedLayerIds } = useContext(LayersContext);
++//  const { , selectedLayerIds } = useContext(LayersContext);
++  const updateSelected = useSetAtom(selectedLayerAtom);
++  const selectedLayerIds = useAtomValue(selectedLayerIdsAtom);
+ 
+   const [visible, { toggle: toggleVisible }] = useDisclosure(
+     unwrappedOverlay.attributes.visible
+@@ -93,7 +87,7 @@
+   );
+ };
+ const AttributePanel = () => {
+-  const { selectedLayer } = useContext(LayersContext);
++  const selectedLayer = useAtomValue(selectedLayerAtom);
+   const { register, reset } = useForm<{
+     label: string;
+   }>();
+@@ -101,8 +95,9 @@
+     reset({
+       label: selectedLayer?.[0]?.attributes?.label!
+     });
+-  }, [selectedLayer?.[0].id]);
+-  if (!selectedLayer?.length) return null;
++  }, [selectedLayer?.[0]?.id]);
++
++
+   const label = register("label");
+   const handleUpdate = (value: string) => {
+     selectedLayer.forEach((layer) => {
+@@ -110,6 +105,9 @@
+     });
+     updateDrawStore(selectedLayer);
+   };
++
++
++  if (!selectedLayer.length) return null;
+   return (
+     <div className={`absolute bottom-0 flex w-full shrink-0 flex-col`}>
+       <Divider w={"100%"} />
+@@ -144,7 +142,24 @@
+ };
+ 
+ function LayerList() {
+-  const { layerState } = useContext(LayersContext);
++  const layerState = useAtomValue(overlayCollectionAtom);
++  if (!layerState?.size) return (
++    <Button
++      size={"xs"}
++      my={rem(60)}
++      mx={"auto"}
++      onClick={() =>
++        executeCommand("chart:overlay:creator", {
++          params: {
++            search: "",
++            command: "textInput"
++          }
++        })
++      }
++    >
++      添加文本标记
++    </Button>
++  );
+   return (
+     <>
+       <ScrollArea
+@@ -169,47 +184,10 @@
+ }
+ 
+ export default function LayerMain() {
+-  const update = useForceUpdate();
+-  const [selectedLayer, updateSelected] = useState<WrappedOverlay[]>([]);
+-  const selectedLayerIds = useMemo(
+-    () => selectedLayer?.map((layer) => layer.id!) ?? ([] as string[]),
+-    [selectedLayer]
+-  );
+-
+-  const [{ overlays }] = useAtom(ChartStoreAtom);
+-
+   return (
+-    <LayersProvider
+-      value={{
+-        selectedLayer,
+-        selectedLayerIds: selectedLayerIds!,
+-        updateSelected,
+-        layerState: overlays,
+-        updateLayerState: update
+-      }}
+-    >
+       <div className={"relative flex h-full w-full flex-col items-center"}>
+-        {overlays.size ? (
+-          <LayerList />
+-        ) : (
+-          <Button
+-            size={"xs"}
+-            my={rem(60)}
+-            mx={"auto"}
+-            onClick={() =>
+-              executeCommand("chart:overlay:creator", {
+-                params: {
+-                  search: "",
+-                  command: "textInput"
+-                }
+-              })
+-            }
+-          >
+-            添加文本标记
+-          </Button>
+-        )}
+-        {selectedLayer.length ? <AttributePanel /> : null}
++        <LayerList />
++        <AttributePanel />
+       </div>
+-    </LayersProvider>
+   );
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1f6263d0-5c57-419a-9b1d-797dacb72784\" name=\"Changes\" comment=\"feature: 搭建基本布局\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Dockerfile\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/Dockerfile\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/(clientLayout)/home/page.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/(clientLayout)/home/page.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/(clientLayout)/layout.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/(clientLayout)/layout.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/KlineCharts/commands.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/KlineCharts/commands.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/KlineCharts/config.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/command-initor.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/KlineCharts/core.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/KlineCharts/core.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/KlineCharts/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/KlineCharts/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/KlineCharts/listeners.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/KlineCharts/listeners.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/KlineCharts/stateFn/index.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/KlineCharts/stateFn/index.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/base/command-initor/index.ts\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/base/github-star/index.tsx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/base/loading/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/base/loading/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/command-initor.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/command-initor.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/page/home/Sidebars/DatasourceMain.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/page/home/Sidebars/DatasourceMain.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/page/home/Sidebars/LayerMain.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/page/home/Sidebars/LayerMain.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/ui/ContextMenu/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/ui/ContextMenu/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/_components/ui/Dock/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_components/ui/Dock/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/backgroundCommand.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/backgroundCommand.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/contextMenuCommands.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/contextMenuCommands.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/dockerCommands.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/dockerCommands.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/index.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/indicatorCommands.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/indicatorCommands.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/mainCommands.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/mainCommands.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/commands/register.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/commands/register.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/context/chart-context.tsx\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/context/mantine-context.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/context/mantine-context.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/context/mantine-override.scss\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_styles/mantine-override.scss\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/context/plugins/mantine-context-menu-context.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/context/plugins/mantine-context-menu-context.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/hooks/use-breakpoints.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/hooks/use-breakpoints.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/hooks/use-event-emitter.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/hooks/use-event-emitter.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/hooks/use-tab-searchparams.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/hooks/use-tab-searchparams.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/layout.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/layout.tsx\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/services/http.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_services/http.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/services/label.api.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_services/label.api.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/services/plate.api.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_services/plate.api.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/services/stock.api.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_services/stock.api.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/services/types.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_services/types.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/store/chartStore.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/store/chartStore.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/store/userPlateStore.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/store/userPlateStore.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/styles/globals.scss\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_styles/globals.scss\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/styles/variables.scss\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_styles/variables.scss\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/types/misc.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_types/misc.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/types/shime.d.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_types/shime.d.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/design.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/design.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/format.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/format.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/globalConfig.ts\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/index.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/index.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/misc.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/misc.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/timezone.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/timezone.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/timezone.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/timezone.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/utils/use-modifieries.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/_lib/utils/use-modifieries.ts\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/next.config.mjs\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/next.config.mjs\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/tsconfig.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/tsconfig.json\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"feature/data_apis\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"GitToolBoxStore\">\r\n    <option name=\"projectConfigVersion\" value=\"5\" />\r\n    <option name=\"recentBranches\">\r\n      <RecentBranches>\r\n        <option name=\"branchesForRepo\">\r\n          <list>\r\n            <RecentBranchesForRepo>\r\n              <option name=\"branches\">\r\n                <list>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"fix/ignore_component_as_page\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1723733705\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/data_apis\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1723733611\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/datasource\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722958601\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/command_overlay\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722871563\" />\r\n                  </RecentBranch>\r\n                  <RecentBranch>\r\n                    <option name=\"branchName\" value=\"feature/contextmenu\" />\r\n                    <option name=\"lastUsedInstant\" value=\"1722782965\" />\r\n                  </RecentBranch>\r\n                </list>\r\n              </option>\r\n              <option name=\"repositoryRootUrl\" value=\"file://$PROJECT_DIR$\" />\r\n            </RecentBranchesForRepo>\r\n          </list>\r\n        </option>\r\n      </RecentBranches>\r\n    </option>\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+core@7.11.2_@mantine+hooks@7.11.2_react@18.2.0__@types+react@18.2.79_react-dom@18.2._qxyfegsockktv5x56iyzi7jrli/node_modules/@mantine/core/lib/components/Popover/Popover.d.ts\" root0=\"SKIP_INSPECTION\" />\r\n    <setting file=\"file://$PROJECT_DIR$/node_modules/.pnpm/@mantine+hooks@7.11.2_react@18.2.0/node_modules/@mantine/hooks/lib/use-scroll-into-view/use-scroll-into-view.d.ts\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2jK5deEmpiJsceoHWrLDs6UWk5O\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Docker.Dockerfile.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;Vitest.Page.executor&quot;: &quot;Run&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;feature/data__apis&quot;,\r\n    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.19.1&quot;,\r\n    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next/app/components/modals/timezone-modals&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,\r\n    &quot;notes&quot;: &quot;&quot;,\r\n    &quot;npm.format.executor&quot;: &quot;Run&quot;,\r\n    &quot;npm.gen-icons.executor&quot;: &quot;Run&quot;,\r\n    &quot;npm.klinecharts &gt; build-dts.executor&quot;: &quot;Run&quot;,\r\n    &quot;npm.test.executor&quot;: &quot;Run&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,\r\n    &quot;ts.external.directory.path&quot;: &quot;D:\\\\projects\\\\kline-next\\\\node_modules\\\\typescript\\\\lib&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\projects\\kline-next\\app\\components\\modals\\timezone-modals\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\vendors\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\Paradise\\kline-next\\app\\components\\base\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\EuProjects\\frontend\\comprehensive_big_model\\comprehensive_big_model\\assets\" />\r\n      <recent name=\"C:\\Users\\Administrator\\Desktop\\EuProjects\\frontend\\comprehensive_big_model\\comprehensive_big_model\\assets\\home\\card-center\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\projects\\kline-next\\app\\_styles\" />\r\n      <recent name=\"D:\\projects\\kline-next\\app\" />\r\n      <recent name=\"D:\\projects\\kline-next\\app\\_lib\" />\r\n      <recent name=\"D:\\projects\\kline-next\\src\" />\r\n      <recent name=\"D:\\projects\\kline-next\\app\\components\\schema-render\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Docker.Dockerfile\">\r\n    <configuration name=\"Page\" type=\"JavaScriptTestRunnerVitest\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <node-interpreter value=\"project\" />\r\n      <vitest-package value=\"$PROJECT_DIR$/node_modules/vitest\" />\r\n      <working-dir value=\"$PROJECT_DIR$\" />\r\n      <vitest-options value=\"--run\" />\r\n      <envs />\r\n      <scope-kind value=\"TEST\" />\r\n      <test-file value=\"$PROJECT_DIR$/app/__tests__/pages/home.test.tsx\" />\r\n      <test-names>\r\n        <test-name value=\"Page\" />\r\n      </test-names>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"Dockerfile\" type=\"docker-deploy\" factoryName=\"dockerfile\" temporary=\"true\" server-name=\"Docker\">\r\n      <deployment type=\"dockerfile\">\r\n        <settings>\r\n          <option name=\"containerName\" value=\"klinenext\" />\r\n          <option name=\"portBindings\">\r\n            <list>\r\n              <DockerPortBindingImpl>\r\n                <option name=\"containerPort\" value=\"3000\" />\r\n                <option name=\"hostPort\" value=\"3001\" />\r\n              </DockerPortBindingImpl>\r\n            </list>\r\n          </option>\r\n          <option name=\"sourceFilePath\" value=\"Dockerfile\" />\r\n        </settings>\r\n      </deployment>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"docker-deploy\" factoryName=\"dockerfile\" temporary=\"true\">\r\n      <deployment type=\"dockerfile\">\r\n        <settings />\r\n      </deployment>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"format\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"format\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"klinecharts &gt; build-dts\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/vendors/klinecharts/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"build-dts\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"test\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\r\n      <command value=\"run\" />\r\n      <scripts>\r\n        <script value=\"test\" />\r\n      </scripts>\r\n      <node-interpreter value=\"project\" />\r\n      <envs />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Docker.Dockerfile\" />\r\n      <item itemvalue=\"npm.test\" />\r\n      <item itemvalue=\"npm.format\" />\r\n      <item itemvalue=\"npm.klinecharts &gt; build-dts\" />\r\n      <item itemvalue=\"Vitest.Page\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Docker.Dockerfile\" />\r\n        <item itemvalue=\"Vitest.Page\" />\r\n        <item itemvalue=\"npm.klinecharts &gt; build-dts\" />\r\n        <item itemvalue=\"npm.format\" />\r\n        <item itemvalue=\"npm.test\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration>C:\\Users\\Administrator\\AppData\\Roaming\\Subversion</configuration>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1f6263d0-5c57-419a-9b1d-797dacb72784\" name=\"Changes\" comment=\"\" />\r\n      <created>1721123016904</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1721123016904</updated>\r\n      <workItem from=\"1721123018066\" duration=\"2269000\" />\r\n      <workItem from=\"1721207950545\" duration=\"12544000\" />\r\n      <workItem from=\"1721373417455\" duration=\"8531000\" />\r\n      <workItem from=\"1721630251659\" duration=\"19000\" />\r\n      <workItem from=\"1721634302177\" duration=\"7483000\" />\r\n      <workItem from=\"1721722147898\" duration=\"112455000\" />\r\n      <workItem from=\"1722308020529\" duration=\"12643000\" />\r\n      <workItem from=\"1722403740672\" duration=\"11502000\" />\r\n      <workItem from=\"1722481871800\" duration=\"1961000\" />\r\n      <workItem from=\"1722486499431\" duration=\"342000\" />\r\n      <workItem from=\"1722486851467\" duration=\"30000\" />\r\n      <workItem from=\"1722486886222\" duration=\"266000\" />\r\n      <workItem from=\"1722487283830\" duration=\"248000\" />\r\n      <workItem from=\"1722487541279\" duration=\"34000\" />\r\n      <workItem from=\"1722487581474\" duration=\"4614000\" />\r\n      <workItem from=\"1722512327181\" duration=\"11365000\" />\r\n      <workItem from=\"1722614842325\" duration=\"947000\" />\r\n      <workItem from=\"1722639909287\" duration=\"594000\" />\r\n      <workItem from=\"1722684103611\" duration=\"12537000\" />\r\n      <workItem from=\"1722729099861\" duration=\"15281000\" />\r\n      <workItem from=\"1722744843620\" duration=\"2894000\" />\r\n      <workItem from=\"1722749392281\" duration=\"2569000\" />\r\n      <workItem from=\"1722752115379\" duration=\"1470000\" />\r\n      <workItem from=\"1722755916691\" duration=\"3318000\" />\r\n      <workItem from=\"1722763393179\" duration=\"1631000\" />\r\n      <workItem from=\"1722769904917\" duration=\"2879000\" />\r\n      <workItem from=\"1722775287941\" duration=\"7700000\" />\r\n      <workItem from=\"1722861741218\" duration=\"9365000\" />\r\n      <workItem from=\"1722899844613\" duration=\"3692000\" />\r\n      <workItem from=\"1722918182153\" duration=\"19000\" />\r\n      <workItem from=\"1722951166959\" duration=\"5784000\" />\r\n      <workItem from=\"1722985247947\" duration=\"11052000\" />\r\n      <workItem from=\"1723074179401\" duration=\"1643000\" />\r\n      <workItem from=\"1723245406177\" duration=\"21141000\" />\r\n      <workItem from=\"1723279880477\" duration=\"2831000\" />\r\n      <workItem from=\"1723340324620\" duration=\"21530000\" />\r\n      <workItem from=\"1723417655067\" duration=\"4927000\" />\r\n      <workItem from=\"1723459252999\" duration=\"9300000\" />\r\n      <workItem from=\"1723506494183\" duration=\"1494000\" />\r\n      <workItem from=\"1723532202224\" duration=\"9531000\" />\r\n      <workItem from=\"1723589154366\" duration=\"6664000\" />\r\n      <workItem from=\"1723721295993\" duration=\"9956000\" />\r\n      <workItem from=\"1723765254783\" duration=\"2332000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"feature/contextmenu\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT\" value=\"false\" />\r\n    <MESSAGE value=\"feature: 搭建基本布局\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"feature: 搭建基本布局\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 24e485a4eba63c18ae3039ee9ce172fe7a43b819)
++++ b/.idea/workspace.xml	(date 1723809554522)
+@@ -6,60 +6,10 @@
+   <component name="ChangeListManager">
+     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/commands.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/command-initor.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/core.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/listeners.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/listeners.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/stateFn/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/stateFn/index.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/base/command-initor/index.ts" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/base/github-star/index.tsx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/base/loading/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/base/loading/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/command-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/command-initor.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/page/home/Sidebars/DatasourceMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/page/home/Sidebars/DatasourceMain.tsx" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/_components/page/home/Sidebars/LayerMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/page/home/Sidebars/LayerMain.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/ui/ContextMenu/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/_components/ui/Dock/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/ui/Dock/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/backgroundCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/backgroundCommand.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/contextMenuCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/contextMenuCommands.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/dockerCommands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/dockerCommands.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/indicatorCommands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/indicatorCommands.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/mainCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/mainCommands.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/commands/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/register.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/context/chart-context.tsx" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/context/mantine-context.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/context/mantine-override.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/_styles/mantine-override.scss" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/context/plugins/mantine-context-menu-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/context/plugins/mantine-context-menu-context.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/hooks/use-breakpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/hooks/use-breakpoints.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/hooks/use-event-emitter.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/hooks/use-tab-searchparams.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/hooks/use-tab-searchparams.ts" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/services/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/http.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/services/label.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/label.api.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/services/plate.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/plate.api.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/services/stock.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/stock.api.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/services/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/types.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/store/chartStore.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/store/userPlateStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/store/userPlateStore.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/styles/globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/_styles/globals.scss" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/styles/variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/_styles/variables.scss" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/types/misc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_types/misc.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/types/shime.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_types/shime.d.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/design.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/design.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/format.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/format.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/globalConfig.ts" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/index.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/misc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/misc.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/timezone.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/timezone.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/timezone.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/timezone.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/utils/use-modifieries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/use-modifieries.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -69,7 +19,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="feature/data_apis" />
++        <entry key="$PROJECT_DIR$" value="fix/ignore_component_as_page" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -84,6 +34,10 @@
+             <RecentBranchesForRepo>
+               <option name="branches">
+                 <list>
++                  <RecentBranch>
++                    <option name="branchName" value="feature/label_style" />
++                    <option name="lastUsedInstant" value="1723806705" />
++                  </RecentBranch>
+                   <RecentBranch>
+                     <option name="branchName" value="fix/ignore_component_as_page" />
+                     <option name="lastUsedInstant" value="1723733705" />
+@@ -99,10 +53,6 @@
+                   <RecentBranch>
+                     <option name="branchName" value="feature/command_overlay" />
+                     <option name="lastUsedInstant" value="1722871563" />
+-                  </RecentBranch>
+-                  <RecentBranch>
+-                    <option name="branchName" value="feature/contextmenu" />
+-                    <option name="lastUsedInstant" value="1722782965" />
+                   </RecentBranch>
+                 </list>
+               </option>
+@@ -306,7 +256,7 @@
+       <workItem from="1723532202224" duration="9531000" />
+       <workItem from="1723589154366" duration="6664000" />
+       <workItem from="1723721295993" duration="9956000" />
+-      <workItem from="1723765254783" duration="2332000" />
++      <workItem from="1723765254783" duration="5853000" />
+     </task>
+     <servers />
+   </component>
+Index: app/_components/KlineCharts/commands.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"use client\";\r\nimport { KlineChartModule, LifeCycle } from \"./core\";\r\nimport type { OverlayCreate } from \"couriourc-klinecharts\";\r\nimport _ from \"underscore\";\r\nimport { removeDrawStore } from \"./stateFn/store\";\r\nimport type { ICommands } from \"./types\";\r\nimport { makeAttributes } from \"@components/KlineCharts/utils/makeAttributes\";\r\n\r\nconst klineChartInstance = KlineChartModule();\r\n\r\nfunction arrifyOverlay<T>(target: T | T[]): T[] {\r\n  return _.isArray(target) ? target : [target];\r\n}\r\n\r\ntype OverlayCreatorOverrid = OverlayCreate & {\r\n  setup: boolean;\r\n};\r\nconst createOverlay: ICommands[\"createOverlay\"] = (overlayCreator, paneId) => {\r\n  const wrapperOverlayFunction = (nameOrOption: string | OverlayCreate) => {\r\n    // wrap option\r\n    const option: OverlayCreatorOverrid = {\r\n      setup: false\r\n    } as OverlayCreatorOverrid;\r\n    if (_.isString(nameOrOption)) {\r\n      option.name = nameOrOption;\r\n    } else {\r\n      Object.assign(option, nameOrOption);\r\n    }\r\n    // 内置信息\r\n    option.extendData = makeAttributes(\r\n      JSON.parse(JSON.stringify(option.extendData ?? {}))\r\n    );\r\n    option.id = option.extendData.id;\r\n    (\r\n      [\r\n        \"onDrawStart\",\r\n        \"onDrawing\",\r\n        \"onDrawEnd\",\r\n        \"onClick\",\r\n        \"onDoubleClick\",\r\n        \"onRightClick\",\r\n        \"onPressedMoveStart\",\r\n        \"onPressedMoving\",\r\n        \"onPressedMoveEnd\",\r\n        \"onMouseEnter\",\r\n        \"onMouseLeave\",\r\n        \"onRemoved\",\r\n        \"onSelected\",\r\n        \"onDeselected\"\r\n      ] as const\r\n    ).forEach((fnName) => {\r\n      const fn = option[fnName];\r\n      // turn all events into function that emits the corresponding event to the chart instance\r\n      option[fnName] = (...args) => {\r\n        klineChartInstance.emitter.emit(\r\n          `chart:overlay:${fnName as LifeCycle}`,\r\n          args[0]\r\n        );\r\n        return !!fn?.(...args);\r\n      };\r\n\r\n      switch (fnName) {\r\n        case \"onRightClick\":\r\n          option[fnName] = (...args) => {\r\n            const event = args[0];\r\n            // cancel right click event to customize contextmenu\r\n            event.preventDefault?.();\r\n            fn?.(...args);\r\n            klineChartInstance.emitter.emit(\r\n              `chart:overlay:${LifeCycle.onRightClick}`,\r\n              args[0]\r\n            );\r\n            return true;\r\n          };\r\n          break;\r\n        case \"onRemoved\":\r\n          option[fnName] = (...args) => {\r\n            const overlay = args[0].overlay;\r\n            klineChartInstance.emitter.emit(\r\n              `chart:overlay:${LifeCycle.onRemoved}`,\r\n              args[0]\r\n            );\r\n            removeDrawStore([overlay.extendData]);\r\n            fn?.(...args);\r\n            return true;\r\n          };\r\n          break;\r\n        default:\r\n          break;\r\n      }\r\n    });\r\n    return option as OverlayCreate;\r\n  };\r\n  const wrapperOverlayCreator = arrifyOverlay(overlayCreator).map(\r\n    wrapperOverlayFunction\r\n  );\r\n  const overlayIds: string[] = klineChartInstance.chart.createOverlay(\r\n    wrapperOverlayCreator,\r\n    paneId\r\n  ) as string[];\r\n  // attach overlay_id\r\n  wrapperOverlayCreator.forEach((item, id) => {\r\n    item.extendData.overlay_id = overlayIds[id]! as string;\r\n    return item.extendData;\r\n  });\r\n  // 获取\r\n  return overlayIds;\r\n};\r\nconst removeOverlay: ICommands[\"removeOverlay\"] = (args: any) => {\r\n  console.log(args);\r\n  KlineChartModule().chart.removeOverlay({\r\n    groupId: args?.id\r\n  });\r\n};\r\nconst getOverlayByIds: ICommands[\"getOverlayByIds\"] = (...args) => {\r\n  const overlayIds = arrifyOverlay(args[0]);\r\n  return overlayIds.map((idOrOption) => {\r\n    if (_.isString(idOrOption)) {\r\n      return klineChartInstance.chart.getOverlayById(idOrOption);\r\n    }\r\n    return klineChartInstance.chart.getOverlayById(idOrOption.id!);\r\n  });\r\n};\r\nconst overrideOverlay: ICommands[\"overrideOverlay\"] = (...args) =>\r\n  klineChartInstance.chart.overrideOverlay(...args);\r\nconst resize: ICommands[\"resize\"] = () => {\r\n  return klineChartInstance.chart?.resize();\r\n};\r\nconst commands: ICommands = {\r\n  createOverlay,\r\n  removeOverlay,\r\n  getOverlayByIds,\r\n  resize,\r\n  overrideOverlay\r\n};\r\n\r\nexport function executeChartCommand<T extends keyof ICommands>(\r\n  type: T,\r\n  ...args: ICommands[T] extends (...args: infer P) => any ? P : never[]\r\n): void {\r\n  klineChartInstance.emitter.emit(\"command:setup\", {\r\n    type,\r\n    args\r\n  });\r\n  /*@ts-ignore*/\r\n  return commands[type as keyof ICommands](...args);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/_components/KlineCharts/commands.ts b/app/_components/KlineCharts/commands.ts
+--- a/app/_components/KlineCharts/commands.ts	(revision 24e485a4eba63c18ae3039ee9ce172fe7a43b819)
++++ b/app/_components/KlineCharts/commands.ts	(date 1723808077415)
+@@ -5,6 +5,7 @@
+ import { removeDrawStore } from "./stateFn/store";
+ import type { ICommands } from "./types";
+ import { makeAttributes } from "@components/KlineCharts/utils/makeAttributes";
++import { executeCommand } from "@lib/hooks/use-event-emitter";
+ 
+ const klineChartInstance = KlineChartModule();
+ 
+@@ -52,14 +53,22 @@
+       const fn = option[fnName];
+       // turn all events into function that emits the corresponding event to the chart instance
+       option[fnName] = (...args) => {
+-        klineChartInstance.emitter.emit(
+-          `chart:overlay:${fnName as LifeCycle}`,
+-          args[0]
+-        );
++        executeCommand(`chart:overlay:${fnName as LifeCycle}`,...args)
+         return !!fn?.(...args);
+       };
+ 
+       switch (fnName) {
++        case "onDoubleClick":
++          option[fnName] = (...args) => {
++            console.log(...args)
++            const event = args[0];
++            // cancel double click event to trigger onDoubleClick event
++            event.preventDefault?.();
++            fn?.(...args);
++            executeCommand(`chart:overlay:${fnName as LifeCycle}`,...args)
++            return true;
++          };
++          break;
+         case "onRightClick":
+           option[fnName] = (...args) => {
+             const event = args[0];

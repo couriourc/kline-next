@@ -14,12 +14,21 @@ import type { WrappedOverlay } from "@components/KlineCharts/types";
 import _ from "underscore";
 
 export interface BaseOverlay extends OverlayTemplate {
-  createPointFigures(
+  createPointFigures?(
     args: OverlayCreateFiguresCallbackParams,
     store?: WrappedOverlay
   ): OverlayFigure[];
-}
 
+  onSelected?(args: OverlayEvent, store?: WrappedOverlay): boolean;
+
+  onDeselected?(args: OverlayEvent, store?: WrappedOverlay): boolean;
+  onMouseEnter?(args: OverlayEvent, store?: WrappedOverlay): boolean;
+  onMouseLeave?(args: OverlayEvent, store?: WrappedOverlay): boolean;
+}
+export enum MouseEventType {
+  MOUSE_ENTER = "mouseenter",
+  MOUSE_LEAVE = "MOUSE_LEAVE"
+}
 type DefineOverlay = (
   fn: () => Omit<BaseOverlay, "onDrawStart">
 ) => OverlayTemplate;
@@ -45,6 +54,27 @@ export const create: DefineOverlay = (fn) => {
 
   return {
     ...(pre as OverlayTemplate),
+    onSelected: (args) => {
+      const store = getOverlayStore(args.overlay.extendData);
+      store!.overlay_event!.selected = true;
+      return pre?.onSelected(args, store);
+    },
+    onDeselected: (args) => {
+      const store = getOverlayStore(args.overlay.extendData);
+      store!.overlay_event!.selected = false;
+      return pre?.onDeselected(args, store);
+    },
+    onMouseEnter: (args) => {
+      const store = getOverlayStore(args.overlay.extendData);
+      store!.overlay_event!.mouse_event = MouseEventType.MOUSE_ENTER;
+      return pre?.onMouseEnter(args, store);
+    },
+    onMouseLeave: (args) => {
+      const store = getOverlayStore(args.overlay.extendData);
+      store!.overlay_event!.mouse_event = MouseEventType.MOUSE_LEAVE;
+      return pre?.onMouseLeave(args, store);
+    },
+
     onDrawStart: (args) => {
       const store = getOverlayStore(args.overlay.extendData);
       dfs(
