@@ -11,6 +11,9 @@ export function makeAttributes(origin?: any): WrappedOverlay {
         visible: true,
         timestamp: Date.now()
       },
+      overlay_event: {
+        selected: false
+      },
       styles: {}
     },
     origin ?? {}

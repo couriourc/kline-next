@@ -1,4 +1,5 @@
 import type { Chart, Overlay, OverlayCreate } from "couriourc-klinecharts";
+import type { MouseEventType } from "@components/KlineCharts/extensions/overlays/BaseOverlay";
 
 export interface Period {
   multiplier: number;
@@ -12,6 +13,10 @@ export type WrappedOverlay = {
     type?: string;
     visible: boolean;
     timestamp: number;
+  };
+  overlay_event?: {
+    selected: boolean;
+    mouse_event: MouseEventType;
   };
   overlay_id?: string;
   styles: Record<string, any>;

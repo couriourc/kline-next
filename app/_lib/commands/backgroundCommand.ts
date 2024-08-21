@@ -24,7 +24,6 @@ registerCommand({
   label: "chart:creator",
   listen: "chart:overlay:creator",
   executor: (args) => {
-    console.log(args);
     executeChartCommand("createOverlay", {
       name: args!.params.command,
       extendData: {

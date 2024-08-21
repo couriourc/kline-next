@@ -27,14 +27,15 @@ const LocaleLayout = ({ children }: { children: ReactNode }) => {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
+        <meta httpEquiv="Content-Security-Policy" content="mixed-content" />
         <PublicEnvScript></PublicEnvScript>
         <ColorSchemeScript
           forceColorScheme={"dark"}
           defaultColorScheme="dark"
+        />
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
         />
       </head>
       <body className="h-full select-auto">

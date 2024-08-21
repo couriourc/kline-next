@@ -44,6 +44,11 @@ import "@mantine/core/styles/CloseButton.css";
 import "@mantine/core/styles/Overlay.css";
 import "@mantine/core/styles/Burger.css";
 import "@mantine/core/styles/Tabs.css";
+import "mantine-datatable/styles.css";
+import "@mantine/core/styles/InlineInput.css";
+import "@mantine/core/styles/PinInput.css";
+import "@mantine/core/styles/PillsInput.css";
+import "@mantine/core/styles/Pill.css";
 // 布局样式
 // 插件样式
 import "@mantine/nprogress/styles.css";

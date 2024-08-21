@@ -20,8 +20,19 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Fuse from "fuse.js";
 import { cx } from "@emotion/css";
-import LayerMain from "@components/page/home/Sidebars/LayerMain";
+import LayerMain, {
+  selectedLayerAtom
+} from "@components/page/home/Sidebars/LayerMain";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCommand } from "@lib/hooks/use-event-emitter";
+import { LifeCycle } from "@components/KlineCharts/core";
+import { useSetAtom } from "jotai";
+import type { WrappedOverlay } from "@components/KlineCharts/types";
+
+export enum SideEnum {
+  SelfSelectedGroupListLayout = "SelfSelectedGroupListLayout",
+  LabelLayout = "LabelLayout"
+}
 
 function AsideMenus() {
   // 用户-自定义板块 列表 数据
@@ -150,24 +161,50 @@ function AsideHeader() {
     </Group>
   );
 }
+
 export default function Datasource() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab") || "0";
+  const [tab, setTab] = useState<SideEnum>(
+    (searchParams.get("tab") as SideEnum) ??
+      SideEnum.SelfSelectedGroupListLayout
+  );
 
-  const tabs = [
-    {
-      title: <AsideHeader />,
-      key: "self-selected-group-list",
-      panel: <DatasourceMain />
+  const handleReplaceLayout = useCallback(
+    (key: SideEnum) => {
+      setTab(key);
+      router.replace(`${pathname}?tab=${key}`);
     },
-    {
-      title: <Text size={"sm"}>标记信息</Text>,
-      key: "self-selected-group-list",
-      panel: <LayerMain />
-    }
-  ];
+    [pathname, tab]
+  );
+  const tabs = useMemo(
+    () => [
+      {
+        title: <AsideHeader />,
+        key: SideEnum.SelfSelectedGroupListLayout,
+        panel: <DatasourceMain />
+      },
+      {
+        title: <Text size={"sm"}>标记信息</Text>,
+        key: SideEnum.LabelLayout,
+        panel: <LayerMain />
+      }
+    ],
+    [pathname, tab]
+  );
+
+  const updateSelectedLayerAtom = useSetAtom(selectedLayerAtom);
+
+  useCommand(`chart:overlay:${LifeCycle.onDoubleClick}`, (info) => {
+    handleReplaceLayout(SideEnum.LabelLayout);
+    updateSelectedLayerAtom([info.overlay.extendData] as WrappedOverlay[]);
+  });
+  useCommand("chart:overlay:onDrawEnd", (info) => {
+    handleReplaceLayout(SideEnum.LabelLayout);
+    updateSelectedLayerAtom([info.overlay.extendData] as WrappedOverlay[]);
+  });
+
   return (
     <Flex
       w={"100%"}
@@ -180,19 +217,20 @@ export default function Datasource() {
         className={"h-full"}
         defaultValue={tab}
         variant={"outline"}
-        onChange={(index) => {
-          router.push(`${pathname}?tab=${index}`);
+        onChange={(key) => {
+          handleReplaceLayout(key as SideEnum);
         }}
+        value={tab}
       >
         <Tabs.List>
           {tabs.map((tab, index) => (
-            <Tabs.Tab size={"xs"} value={`${index}`} key={tab.key}>
+            <Tabs.Tab size={"xs"} value={tab.key} key={tab.key}>
               {tab.title}
             </Tabs.Tab>
           ))}
         </Tabs.List>
         {tabs.map((tab, index) => (
-          <Tabs.Panel value={`${index}`} key={tab.key}>
+          <Tabs.Panel value={tab.key} key={tab.key}>
             {tab.panel}
           </Tabs.Panel>
         ))}

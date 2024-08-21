@@ -5,61 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f6263d0-5c57-419a-9b1d-797dacb72784" name="Changes" comment="feature: 搭建基本布局">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_21_18_20_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2024_8_21_18_20__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_8_16_20_03_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2024_8_16_20_03__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/figures/utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/_components/modals/label-manager/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/_components/ui/Empty.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/home/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(clientLayout)/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/commands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/commands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/command-initor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/core.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/core.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/figures/icon.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/figures/icon.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/overlays/BaseOverlay.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/overlays/BaseOverlay.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/overlays/textInput.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/extensions/overlays/textInput.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/listeners.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/listeners.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/stateFn/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/stateFn/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/base/command-initor/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/base/github-star/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/base/loading/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/base/loading/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/command-initor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/command-initor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/stateFn/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/stateFn/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/KlineCharts/utils/makeAttributes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/KlineCharts/utils/makeAttributes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/_components/page/home/Sidebars/DatasourceMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/page/home/Sidebars/DatasourceMain.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/_components/page/home/Sidebars/LayerMain.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/page/home/Sidebars/LayerMain.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/ui/ContextMenu/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/ui/ContextMenu/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/ui/Dock/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/ui/Dock/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/backgroundCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/backgroundCommand.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/contextMenuCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/contextMenuCommands.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/dockerCommands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/dockerCommands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/indicatorCommands.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/indicatorCommands.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/mainCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/mainCommands.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/commands/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/chart-context.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/context/mantine-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/mantine-override.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/_styles/mantine-override.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/context/plugins/mantine-context-menu-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/context/plugins/mantine-context-menu-context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hooks/use-breakpoints.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/hooks/use-breakpoints.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hooks/use-event-emitter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/hooks/use-event-emitter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/hooks/use-tab-searchparams.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/hooks/use-tab-searchparams.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_lib/commands/backgroundCommand.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/commands/backgroundCommand.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_lib/context/mantine-context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/context/mantine-context.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/http.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/http.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/label.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/label.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/plate.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/plate.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/stock.api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/stock.api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_services/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/store/chartStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/store/chartStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/store/userPlateStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/store/userPlateStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/styles/globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/_styles/globals.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/styles/variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/_styles/variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/types/misc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_types/misc.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/types/shime.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_types/shime.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/design.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/design.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/format.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/format.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/globalConfig.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/misc.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/misc.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/timezone.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/timezone.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/timezone.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/timezone.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/use-modifieries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/_lib/utils/use-modifieries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/data_apis" />
+        <entry key="$PROJECT_DIR$" value="feature/label_style" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,6 +55,14 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="feature/styles" />
+                    <option name="lastUsedInstant" value="1724235636" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/label_style" />
+                    <option name="lastUsedInstant" value="1723806705" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="fix/ignore_component_as_page" />
                     <option name="lastUsedInstant" value="1723733705" />
                   </RecentBranch>
@@ -95,14 +73,6 @@
                   <RecentBranch>
                     <option name="branchName" value="feature/datasource" />
                     <option name="lastUsedInstant" value="1722958601" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/command_overlay" />
-                    <option name="lastUsedInstant" value="1722871563" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/contextmenu" />
-                    <option name="lastUsedInstant" value="1722782965" />
                   </RecentBranch>
                 </list>
               </option>
@@ -137,7 +107,7 @@
     &quot;git-widget-placeholder&quot;: &quot;feature/data__apis&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;18.19.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/projects/kline-next/app/components/modals/timezone-modals&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/projects/klinecharts&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -246,10 +216,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Docker.Dockerfile" />
-        <item itemvalue="Vitest.Page" />
+        <item itemvalue="npm.test" />
         <item itemvalue="npm.klinecharts &gt; build-dts" />
         <item itemvalue="npm.format" />
-        <item itemvalue="npm.test" />
+        <item itemvalue="Vitest.Page" />
       </list>
     </recent_temporary>
   </component>
@@ -306,7 +276,9 @@
       <workItem from="1723532202224" duration="9531000" />
       <workItem from="1723589154366" duration="6664000" />
       <workItem from="1723721295993" duration="9956000" />
-      <workItem from="1723765254783" duration="2332000" />
+      <workItem from="1723765254783" duration="11730000" />
+      <workItem from="1723818887115" duration="2490000" />
+      <workItem from="1724235507057" duration="4090000" />
     </task>
     <servers />
   </component>
@@ -324,7 +296,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feature/contextmenu" />
+                        <option value="feature/label_style" />
                       </list>
                     </value>
                   </entry>

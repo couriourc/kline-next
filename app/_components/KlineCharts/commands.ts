@@ -5,6 +5,7 @@ import _ from "underscore";
 import { removeDrawStore } from "./stateFn/store";
 import type { ICommands } from "./types";
 import { makeAttributes } from "@components/KlineCharts/utils/makeAttributes";
+import { executeCommand } from "@lib/hooks/use-event-emitter";
 
 const klineChartInstance = KlineChartModule();
 
@@ -52,14 +53,22 @@ const createOverlay: ICommands["createOverlay"] = (overlayCreator, paneId) => {
       const fn = option[fnName];
       // turn all events into function that emits the corresponding event to the chart instance
       option[fnName] = (...args) => {
-        klineChartInstance.emitter.emit(
-          `chart:overlay:${fnName as LifeCycle}`,
-          args[0]
-        );
+        executeCommand(`chart:overlay:${fnName as LifeCycle}`, ...args);
         return !!fn?.(...args);
       };
 
       switch (fnName) {
+        case "onDoubleClick":
+          option[fnName] = (...args) => {
+            console.log(...args);
+            const event = args[0];
+            // cancel double click event to trigger onDoubleClick event
+            event.preventDefault?.();
+            fn?.(...args);
+            executeCommand(`chart:overlay:${fnName as LifeCycle}`, ...args);
+            return true;
+          };
+          break;
         case "onRightClick":
           option[fnName] = (...args) => {
             const event = args[0];
